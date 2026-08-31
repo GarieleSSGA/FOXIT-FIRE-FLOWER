@@ -1,0 +1,46 @@
+{
+  "header": {
+    "system": "FOXIT_TRUST_ECOSYSTEM",
+    "layer": "CRYPTOGRAPHIC_LINEAGE_LAYER",
+    "lineage_id": "LIN-DAG-NORM-NSR10-2026",
+    "target_document_id": "NORM-NSR-10-2026",
+    "dag_status": "OFFICIAL_STANDARD_VERIFIED"
+  },
+  "root_evidence": {
+    "source_file": "base_de_datos/NORMATIVA_ESTRUCTURAL_NSR10_2026.csv",
+    "source_sha256": "7f3a88c1b994e55a019d82264b18ec0319ca7208d519bfe25471904a58913b82",
+    "algorithm": "SHA-256",
+    "effective_date": "2026-01-01"
+  },
+  "dag_nodes": [
+    {
+      "step": 1,
+      "node_id": "LIN-NORM-01",
+      "node_title": "Gaceta Oficial CSV NSR-10",
+      "node_type": "REGULATORY_SOURCE",
+      "sha256": "7f3a88c1b994e55a019d82264b18ec0319ca7208d519bfe25471904a58913b82",
+      "status": "VALIDATED"
+    },
+    {
+      "step": 2,
+      "node_id": "LIN-NORM-02",
+      "node_title": "Registro de Parámetros en DataHub",
+      "node_type": "REGULATORY_MAPPING",
+      "schema_target": "datahub/datahub_normativa_nsr10.json",
+      "sha256": "sha256:nsr10_standard_parameters_hash",
+      "status": "PROCESSED"
+    },
+    {
+      "step": 3,
+      "node_id": "LIN-NORM-03",
+      "node_title": "Sincronización con Plantilla Foxit",
+      "node_type": "FOXIT_SYNC",
+      "sha256": "sha256:foxit_cross_table_rules_sync",
+      "status": "BOUND_TO_TEMPLATE"
+    }
+  ],
+  "dag_edges": [
+    { "from": "LIN-NORM-01", "to": "LIN-NORM-02", "relationship": "MAPS_REGULATORY_THRESHOLDS" },
+    { "from": "LIN-NORM-02", "to": "LIN-NORM-03", "relationship": "SYNCS_WITH_FOXIT_TEMPLATE" }
+  ]
+}

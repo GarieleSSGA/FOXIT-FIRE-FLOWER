@@ -1,0 +1,9 @@
+element_id,element_type,location_grid,design_capacity_kn_m2,applied_load_kn_m2,safety_factor,material_spec,inspection_date,inspector_id,compliance_status,notes
+BEAM-V101,Viga Concreto Armado,Piso 1 - Eje A-B,800.0,450.0,1.78,Hormigon H-30 / Acero B500S,2026-01-15,ENG-8821,PASS,Elemento conforme bajo norma NSR-10
+BEAM-V102,Viga Concreto Armado,Piso 1 - Eje B-C,800.0,465.0,1.72,Hormigon H-30 / Acero B500S,2026-01-15,ENG-8821,PASS,Carga muerta y viva dentro de rango optimo
+BEAM-V103,Viga Concreto Armado,Piso 1 - Eje C-D,800.0,440.0,1.82,Hormigon H-30 / Acero B500S,2026-01-15,ENG-8821,PASS,Revision de deflexion superada
+BEAM-V104,Viga Concreto Armado,Piso 1 - Eje D-E,600.0,410.0,1.46,Hormigon H-30 / Acero B500S,2026-01-15,ENG-8821,PASS,Margen de tolerancia aceptable
+COL-C201,Columna Principal,Sotano - Eje 1-A,1200.0,620.0,1.94,Hormigon H-45 / Acero B500S,2026-01-15,ENG-8821,PASS,Esfuerzo axial sin concentracion de tensiones
+COL-C202,Columna Principal,Sotano - Eje 2-A,1200.0,635.0,1.89,Hormigon H-45 / Acero B500S,2026-01-15,ENG-8821,PASS,Compresion y momento flector verificados
+COL-C203,Columna Principal,Sotano - Eje 3-B,1200.0,590.0,2.03,Hormigon H-45 / Acero B500S,2026-01-15,ENG-8821,PASS,Revision geotecnica y anclaje conforme
+SLAB-L301,Losa Aligerada,Piso 1 - Zona Central,500.0,280.0,1.79,Viguetas pretensadas e=25cm,2026-01-15,ENG-8821,PASS,Distribucion de carga uniforme

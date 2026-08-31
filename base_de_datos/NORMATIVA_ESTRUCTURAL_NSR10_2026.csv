@@ -1,0 +1,5 @@
+norm_id,element_type,min_safety_factor,max_deflection_ratio,required_concrete_grade,max_load_allowance_kn_m2,seismic_zone,regulatory_body,effective_date
+NORM-NSR10-VIG,Viga Concreto Armado,1.50,L/360,H-30,800.0,Zona 4 (Alta Sismicidad),Comision Asesora Permanente de Construcciones,2026-01-01
+NORM-NSR10-COL,Columna Principal,1.75,L/500,H-45,1200.0,Zona 4 (Alta Sismicidad),Comision Asesora Permanente de Construcciones,2026-01-01
+NORM-NSR10-LOS,Losa Aligerada,1.50,L/360,H-25,500.0,Zona 4 (Alta Sismicidad),Comision Asesora Permanente de Construcciones,2026-01-01
+NORM-NSR10-FND,Cimentacion y Zapatas,2.00,N/A,H-35,2000.0,Zona 4 (Alta Sismicidad),Comision Asesora Permanente de Construcciones,2026-01-01

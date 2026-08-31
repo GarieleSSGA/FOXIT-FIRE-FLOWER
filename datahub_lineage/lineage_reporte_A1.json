@@ -1,0 +1,56 @@
+{
+  "header": {
+    "system": "FOXIT_TRUST_ECOSYSTEM",
+    "layer": "CRYPTOGRAPHIC_LINEAGE_LAYER",
+    "lineage_id": "LIN-DAG-DOC-A1-202601",
+    "target_document_id": "DOC-A1-202601",
+    "dag_status": "GROUND_TRUTH_VALID"
+  },
+  "root_evidence": {
+    "source_file": "base_de_datos/A1_REPORTE_ESTRUCTURAL_CLEAN_ENERO_2026.csv",
+    "source_sha256": "c1c38f1634cc11d79498e5663a8edf6f21e0279429c981b9623f5b3dba733a60",
+    "algorithm": "SHA-256",
+    "audit_timestamp": "2026-01-15T08:30:00Z"
+  },
+  "dag_nodes": [
+    {
+      "step": 1,
+      "node_id": "LIN-A1-01",
+      "node_title": "Fuente Primaria CSV (Ground Truth)",
+      "node_type": "DATA_SOURCE",
+      "sha256": "c1c38f1634cc11d79498e5663a8edf6f21e0279429c981b9623f5b3dba733a60",
+      "status": "VALIDATED"
+    },
+    {
+      "step": 2,
+      "node_id": "LIN-A1-02",
+      "node_title": "Firma Criptográfica SHA-256 Inmutable",
+      "node_type": "CRYPTO_SEAL",
+      "sha256": "c1c38f1634cc11d79498e5663a8edf6f21e0279429c981b9623f5b3dba733a60",
+      "status": "SEALED"
+    },
+    {
+      "step": 3,
+      "node_id": "LIN-A1-03",
+      "node_title": "Mapeo y Extracción de 11 Columnas por IA",
+      "node_type": "AI_EXTRACTION",
+      "schema_target": "datahub/datahub_reporte_A1.json",
+      "sha256": "sha256:mapping_a1_nsr10_ruleset",
+      "status": "PROCESSED"
+    },
+    {
+      "step": 4,
+      "node_id": "LIN-A1-04",
+      "node_title": "Supervisión y Aprobación Humana",
+      "node_type": "HUMAN_OVERSIGHT",
+      "auditor": "ENG-8821",
+      "sha256": "sha256:human_audit_eng8821_sig",
+      "status": "APPROVED"
+    }
+  ],
+  "dag_edges": [
+    { "from": "LIN-A1-01", "to": "LIN-A1-02", "relationship": "GENERATES_CRYPTO_HASH" },
+    { "from": "LIN-A1-02", "to": "LIN-A1-03", "relationship": "INGESTED_BY_AI" },
+    { "from": "LIN-A1-03", "to": "LIN-A1-04", "relationship": "AUDITED_BY_SUPERVISOR" }
+  ]
+}

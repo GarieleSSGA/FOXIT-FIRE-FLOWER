@@ -1,0 +1,51 @@
+{
+  "foxit_api_engine": "Foxit Fusion Document Generation Cloud API",
+  "endpoint": "https://na1.fusion.foxit.com/document-generation/api/GenerateDocumentBase64",
+  "template_file": "plantillas_foxit/plantilla_ingenieria_nsr10.docx",
+  "template_id": "TMPL-FOXIT-STRUCTURAL-NSR10-V2.4",
+  "template_name": "Plantilla Oficial Foxit de Auditoría Estructural y Cumplimiento Sismorresistente NSR-10",
+  "document_type": "PDF_OFFICIAL_CERTIFICATE",
+  "standard_compliance": "PDF/A-2b Standard Engineering",
+  "detected_tags": {
+    "single_tags": [
+      "project_name",
+      "document_code",
+      "audit_date",
+      "inspector",
+      "regulatory_framework",
+      "seismic_zone",
+      "ground_truth_sha256",
+      "norm_sha256",
+      "lineage_status",
+      "element_id",
+      "element_type",
+      "location_grid",
+      "applied_load_kn_m2",
+      "design_capacity_kn_m2",
+      "safety_factor",
+      "normative_min_fs",
+      "compliance_status",
+      "total_elements",
+      "avg_safety_factor",
+      "trust_score",
+      "risk_level",
+      "envelope_id",
+      "crypto_seal_hash"
+    ],
+    "double_loop_tags": [
+      "structural_elements"
+    ]
+  },
+  "bindings": {
+    "datahub_reporte_ref": "datahub_lineage/datahub_reporte_A1.json",
+    "datahub_normativa_ref": "datahub_lineage/datahub_normativa_nsr10.json",
+    "lineage_reporte_ref": "datahub_lineage/lineage_reporte_A1.json",
+    "lineage_normativa_ref": "datahub_lineage/lineage_normativa_nsr10.json",
+    "csv_source_ref": "base_de_datos/A1_REPORTE_ESTRUCTURAL_CLEAN_ENERO_2026.csv"
+  },
+  "esign_smart_tags": {
+    "sig_inspector_pe": "[[sig_inspector_pe]]",
+    "sig_ai_governance": "[[sig_ai_governance]]",
+    "date_signed_utc": "[[date_signed_utc]]"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "header": {
+    "system": "FOXIT_TRUST_ECOSYSTEM",
+    "layer": "DATAHUB_CONTEXT_LAYER",
+    "project_id": "PRJ-FIRE-FLOWER-2026",
+    "document_id": "DOC-A1-202601",
+    "document_type": "STRUCTURAL_AUDIT_REPORT",
+    "version": "v1.0",
+    "integrity_status": "AUDITED_GROUND_TRUTH"
+  },
+  "metadata": {
+    "source_file": "base_de_datos/A1_REPORTE_ESTRUCTURAL_CLEAN_ENERO_2026.csv",
+    "author_inspector": "ENG-8821 (Chief PE Inspector)",
+    "audit_date": "2026-01-15",
+    "regulatory_framework": "NSR-10 (Zona 4 Alta Sismicidad)",
+    "total_records": 8,
+    "total_columns": 11
+  },
+  "columns_dictionary": [
+    { "index": 1, "column": "element_id", "type": "STRING", "unit": "N/A", "description": "Identificador de viga, columna o losa" },
+    { "index": 2, "column": "element_type", "type": "STRING", "unit": "N/A", "description": "Tipología estructural" },
+    { "index": 3, "column": "location_grid", "type": "STRING", "unit": "N/A", "description": "Ubicación en plano y nivel de planta" },
+    { "index": 4, "column": "design_capacity_kn_m2", "type": "FLOAT", "unit": "kN/m²", "description": "Capacidad resistente máxima calculada" },
+    { "index": 5, "column": "applied_load_kn_m2", "type": "FLOAT", "unit": "kN/m²", "description": "Carga de servicio real en obra" },
+    { "index": 6, "column": "safety_factor", "type": "FLOAT", "unit": "DIMENSIONLESS", "description": "Factor de seguridad (Capacidad / Carga)" },
+    { "index": 7, "column": "material_spec", "type": "STRING", "unit": "N/A", "description": "Grado de hormigón y fluencia de acero" },
+    { "index": 8, "column": "inspection_date", "type": "DATE", "unit": "YYYY-MM-DD", "description": "Fecha de peritaje técnico" },
+    { "index": 9, "column": "inspector_id", "type": "STRING", "unit": "N/A", "description": "Cédula profesional del auditor" },
+    { "index": 10, "column": "compliance_status", "type": "ENUM", "unit": "N/A", "description": "PASS / FAIL / FLAGGED" },
+    { "index": 11, "column": "notes", "type": "STRING", "unit": "N/A", "description": "Observaciones técnicas de obra" }
+  ],
+  "structural_summary": {
+    "beams_evaluated": 4,
+    "columns_evaluated": 3,
+    "slabs_evaluated": 1,
+    "min_safety_factor": 1.46,
+    "max_safety_factor": 2.03,
+    "avg_safety_factor": 1.80,
+    "overall_integrity": "CONFORME"
+  },
+  "human_oversight": {
+    "supervised_by": "Senior Structural Auditor",
+    "decision": "APPROVED",
+    "verified_timestamp": "2026-01-15T09:00:00Z",
+    "signature_hash": "sha256:human_audit_eng8821_sig"
+  }
+}

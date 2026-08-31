@@ -1,0 +1,1426 @@
+ARQUITECTURA DEFINITIVA — ECOSISTEMA DE CONFIANZA PARA IA
+================================================================
+
+IDEA CENTRAL
+------------
+
+El proyecto NO busca construir una IA más inteligente.
+
+Busca construir un ECOSISTEMA DE CONFIANZA alrededor de una IA.
+
+Pregunta central:
+
+"¿Realmente necesitamos un modelo más inteligente, o necesitamos tener
+orden en nuestro ecosistema? Porque la IA ya es potente."
+
+Una IA puede producir una respuesta aparentemente correcta y aun así no
+saber que está trabajando con información alterada, incompleta,
+inconsistente o corrupta.
+
+Por eso:
+
+LA IA APORTA INTELIGENCIA.
+EL ECOSISTEMA APORTA CONFIANZA.
+LA GOBERNANZA DETERMINA CUÁNDO SE PUEDE AUTOMATIZAR.
+
+
+================================================================
+1. FLUJO DEFINITIVO
+================================================================
+
+                     CSV LIMPIO
+                          |
+                          v
+                  +---------------+
+                  |      IA       |
+                  |    PROMPT     |
+                  | Extract/Map   |
+                  +-------+-------+
+                          |
+                 +--------+--------+
+                 v                 v
+             DATAHUB           LINEAGE
+                 |                 |
+                 +--------+--------+
+                          |
+                          v
+                       FOXIT
+                   Template + API
+                          |
+                          v
+                         IA
+                   MISMO PROMPT
+                          |
+                          v
+                     VALIDACION
+                          |
+                          v
+                       TRUST
+                    Trust Score
+                          |
+                          v
+                        RISK
+                    Risk Level
+                          |
+                          v
+                    GOVERNANCE
+                     /                           v         v
+             AUTOMATIZACION  HUMANO
+
+
+================================================================
+2. ETAPA 1 — CSV LIMPIO
+================================================================
+
+El primer archivo es la fuente de referencia.
+
+Ejemplo:
+
+PROJECT_CLEAN.csv
+
+Debe tener:
+
+- Columnas necesarias.
+- Nombres correctos.
+- Tipos de datos correctos.
+- Unidades correctas.
+- Identificadores.
+- Relaciones necesarias.
+- Valores válidos.
+- Estructura definida.
+
+Además, el archivo es previamente AUDITADO por el usuario.
+
+Por tanto, para la demostración:
+
+CSV LIMPIO = FUENTE DE REFERENCIA CONFIABLE.
+
+
+================================================================
+3. ETAPA 2 — LA IA EXTRAE EL CONTEXTO
+================================================================
+
+Se entrega a la IA:
+
+- CSV limpio.
+- Prompt definido.
+
+La IA extrae/interpreta la información necesaria para construir:
+
+- Metadata.
+- Esquema.
+- Columnas.
+- Tipos.
+- Unidades.
+- Entidades.
+- Relaciones.
+- Información del DataHub.
+- Información del Lineage.
+
+Flujo:
+
+CSV LIMPIO
+    |
+    v
+IA + PROMPT
+    |
+    +------> DATAHUB
+    |
+    +------> LINEAGE
+
+
+================================================================
+4. DATAHUB
+================================================================
+
+El DataHub representa el contexto y metadata.
+
+Puede registrar:
+
+Project_ID
+Document_ID
+Document_Type
+Source
+Author
+Created_At
+Version
+Schema
+Units
+Status
+Parent_Document
+Integrity_Status
+
+Ejemplo:
+
+Project_ID: PRJ-2026-0001
+Document_ID: STR-001
+Version: V1.0
+Source: PROJECT_CLEAN.csv
+Status: TRUSTED_REFERENCE
+
+
+================================================================
+5. LINEAGE
+================================================================
+
+PUNTO CLAVE:
+
+El Lineage sale A PARTIR DE LOS DATOS.
+
+No aparece antes de la fuente.
+
+Flujo correcto:
+
+DATOS LIMPIOS
+    |
+    v
+IA
+    |
+    v
+DATAHUB + LINEAGE
+
+El Lineage registra:
+
+- Fuente original.
+- Documento.
+- Versiones.
+- Transformaciones.
+- Procesamientos.
+- Relaciones.
+- Fechas.
+- Sistemas involucrados.
+- Dependencias.
+- Hash.
+- Estados.
+
+Concepto:
+
+DOCUMENT DNA
+
+
+Ejemplo:
+
+PROJECT_CLEAN.csv
+       |
+       v
+      V1.0
+       |
+       v
+DATA EXTRACTION
+       |
+       v
+    DATAHUB
+       |
+       v
+    LINEAGE
+       |
+       v
+     FOXIT
+
+
+================================================================
+6. FOXIT
+================================================================
+
+Después de construir DataHub + Lineage:
+
+DATAHUB + LINEAGE
+       |
+       v
+     FOXIT
+       |
+       v
+   PLANTILLA
+       |
+       v
+ DOCUMENTO
+
+La plantilla puede contener:
+
+- Proyecto.
+- Documento.
+- Versión.
+- Autor.
+- Fecha.
+- Estado.
+- Trust Score.
+- Risk Level.
+- Resultado de IA.
+- Resultado de validación.
+- Estado de firma.
+- Revisión humana.
+- Observaciones.
+
+
+================================================================
+7. FOXIT API
+================================================================
+
+La API se utiliza para automatizar las operaciones documentales
+disponibles.
+
+Conceptualmente:
+
+BACKEND
+   |
+   v
+FOXIT API
+   |
+   v
+PLANTILLA
+   |
+   v
+DOCUMENTO
+   |
+   v
+VALIDACION
+   |
+   +------> FIRMA / BLOQUEO
+
+IMPORTANTE:
+
+No asumir que una firma criptográfica real puede simplemente
+"borrarse".
+
+Separar:
+
+1. Estado criptográfico de la firma.
+2. Estado de confianza.
+3. Estado de automatización.
+4. Política de gobernanza.
+
+Estados posibles:
+
+VALID
+INVALID
+REVOKED
+FLAGGED
+PENDING_HUMAN_REVIEW
+BLOCKED
+
+La implementación real dependerá de las capacidades concretas de la
+API y del mecanismo de firma.
+
+
+================================================================
+8. ETAPA 3 — IA DE ANALISIS
+================================================================
+
+Después de construir DataHub + Lineage y pasar por Foxit, el documento
+entra al análisis mediante IA.
+
+REGLA PRINCIPAL:
+
+EL PROMPT DEBE SER EXACTAMENTE EL MISMO.
+
+No cambiarlo entre:
+
+CSV LIMPIO
+
+y
+
+CSV ALTERADO.
+
+No decirle a la IA que el segundo archivo está corrupto.
+
+
+================================================================
+9. DEMO CENTRAL — CSV LIMPIO
+================================================================
+
+PROJECT_CLEAN.csv
+
+Flujo:
+
+CSV LIMPIO
+    |
+    v
+IA + PROMPT
+    |
+    v
+DATAHUB
+    |
+    v
+LINEAGE
+    |
+    v
+FOXIT
+    |
+    v
+IA
+    |
+    v
+VALIDACION
+    |
+    v
+CONFIANZA
+    |
+    v
+RIESGO
+    |
+    v
+GOBERNANZA
+    |
+    v
+AUTOMATIZACION / HUMANO
+
+Como el archivo fue previamente auditado:
+
+Data Integrity       PASS
+Schema               PASS
+Lineage              PASS
+Validation           PASS
+AI Analysis          PASS
+
+Resultado conceptual:
+
+TRUST SCORE: 98/100
+RISK LEVEL: LOW
+AUTOMATION: AVAILABLE
+
+Resumen:
+
+CSV LIMPIO
+    ->
+TODO PASA
+    ->
+CONFIANZA ALTA
+    ->
+AUTOMATIZACION DISPONIBLE
+
+
+================================================================
+10. DEMO CENTRAL — CSV ALTERADO
+================================================================
+
+Crear una copia:
+
+PROJECT_CLEAN.csv
+       |
+       v
+PROJECT_ALTERED.csv
+
+Modificar deliberadamente uno o varios datos.
+
+Ejemplo:
+
+ORIGINAL:
+Carga = 500 kg/m2
+
+ALTERADO:
+Carga = 1500 kg/m2
+
+La alteración debe ser CONTROLADA y preferiblemente SEMANTICA.
+
+No conviene romper el archivo para que deje de abrir.
+
+Debe seguir siendo legible.
+
+Posibles alteraciones:
+
+- Valor cambiado.
+- Unidad cambiada.
+- Identificador cambiado.
+- Registro duplicado.
+- Registro eliminado.
+- Valor fuera de rango.
+- Relación inconsistente.
+- Metadata modificada.
+- Versión alterada.
+
+
+================================================================
+11. EL MISMO PROMPT
+================================================================
+
+La IA recibe:
+
+PROMPT A + CSV LIMPIO
+
+Después:
+
+PROMPT A + CSV ALTERADO
+
+Exactamente el mismo prompt.
+
+La IA no sabe que existe una prueba de corrupción.
+
+Puede:
+
+A) Detectar el error.
+B) No detectarlo.
+C) Detectar solo una parte.
+D) Dar una respuesta aparentemente correcta.
+
+TODOS SON RESULTADOS ÚTILES PARA EL EXPERIMENTO.
+
+
+================================================================
+12. EL PUNTO DEL PROYECTO
+================================================================
+
+El proyecto NO intenta demostrar:
+
+"Mi IA detecta todos los errores."
+
+Busca demostrar:
+
+"El proceso de confianza no debe depender exclusivamente de que la IA
+detecte todos los errores."
+
+La IA puede decir:
+
+"El documento parece correcto."
+
+Pero el ecosistema pregunta:
+
+"¿La información que sustenta ese análisis sigue siendo confiable?"
+
+La IA puede decir:
+
+"No encontré inconsistencias."
+
+Pero el ecosistema pregunta:
+
+"¿El documento coincide con su Lineage?"
+
+La IA puede decir:
+
+"Estoy muy segura de mi respuesta."
+
+Pero el ecosistema pregunta:
+
+"¿El nivel de riesgo permite automatizar?"
+
+
+================================================================
+13. LA CAPA DE CONFIANZA
+================================================================
+
+Archivo alterado:
+
+CSV ALTERADO
+    |
+    v
+IA
+    |
+    v
+DATAHUB
+    |
+    v
+LINEAGE
+    |
+    v
+FOXIT
+    |
+    v
+IA
+    |
+    v
+VALIDACION
+    |
+    v
+CONFIANZA
+    |
+    v
+RIESGO
+    |
+    v
+GOBERNANZA
+
+El ecosistema puede detectar:
+
+- Hash diferente.
+- Integridad fallida.
+- Cambio de versión.
+- Lineage inconsistente.
+- Valor alterado.
+- Unidad incompatible.
+- Registro inesperado.
+- Relación semántica incorrecta.
+
+
+Resultado conceptual:
+
+Data Integrity       FAIL
+Schema               PASS
+Lineage              WARNING
+Semantic Validation  FAIL
+AI Analysis          PASS
+
+Trust Score: 34/100
+Risk Level: HIGH
+Automation: BLOCKED
+Human Review: REQUIRED
+
+
+================================================================
+14. TRES CONCEPTOS DIFERENTES
+================================================================
+
+NO CONFUNDIR:
+
+1. AI CONFIDENCE
+2. DATA TRUST
+3. AUTOMATION DECISION
+
+
+14.1 AI CONFIDENCE
+------------------
+
+¿Qué tan segura está la IA de su propio análisis?
+
+Ejemplo:
+
+AI CONFIDENCE = 96%
+
+
+14.2 DATA TRUST
+---------------
+
+¿Qué tan confiable es la información y el contexto?
+
+Ejemplo:
+
+DATA TRUST = 31/100
+
+
+14.3 AUTOMATION DECISION
+-----------------------
+
+¿Está permitido automatizar?
+
+Ejemplo:
+
+AUTOMATION = BLOCKED
+
+
+Es perfectamente posible:
+
+AI CONFIDENCE = 96%
+DATA TRUST = 31/100
+RISK = HIGH
+AUTOMATION = BLOCKED
+
+La IA puede estar muy segura de su análisis.
+
+Eso NO significa que el sistema deba confiar en la información ni
+permitir una acción automática.
+
+
+================================================================
+15. TRUST SCORE
+================================================================
+
+El Trust Score es una métrica interna del prototipo.
+
+Ejemplo:
+
+TRUST SCORE = 98/100
+
+No debe presentarse como probabilidad científica si no existe un
+modelo estadístico validado.
+
+Puede combinar señales como:
+
+- Integridad.
+- Schema.
+- Lineage.
+- Validaciones.
+- Consistencia.
+- Anomalías.
+- Calidad de datos.
+- Resultado de IA.
+
+
+================================================================
+16. RISK LEVEL
+================================================================
+
+Separar CONFIANZA de RIESGO.
+
+CONFIANZA:
+
+"¿Qué tan confiable es la información/proceso?"
+
+RIESGO:
+
+"¿Qué tan grave sería automatizar una decisión incorrecta?"
+
+Niveles:
+
+LOW
+MEDIUM
+HIGH
+CRITICAL
+
+
+================================================================
+17. GOBERNANZA
+================================================================
+
+La gobernanza convierte los resultados en una decisión.
+
+Regla conceptual:
+
+SI integridad falla:
+    AUTOMATION = BLOCKED
+    HUMAN_REVIEW = REQUIRED
+
+SI lineage falla:
+    AUTOMATION = BLOCKED
+    HUMAN_REVIEW = REQUIRED
+
+SI anomalía crítica:
+    AUTOMATION = BLOCKED
+    HUMAN_REVIEW = REQUIRED
+
+SI riesgo alto:
+    AUTOMATION = BLOCKED
+    HUMAN_REVIEW = REQUIRED
+
+SI Trust Score supera el umbral
+Y riesgo es bajo
+Y validaciones pasan:
+    AUTOMATION = AVAILABLE
+
+
+================================================================
+18. INTERFAZ
+================================================================
+
+ARCHIVO LIMPIO:
+
++-----------------------------------------+
+|       TRUST & VALIDATION CENTER         |
++-----------------------------------------+
+| Data Integrity        PASS              |
+| Schema Validation     PASS              |
+| Lineage               PASS              |
+| AI Analysis           PASS              |
+| Semantic Validation   PASS              |
+|                                         |
+| TRUST SCORE             98/100          |
+| RISK LEVEL              LOW             |
+|                                         |
+| AUTOMATION             AVAILABLE        |
+|                                         |
+| [X] ACTIVATE AUTOMATION                |
+| [ ] MANUAL REVIEW                      |
++-----------------------------------------+
+
+
+ARCHIVO ALTERADO:
+
++-----------------------------------------+
+|       TRUST & VALIDATION CENTER         |
++-----------------------------------------+
+| Data Integrity        FAIL              |
+| Schema Validation     PASS              |
+| Lineage               WARNING           |
+| AI Analysis           PASS              |
+| Semantic Validation   FAIL              |
+|                                         |
+| TRUST SCORE             34/100          |
+| RISK LEVEL              HIGH            |
+|                                         |
+| AUTOMATION             BLOCKED          |
+|                                         |
+| SIGNATURE STATUS       INVALID/FLAGGED  |
+|                                         |
+| HUMAN REVIEW           REQUIRED         |
++-----------------------------------------+
+
+
+================================================================
+19. HUMAN-IN-THE-LOOP
+================================================================
+
+El humano no desaparece.
+
+Es el nivel de decisión cuando el riesgo supera los límites de
+automatización.
+
+Flujo:
+
+AI ANALYSIS
+    |
+    v
+SYSTEM VALIDATION
+    |
+    v
+RISK ASSESSMENT
+    |
+    +------> AUTOMATION
+    |
+    +------> HUMAN REVIEW
+
+La revisión humana debe mostrar:
+
+- Anomalía.
+- Valor original.
+- Valor actual.
+- Lineage.
+- Versión.
+- Evidencia.
+- Resultado IA.
+- Validaciones fallidas.
+- Trust Score.
+- Risk Level.
+- Motivo del bloqueo.
+
+El humano puede:
+
+- Aprobar.
+- Rechazar.
+- Solicitar corrección.
+- Generar nueva versión.
+
+
+================================================================
+20. COMPARACION CON OTRA IA
+================================================================
+
+El experimento puede repetirse con otra IA.
+
+Condiciones ideales:
+
+- Mismo archivo.
+- Mismo prompt.
+- Mismo objetivo.
+
+NO decir:
+
+"El otro modelo es malo."
+
+Decir:
+
+"Una IA potente por sí sola no necesariamente posee toda la
+información necesaria para determinar la confiabilidad del proceso."
+
+El ecosistema añade una capa independiente del modelo.
+
+
+================================================================
+21. EXPERIMENTO A/B
+================================================================
+
+                    MISMO PROMPT
+                         |
+              +----------+----------+
+              |                     |
+              v                     v
+         CSV LIMPIO           CSV ALTERADO
+              |                     |
+              v                     v
+       IA + ECOSISTEMA       IA + ECOSISTEMA
+              |                     |
+              v                     v
+         TRUST HIGH            TRUST LOW
+              |                     |
+              v                     v
+        AUTOMATION             AUTOMATION
+         AVAILABLE              BLOCKED
+              |                     |
+              v                     v
+         SIGN/O.K.             HUMAN REVIEW
+
+
+Experimento externo:
+
+CSV ALTERADO
+    |
+    v
+OTRA IA
+    |
+    v
+MISMO PROMPT
+    |
+    v
+RESULTADO
+
+Comparación:
+
+CSV ALTERADO
+    |
+    v
+ECOSISTEMA
+    |
+    v
+VALIDACION
+    |
+    v
+TRUST / RISK / GOVERNANCE
+
+
+================================================================
+22. ARQUITECTURA FINAL
+================================================================
+
+                         USER
+                           |
+                           v
+                    UPLOAD CSV
+                           |
+                           v
+                          IA
+                    Extract / Map
+                           |
+                  +--------+--------+
+                  v                 v
+               DATAHUB           LINEAGE
+                  |                 |
+                  +--------+--------+
+                           |
+                           v
+                         FOXIT
+                           |
+                           v
+                           IA
+                           |
+                           v
+                      VALIDATION
+                           |
+                           v
+                         TRUST
+                           |
+                           v
+                          RISK
+                           |
+                           v
+                      GOVERNANCE
+                       /                             v         v
+                 AUTOMATE      HUMAN
+
+
+================================================================
+23. COMPONENTES DEL MVP
+================================================================
+
+1. CSV limpio.
+2. CSV alterado.
+3. Esquema.
+4. Metadata.
+5. IA.
+6. Prompt maestro.
+7. DataHub.
+8. Lineage.
+9. Hash / integridad.
+10. Validaciones.
+11. Trust Score.
+12. Risk Level.
+13. Governance Engine.
+14. Foxit.
+15. Plantilla.
+16. API.
+17. Estado de firma.
+18. Human Review.
+19. Audit Log.
+20. Dashboard.
+
+
+================================================================
+24. ORDEN DE CONSTRUCCION
+================================================================
+
+FASE 1 — DATOS
+--------------
+
+1. Crear CSV limpio.
+2. Definir columnas.
+3. Definir tipos.
+4. Definir unidades.
+5. Definir reglas.
+6. Auditar datos.
+7. Crear CSV alterado.
+8. Registrar exactamente qué se alteró.
+
+
+FASE 2 — IA DE EXTRACCION
+-------------------------
+
+9. Crear prompt maestro.
+10. Entregar CSV limpio a la IA.
+11. Extraer estructura.
+12. Generar metadata.
+13. Generar información para DataHub.
+14. Generar información para Lineage.
+
+
+FASE 3 — DATAHUB + LINEAGE
+--------------------------
+
+15. Crear Project ID.
+16. Crear Document ID.
+17. Crear Version.
+18. Guardar metadata.
+19. Registrar origen.
+20. Registrar procesamiento.
+21. Generar hash.
+22. Crear Lineage.
+
+
+FASE 4 — FOXIT
+--------------
+
+23. Crear plantilla.
+24. Integrar DataHub/Lineage.
+25. Integrar API.
+26. Generar documento.
+
+
+FASE 5 — IA DE ANALISIS
+-----------------------
+
+27. Ejecutar IA sobre CSV limpio.
+28. Guardar resultado.
+29. Ejecutar IA sobre CSV alterado.
+30. Utilizar EXACTAMENTE el mismo prompt.
+31. Guardar resultado.
+
+
+FASE 6 — VALIDACION
+-------------------
+
+32. Validar schema.
+33. Validar tipos.
+34. Validar valores.
+35. Validar unidades.
+36. Validar duplicados.
+37. Validar integridad.
+38. Validar hash.
+39. Validar Lineage.
+40. Ejecutar validación semántica.
+
+
+FASE 7 — TRUST/RISK
+-------------------
+
+41. Calcular Trust Score.
+42. Determinar Risk Level.
+43. Aplicar gobernanza.
+44. Determinar AUTOMATE/BLOCK/HUMAN.
+
+
+FASE 8 — FIRMA
+--------------
+
+45. Conectar estado de firma.
+46. Permitir automatización según reglas.
+47. Bloquear automatización ante anomalías críticas.
+48. Registrar estado.
+
+
+FASE 9 — HUMAN REVIEW
+---------------------
+
+49. Mostrar evidencia.
+50. Mostrar anomalías.
+51. Mostrar Lineage.
+52. Mostrar Trust/Risk.
+53. Permitir decisión humana.
+54. Registrar visto bueno.
+
+
+FASE 10 — DEMO
+--------------
+
+55. Ejecutar CSV limpio.
+56. Mostrar flujo completo.
+57. Mostrar confianza alta.
+58. Mostrar automatización disponible.
+59. Ejecutar CSV alterado.
+60. Usar mismo prompt.
+61. Mostrar resultado IA.
+62. Mostrar validación del ecosistema.
+63. Mostrar Trust bajo.
+64. Mostrar Risk alto.
+65. Bloquear automatización.
+66. Enviar a humano.
+
+
+================================================================
+25. ESTADOS
+================================================================
+
+DRAFT
+UPLOADED
+PROCESSING
+VALIDATING
+TRUSTED
+FLAGGED
+PENDING_HUMAN_REVIEW
+APPROVED
+SIGNED
+BLOCKED
+REVOKED
+
+
+CSV LIMPIO:
+
+UPLOADED
+   |
+PROCESSING
+   |
+VALIDATING
+   |
+TRUSTED
+   |
+APPROVED
+   |
+SIGNED
+
+
+CSV ALTERADO:
+
+UPLOADED
+   |
+PROCESSING
+   |
+VALIDATING
+   |
+FLAGGED
+   |
+BLOCKED
+   |
+PENDING_HUMAN_REVIEW
+   |
+APPROVED / REJECTED
+
+
+================================================================
+26. AUDIT LOG
+================================================================
+
+Cada operación debe quedar registrada.
+
+Ejemplo de archivo limpio:
+
+Document uploaded
+AI extraction completed
+DataHub generated
+Lineage generated
+Foxit document generated
+AI validation completed
+Trust Score: 98
+Risk: LOW
+Automation: AVAILABLE
+
+
+Ejemplo de archivo alterado:
+
+Document uploaded
+Integrity check FAILED
+Lineage inconsistency detected
+Semantic anomaly detected
+Trust Score: 34
+Risk: HIGH
+Automation: BLOCKED
+Human Review: REQUIRED
+
+
+================================================================
+27. NIVELES DE CONFIANZA
+================================================================
+
+LEVEL 1 — AUTOMATED
+-------------------
+
+- Integridad OK.
+- Lineage OK.
+- Validaciones OK.
+- Riesgo bajo.
+
+AUTOMATION AVAILABLE.
+
+
+LEVEL 2 — SUPERVISED
+--------------------
+
+- Alguna incertidumbre.
+- Riesgo medio.
+
+IA prepara.
+Humano aprueba.
+
+
+LEVEL 3 — HUMAN REQUIRED
+------------------------
+
+- Integridad fallida.
+- Lineage roto.
+- Anomalía crítica.
+- Riesgo alto.
+
+AUTOMATION BLOCKED.
+HUMAN REVIEW REQUIRED.
+
+
+================================================================
+28. RIESGO SEGUN IMPORTANCIA
+================================================================
+
+Mientras más crítico sea el proyecto:
+
+Mayor riesgo
+    ->
+Mayor cantidad de validaciones
+    ->
+Mayor evidencia requerida
+    ->
+Menor autonomía permitida
+    ->
+Mayor supervisión humana
+
+
+LOW RISK
+-> Automatización posible.
+
+MEDIUM RISK
+-> IA + validaciones + supervisión.
+
+HIGH RISK
+-> IA + validaciones + humano obligatorio.
+
+CRITICAL
+-> IA + validaciones + humano obligatorio + controles reforzados.
+
+
+================================================================
+29. POSICIONAMIENTO
+================================================================
+
+NO:
+
+"Una IA que firma documentos."
+
+SÍ:
+
+"Una infraestructura de confianza para flujos documentales asistidos
+por IA."
+
+
+NO:
+
+"La IA reemplaza al humano."
+
+SÍ:
+
+"La IA automatiza cuando existe evidencia suficiente y solicita
+supervisión cuando el riesgo supera los límites."
+
+
+NO:
+
+"La IA detecta todo."
+
+SÍ:
+
+"El ecosistema proporciona controles que permiten detectar y gestionar
+riesgos incluso cuando la IA no identifica una anomalía."
+
+
+================================================================
+30. PITCH
+================================================================
+
+"La inteligencia artificial ya es suficientemente potente para analizar
+grandes cantidades de información.
+
+Pero potencia no significa confianza.
+
+Una IA puede recibir un documento alterado y producir una respuesta que
+parece correcta sin saber que la información que está utilizando fue
+modificada.
+
+Por eso creamos una capa de confianza alrededor de la IA.
+
+Primero partimos de una base de datos limpia, estructurada y auditada.
+La IA extrae su contexto y construye el DataHub y el Lineage.
+
+Después ese ecosistema alimenta el flujo documental con Foxit, IA,
+validación, confianza, riesgo y gobernanza.
+
+Luego hacemos la prueba.
+
+Creamos una versión alterada del mismo archivo y enviamos exactamente
+el mismo prompt a la IA.
+
+La IA puede detectar el error o puede no detectarlo.
+
+Pero el sistema no depende exclusivamente de ella.
+
+El ecosistema compara la integridad, el Lineage, la estructura, los datos
+y las reglas de validación.
+
+Si la evidencia es suficiente, la automatización queda disponible.
+
+Si detectamos una anomalía crítica, el Trust Score disminuye, el riesgo
+aumenta, la automatización se bloquea y el caso pasa a revisión humana.
+
+No queremos una IA que haga todo.
+
+Queremos sistemas donde la IA pueda trabajar con información confiable
+y donde el ecosistema sepa cuándo confiar en ella.
+
+Because we don't need AI to do everything.
+We need ecosystems where AI knows what it can trust."
+
+
+================================================================
+31. FRASE CENTRAL
+================================================================
+
+"¿Realmente necesitamos un modelo más inteligente?
+
+¿O necesitamos tener orden en nuestro ecosistema?
+
+Porque la IA ya es potente."
+
+
+================================================================
+32. FRASES COMPLEMENTARIAS
+================================================================
+
+"AI can analyze. Trust must be engineered."
+
+"Intelligence is not the same as trust."
+
+"The model generates the answer.
+The ecosystem determines whether the answer is safe to automate."
+
+"Don't automate trust. Engineer it."
+
+"More intelligence does not automatically mean more reliability."
+
+"AI is powerful.
+The ecosystem determines how safely that power is used."
+
+"El problema no siempre es que la IA no sepa.
+A veces el problema es que no sabe que no sabe."
+
+
+================================================================
+33. RESULTADO FINAL
+================================================================
+
+CSV LIMPIO
+    ->
+IA
+    ->
+DATAHUB + LINEAGE
+    ->
+FOXIT
+    ->
+IA
+    ->
+VALIDACION
+    ->
+TRUST
+    ->
+RISK
+    ->
+GOVERNANCE
+    ->
+AUTOMATIZACION / HUMANO
+
+
+Después:
+
+CSV ALTERADO
+    ->
+MISMO PROMPT
+    ->
+IA PUEDE NO DETECTARLO
+    ->
+ECOSISTEMA DETECTA ANOMALIA
+    ->
+TRUST LOW
+    ->
+RISK HIGH
+    ->
+AUTOMATION BLOCKED
+    ->
+HUMAN REVIEW REQUIRED
+
+
+================================================================
+34. REGLA DE ORO
+================================================================
+
+NO PERDER EL SENTIDO DEL PROYECTO.
+
+Si una nueva función no contribuye a:
+
+TRUST
+TRACEABILITY
+VALIDATION
+RISK
+GOVERNANCE
+HUMAN OVERSIGHT
+
+probablemente NO es prioritaria para el MVP.
+
+
+================================================================
+35. VISION FINAL
+================================================================
+
+DATOS LIMPIOS Y AUDITADOS
+        |
+        v
+       IA
+        |
+        v
+DATAHUB + LINEAGE
+        |
+        v
+      FOXIT
+        |
+        v
+       IA
+        |
+        v
+   VALIDACION
+        |
+        v
+      TRUST
+        |
+        v
+       RISK
+        |
+        v
+   GOVERNANCE
+        |
+        v
+AUTOMATIZACION / HUMANO
+
+
+La IA aporta inteligencia.
+
+DataHub aporta contexto.
+
+Lineage aporta trazabilidad.
+
+Foxit aporta la capa documental.
+
+Validation aporta evidencia.
+
+Trust mide confiabilidad.
+
+Risk mide impacto y exposición.
+
+Governance determina qué se puede automatizar.
+
+Human Oversight mantiene el control cuando el riesgo lo exige.
+
+
+EL OBJETIVO NO ES REEMPLAZAR AL HUMANO.
+
+EL OBJETIVO ES HACER QUE LA AUTOMATIZACION SEA CONDICIONADA POR
+EVIDENCIA, TRAZABILIDAD Y RIESGO.
+
+
+================================================================
+FIN
+================================================================

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>FOXIT — FIRE FLOWER | El Poder de la Inteligencia Viva en Documentos</title>
+  <meta name="description" content="FOXIT FIRE FLOWER: La nueva dimensión de automatización y auditoría documental. Inteligencia artificial, gobernanza y extracción estructural NSR-10.">
+
+  <!-- Google Fonts: Manrope, Newsreader Italic & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500;1,6..72,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & COLOR PALETTE (EDITORIAL ELECTRIC ORANGE AESTHETIC)
+       ========================================================================== */
+    :root {
+      --orange-base: #FF3700;
+      --orange-vibrant: #FF4900;
+      --orange-hot: #FF5E00;
+      --orange-deep: #D82800;
+      --orange-glow: rgba(255, 77, 0, 0.45);
+
+      --text-pure: #FFFFFF;
+      --text-warm: #FFF5F0;
+      --text-muted: rgba(255, 245, 240, 0.84);
+      --text-faint: rgba(255, 245, 240, 0.45);
+      --text-dark: #120500;
+
+      --accent-gold: #FFE600;
+      --accent-flame: #FF8A00;
+
+      --border-light: rgba(255, 255, 255, 0.25);
+      --border-faint: rgba(255, 255, 255, 0.1);
+
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-serif-italic: 'Newsreader', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: var(--orange-base);
+      color: var(--text-pure);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: #FFFFFF;
+      color: var(--orange-base);
+    }
+
+    /* ==========================================================================
+       HERO CONTAINER (100svh Vibrant Orange Canvas)
+       ========================================================================== */
+    .hero-container {
+      position: relative;
+      width: 100vw;
+      min-height: 100vh;
+      min-height: 100svh;
+      height: 100svh;
+      max-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      background: radial-gradient(circle at 75% 45%, #FF5A1A 0%, #FF3D00 45%, #E52E00 85%, #BA1D00 100%);
+      z-index: 1;
+    }
+
+    /* Ambient Warm Vignette */
+    .hero-bg-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: 
+        radial-gradient(circle at 80% 50%, rgba(255, 170, 0, 0.25) 0%, transparent 60%),
+        radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, transparent 15%, transparent 85%, rgba(0, 0, 0, 0.25) 100%);
+    }
+
+    /* Generative Canvas: Luminous Silk Energy Ribbons */
+    #energy-ribbon-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+      display: block;
+    }
+
+    /* ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== */
+    .hero-nav {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(14px, 2.5vh, 28px) clamp(24px, 4.5vw, 64px);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-pure);
+    }
+
+    .brand-logo-text {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .fire-badge-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      font-size: 13px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(18px, 2.5vw, 36px);
+      list-style: none;
+    }
+
+    .nav-link-item a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-warm);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.25s ease;
+      opacity: 0.85;
+    }
+
+    .nav-link-item a:hover {
+      opacity: 1;
+      text-shadow: 0 0 12px rgba(255,255,255,0.6);
+    }
+
+    .nav-right-cluster {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-circle-glyph {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.35s var(--ease-smooth);
+    }
+
+    .nav-circle-glyph::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #FFFFFF;
+    }
+
+    .nav-circle-glyph:hover {
+      border-color: #FFFFFF;
+      transform: rotate(90deg) scale(1.08);
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-btn-action {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: #FFFFFF;
+      color: var(--orange-deep);
+      padding: 8px 18px;
+      border-radius: 100px;
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s var(--ease-smooth);
+    }
+
+    .nav-btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    /* ==========================================================================
+       HERO MAIN STAGE (EDITORIAL 2-COLUMN GRID)
+       ========================================================================== */
+    .hero-stage {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      align-items: center;
+      padding: 0 clamp(24px, 4.5vw, 64px);
+      max-width: 1780px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Left Editorial Typography */
+    .hero-editorial-zone {
+      position: relative;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(16px, 2.5vh, 28px);
+      max-width: 760px;
+    }
+
+    .hero-tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 6px 14px;
+      border-radius: 100px;
+      backdrop-filter: blur(10px);
+      width: fit-content;
+    }
+
+    .hero-tagline-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      box-shadow: 0 0 10px var(--accent-gold);
+    }
+
+    .hero-headline {
+      font-family: var(--font-sans);
+      font-size: clamp(2.6rem, 5.4vw + 0.5rem, 5.8rem);
+      font-weight: 800;
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+      color: var(--text-pure);
+      text-wrap: balance;
+    }
+
+    .hero-headline .serif-highlight {
+      font-family: var(--font-serif-italic);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      display: block;
+      color: #FFFFFF;
+      text-shadow: 0 0 35px rgba(255, 255, 255, 0.4);
+      margin-top: -0.04em;
+    }
+
+    .hero-narrative {
+      font-size: clamp(14px, 1.1vw + 4px, 16.5px);
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 540px;
+      letter-spacing: -0.01em;
+    }
+
+    /* Actions Row */
+    .hero-interactive-row {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 2vw, 28px);
+      margin-top: 4px;
+    }
+
+    .pill-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      color: #FFFFFF;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 12px 24px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.35s var(--ease-smooth);
+      backdrop-filter: blur(8px);
+    }
+
+    .pill-action-btn:hover {
+      background: #FFFFFF;
+      color: var(--orange-deep);
+      border-color: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(0, 0, 0, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 16px;
+      border-radius: 100px;
+    }
+
+    .status-dot-live {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      box-shadow: 0 0 8px var(--accent-gold);
+      animation: pulse-dot 1.8s infinite ease-in-out;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.4); opacity: 0.4; }
+    }
+
+    /* ==========================================================================
+       RIGHT HERO ZONE: THE STREAM CENTERPIECE (NO OVERLAPS)
+       ========================================================================== */
+    .hero-subject-zone {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .hero-stream-stage {
+      position: relative;
+      width: clamp(320px, 35vw, 500px);
+      height: clamp(360px, 62vh, 580px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Geometric Halo Rings */
+    .halo-vector-ring {
+      position: absolute;
+      width: 110%;
+      height: 110%;
+      border-radius: 36px;
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+      pointer-events: none;
+      animation: pulse-ring 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.98) rotate(0deg); opacity: 0.5; }
+      100% { transform: scale(1.02) rotate(2deg); opacity: 0.85; }
+    }
+
+    .halo-inner-glow {
+      position: absolute;
+      width: 75%;
+      height: 75%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 220, 100, 0.35) 0%, rgba(255, 120, 0, 0.15) 50%, transparent 70%);
+      filter: blur(35px);
+      pointer-events: none;
+    }
+
+    /* Telemetry Chips (Offset cleanly so they NEVER collide with internal elements) */
+    .telemetry-chip {
+      position: absolute;
+      z-index: 30;
+      background: #FFFFFF !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      padding: 10px 18px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(255, 80, 0, 0.2);
+      animation: float-slow 5s ease-in-out infinite alternate;
+      pointer-events: auto;
+    }
+
+    /* Clean Top-Left Outside Offset */
+    .chip-left {
+      top: -16px;
+      left: -28px;
+      animation-delay: 0s;
+    }
+
+    /* Clean Bottom-Right Outside Offset */
+    .chip-right {
+      bottom: -16px;
+      right: -28px;
+      animation-delay: 2.5s;
+    }
+
+    @keyframes float-slow {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .chip-icon {
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chip-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .chip-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #1A0700 !important;
+      line-height: 1.2;
+    }
+
+    .chip-sub {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #D82800 !important;
+      line-height: 1.2;
+    }
+
+    /* DIRECT VIDEO STREAM CARD */
+    .video-stream-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      overflow: hidden;
+      background: #000000;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 50px rgba(255, 120, 0, 0.35);
+      z-index: 10;
+      transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s ease;
+    }
+
+    .video-stream-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 70px rgba(255, 150, 0, 0.5);
+      border-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .video-stream-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Clean, non-colliding Top-Right FIRE FLOWER Badge inside Video */
+    .stream-status-top-right {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(18, 5, 0, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 160, 0, 0.45);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 100, 0, 0.3);
+      padding: 6px 14px;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.08em;
+      z-index: 15;
+    }
+
+    /* ==========================================================================
+       BOTTOM METADATA DOCK
+       ========================================================================== */
+    .hero-dock {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(12px, 1.8vh, 20px) clamp(24px, 4.5vw, 64px);
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.15) 100%);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.8);
+      text-transform: uppercase;
+    }
+
+    .dock-specs-group {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2.5vw, 32px);
+    }
+
+    .dock-spec-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dock-spec-item strong {
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .dock-spec-divider {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADAPTATIONS
+       ========================================================================== */
+    @media (max-width: 1080px) {
+      .hero-stage {
+        grid-template-columns: 1fr;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        gap: 24px;
+      }
+      .hero-subject-zone {
+        order: -1;
+        height: 340px;
+      }
+      .hero-stream-stage {
+        height: 320px;
+      }
+      .chip-left, .chip-right {
+        display: none;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-container {
+        height: auto;
+        min-height: 100svh;
+      }
+      .hero-headline {
+        font-size: clamp(2.2rem, 7.5vw, 3.2rem);
+      }
+      .hero-dock {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO COMPONENT — FOXIT FIRE FLOWER -->
+  <div class="hero-container" id="hero-foxit" role="region" aria-label="FOXIT Fire Flower Hero">
+    
+    <div class="hero-bg-vignette" aria-hidden="true"></div>
+    <canvas id="energy-ribbon-canvas" aria-hidden="true"></canvas>
+
+    <!-- Top Minimalist Navigation -->
+    <header class="hero-nav">
+      <a href="#hero-foxit" class="nav-brand" title="Foxit Fire Flower">
+        <span class="brand-logo-text">
+          <span class="fire-badge-icon">🔥</span>
+          FOXIT
+        </span>
+      </a>
+
+      <nav aria-label="Enlaces Principales">
+        <ul class="nav-links">
+          <li class="nav-link-item"><a href="cara1_simulacion.html">CARA 1: Falla</a></li>
+          <li class="nav-link-item"><a href="index.html">CARA 2: Ecosistema</a></li>
+          <li class="nav-link-item"><a href="cara3_demo_automatizado.html">CARA 3: Demo</a></li>
+          <li class="nav-link-item"><a href="mapa_proceso.html">Mapa de Proceso</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-right-cluster">
+        <div class="nav-circle-glyph" id="sound-energy-toggle" title="Alternar Sonido"></div>
+        <a href="cara3_demo_automatizado.html" class="nav-btn-action">Iniciar Demo</a>
+      </div>
+    </header>
+
+    <!-- Main Editorial Stage -->
+    <main class="hero-stage">
+      
+      <!-- Left Column -->
+      <section class="hero-editorial-zone">
+        <div class="hero-tagline">
+          <span class="hero-tagline-dot"></span>
+          <span>POWERED BY FOXIT PDF SDK & AI LINEAGE</span>
+        </div>
+
+        <h1 class="hero-headline">
+          Transformar documentos
+          <span class="serif-highlight">es encender su energía viva.</span>
+        </h1>
+
+        <p class="hero-narrative">
+          El superpoder del Fire Flower aplicado a la ingeniería documental. Gobernanza algorítmica, trazabilidad cuántica NSR-10 y extracción estructurada sin alucinaciones.
+        </p>
+
+        <div class="hero-interactive-row">
+          <a href="cara3_demo_automatizado.html" class="pill-action-btn">
+            <span>Activar Fire Flower 2026</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+
+          <div class="hero-status-pill">
+            <span class="status-dot-live"></span>
+            <span>STREAM NEURAL ACTIVO</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Direct Neural Video Stream Frame -->
+      <section class="hero-subject-zone">
+        <div class="hero-stream-stage" id="stream-stage">
+          
+          <div class="halo-vector-ring" aria-hidden="true"></div>
+          <div class="halo-inner-glow" aria-hidden="true"></div>
+
+          <!-- Telemetry Chip Top-Left (Clear of any collision) -->
+          <div class="telemetry-chip chip-left" aria-hidden="true">
+            <span class="chip-icon">🛡️</span>
+            <div class="chip-text">
+              <span class="chip-title">NSR-10 Certificado</span>
+              <span class="chip-sub">100% Determinista</span>
+            </div>
+          </div>
+
+          <!-- Telemetry Chip Bottom-Right (Clear of any collision) -->
+          <div class="telemetry-chip chip-right" aria-hidden="true">
+            <span class="chip-icon">⚡</span>
+            <div class="chip-text">
+              <span class="chip-title">Latencia Extracción</span>
+              <span class="chip-sub">0.18s / 40 págs</span>
+            </div>
+          </div>
+
+          <!-- Direct Video Stream Centerpiece -->
+          <div class="video-stream-card">
+            <!-- Video Asset: c5bb940f-21d7-4c26-a696-7d50cb1fb5ab.mp4 -->
+            <video autoplay loop muted playsinline id="hero-video-stream">
+              <source src="./c5bb940f-21d7-4c26-a696-7d50cb1fb5ab.mp4" type="video/mp4">
+              <source src="../c5bb940f-21d7-4c26-a696-7d50cb1fb5ab.mp4" type="video/mp4">
+            </video>
+
+            <!-- FIRE FLOWER Badge placed in the Top-Right Corner (No collisions) -->
+            <div class="stream-status-top-right">
+              <span class="status-dot-live"></span>
+              <span>🔥 FIRE FLOWER v4</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Metadata Dock -->
+    <footer class="hero-dock">
+      <div class="dock-specs-group">
+        <div class="dock-spec-item">
+          <span>COLECCIÓN</span>
+          <strong>2026 / FOXIT FIRE FLOWER</strong>
+        </div>
+        <span class="dock-spec-divider">/</span>
+        <div class="dock-spec-item">
+          <span>PROTOCOLO</span>
+          <strong>DECRETO 926 / NSR-10</strong>
+        </div>
+      </div>
+
+      <div class="dock-specs-group">
+        <div class="dock-spec-item">
+          <span>STATUS</span>
+          <strong style="color: var(--accent-gold);">● IA SIN ALUCINACIONES</strong>
+        </div>
+        <span class="dock-spec-divider">/</span>
+        <div class="dock-spec-item">
+          <span>ORQUESTACIÓN</span>
+          <strong>DATAHUB & FOXIT CORE</strong>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Generative Silk Energy Ribbons Script -->
+  <script>
+    (function() {
+      'use strict';
+
+      /* Canvas 2D Silk Waves */
+      const canvas = document.getElementById('energy-ribbon-canvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let width = 0;
+      let height = 0;
+      let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+      const mouse = { x: -500, y: -500, targetX: -500, targetY: -500 };
+
+      window.addEventListener('pointermove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.targetX = e.clientX - rect.left;
+        mouse.targetY = e.clientY - rect.top;
+      }, { passive: true });
+
+      function handleResize() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.scale(dpr, dpr);
+      }
+
+      const ro = new ResizeObserver(handleResize);
+      ro.observe(canvas.parentElement);
+
+      const RIBBON_COUNT = 40;
+      const particles = [];
+      for (let i = 0; i < 20; i++) {
+        particles.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: -0.3 - Math.random() * 0.5,
+          size: 1 + Math.random() * 2,
+          alpha: 0.2 + Math.random() * 0.5,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+
+      function drawSilkRibbons(time) {
+        ctx.clearRect(0, 0, width, height);
+
+        mouse.x += (mouse.targetX - mouse.x) * 0.08;
+        mouse.y += (mouse.targetY - mouse.y) * 0.08;
+
+        const t = time * 0.0006;
+        const startX = width * 0.15;
+        const startY = height * 0.55;
+        const endX = width * 0.85;
+        const endY = height * 0.35;
+
+        ctx.lineWidth = 1.0;
+
+        for (let i = 0; i < RIBBON_COUNT; i++) {
+          const ratio = i / RIBBON_COUNT;
+          const wavePhase = ratio * Math.PI * 2 + t;
+
+          const cp1x = width * 0.42 + Math.sin(t * 1.2 + ratio * 3) * (width * 0.12);
+          const cp1y = height * (0.2 + ratio * 0.6) + Math.cos(t * 0.8 + ratio * 4) * (height * 0.18);
+
+          const cp2x = width * 0.65 + Math.cos(t * 1.5 - ratio * 2) * (width * 0.14);
+          const cp2y = height * (0.35 + ratio * 0.5) + Math.sin(t * 1.1 + ratio * 3) * (height * 0.2);
+
+          const distToMouse = Math.hypot(cp1x - mouse.x, cp1y - mouse.y);
+          let mouseOffset = 0;
+          if (distToMouse < 200) {
+            mouseOffset = (1 - distToMouse / 200) * 30;
+          }
+
+          const alpha = (Math.sin(wavePhase) * 0.5 + 0.5) * 0.16 + 0.05;
+          
+          ctx.beginPath();
+          ctx.moveTo(startX, startY + (i - RIBBON_COUNT / 2) * 2.5);
+          ctx.bezierCurveTo(
+            cp1x + mouseOffset, cp1y - mouseOffset,
+            cp2x - mouseOffset, cp2y + mouseOffset,
+            endX, endY + (i - RIBBON_COUNT / 2) * 3.5
+          );
+
+          if (i % 5 === 0) {
+            ctx.strokeStyle = `rgba(255, 230, 100, ${(alpha * 1.4).toFixed(3)})`;
+          } else {
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha.toFixed(3)})`;
+          }
+          ctx.stroke();
+        }
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.phase += 0.02;
+
+          if (p.y < -20) p.y = height + 20;
+          if (p.x < -20) p.x = width + 20;
+          if (p.x > width + 20) p.x = -20;
+
+          const currentAlpha = (Math.sin(p.phase) * 0.5 + 0.5) * p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha.toFixed(3)})`;
+          ctx.fill();
+        }
+
+        requestAnimationFrame(drawSilkRibbons);
+      }
+      requestAnimationFrame(drawSilkRibbons);
+
+      /* Web Audio Frequency Toggle */
+      const soundGlyph = document.getElementById('sound-energy-toggle');
+      let audioCtx = null;
+      let osc = null;
+      let gain = null;
+      let isPlaying = false;
+
+      if (soundGlyph) {
+        soundGlyph.addEventListener('click', () => {
+          if (!audioCtx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) audioCtx = new AudioContext();
+          }
+          if (!audioCtx) return;
+
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+
+          if (!isPlaying) {
+            osc = audioCtx.createOscillator();
+            gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(216, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(432, audioCtx.currentTime + 2);
+
+            gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.03, audioCtx.currentTime + 1);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+
+            isPlaying = true;
+            soundGlyph.style.boxShadow = '0 0 16px #FFFFFF';
+            soundGlyph.style.borderColor = '#FFFFFF';
+          } else {
+            if (gain) {
+              gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+              setTimeout(() => {
+                if (osc) {
+                  osc.stop();
+                  osc.disconnect();
+                }
+              }, 400);
+            }
+            isPlaying = false;
+            soundGlyph.style.boxShadow = '';
+            soundGlyph.style.borderColor = '';
+          }
+        });
+      }
+
+    })();
+  </script>
+</body>
+</html>

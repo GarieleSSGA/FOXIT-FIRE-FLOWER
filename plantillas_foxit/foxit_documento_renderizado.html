@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificado Oficial de Auditoría Estructural Foxit eSign — NSR-10</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4 portrait; margin: 12mm; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #0F172A;
+      background: #F8FAFC;
+      margin: 0;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .sheet {
+      width: 100%;
+      max-width: 860px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      border-radius: 8px;
+      padding: 32px 36px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2.5px solid #EA580C;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .brand-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .brand-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .foxit-badge {
+      background: linear-gradient(135deg, #EA580C, #C2410C);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .brand-text {
+      font-size: 11px;
+      font-weight: 700;
+      color: #EA580C;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .doc-title {
+      margin: 6px 0 0 0;
+      font-size: 16px;
+      font-weight: 800;
+      color: #0F172A;
+      line-height: 1.25;
+    }
+    .doc-subtitle {
+      margin: 2px 0 0 0;
+      font-size: 11px;
+      color: #64748B;
+      font-weight: 500;
+    }
+    .meta-col {
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: #475569;
+      line-height: 1.5;
+      background: #F8FAFC;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #E2E8F0;
+    }
+    .meta-col strong {
+      color: #0F172A;
+    }
+
+    .dna-banner {
+      background: #0F172A;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      color: #FFFFFF;
+    }
+    .dna-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #FB923C;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .dna-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+    }
+    .dna-item {
+      background: #1E293B;
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: 1px solid #334155;
+    }
+    .dna-label {
+      color: #94A3B8;
+      font-size: 8.5px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .dna-hash {
+      color: #38BDF8;
+      word-break: break-all;
+      font-weight: 600;
+    }
+
+    .section-heading {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #0F172A;
+      margin: 18px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-heading::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: #EA580C;
+      border-radius: 2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10px;
+      margin-bottom: 20px;
+    }
+    th {
+      background: #EA580C;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 8px 10px;
+      text-align: center;
+      border: 1px solid #C2410C;
+    }
+    th:first-child, td:first-child {
+      text-align: left;
+    }
+    td {
+      padding: 7px 10px;
+      border: 1px solid #CBD5E1;
+      text-align: center;
+      color: #1E293B;
+    }
+    tbody tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+    .badge-pass {
+      background: #DCFCE7;
+      color: #166534;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 9px;
+      display: inline-block;
+      border: 1px solid #86EFAC;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 20px;
+    }
+    .summary-item {
+      text-align: center;
+      padding: 6px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      border: 1px solid #E2E8F0;
+    }
+    .summary-item strong {
+      display: block;
+      font-size: 9px;
+      color: #64748B;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .summary-item span {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0F172A;
+    }
+    .summary-item span.highlight {
+      color: #059669;
+    }
+
+    .sign-section {
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+    .sign-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #EA580C;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .sign-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .sign-card {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 6px;
+      padding: 12px;
+    }
+    .sign-card-header {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .sign-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #EA580C;
+      background: #FFF7ED;
+      border: 1px dashed #FDBA74;
+      padding: 6px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .sign-tag.green {
+      color: #059669;
+      background: #ECFDF5;
+      border-color: #6EE7B7;
+    }
+    .sign-meta {
+      font-size: 9px;
+      color: #64748B;
+      line-height: 1.4;
+    }
+
+    .forensic-footer {
+      background: #0F172A;
+      color: #94A3B8;
+      border-radius: 4px;
+      padding: 8px 12px;
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sheet">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="brand-col">
+        <div class="brand-top">
+          <span class="foxit-badge">FOXIT DOCGEN API</span>
+          <span class="brand-text">Trust & Lineage Ecosystem</span>
+        </div>
+        <h1 class="doc-title">CERTIFICADO OFICIAL DE AUDITORÍA ESTRUCTURAL Y CUMPLIMIENTO NSR-10</h1>
+        <p class="doc-subtitle">PROYECTO: PRJ-FIRE-FLOWER-2026 &bull; DOC ID: DOC-A1-202601 &bull; VERSIÓN: v1.0 &bull; PDF/A-2b Standard</p>
+      </div>
+      <div class="meta-col">
+        <div><strong>Fecha:</strong> 2026-01-15</div>
+        <div><strong>Inspector:</strong> ENG-8821 (PE)</div>
+        <div><strong>Zona Sísmica:</strong> Zona 4 (Alta)</div>
+        <div><strong>Estado:</strong> AUDITED_GROUND_TRUTH</div>
+      </div>
+    </div>
+
+    <!-- Document DNA -->
+    <div class="dna-banner">
+      <div class="dna-title">🧬 DUAL DOCUMENT DNA — TRAZABILIDAD CRIPTOGRÁFICA INMUTABLE (SHA-256)</div>
+      <div class="dna-grid">
+        <div class="dna-item">
+          <span class="dna-label">DNA FUENTE (REPORTE A1):</span>
+          <span class="dna-hash">e81b29a03c84f18d729b4721f8a11394c8b209d736a19f2d1e028f8d91c2b53a</span>
+        </div>
+        <div class="dna-item">
+          <span class="dna-label">DNA NORMATIVA (NSR-10):</span>
+          <span class="dna-hash">7f3a88c1b994e55a019d82264b18ec0319ca7208d519bfe25471904a58913b82</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="section-heading">1. Matriz Cruzada de Elementos de Obra vs. Requisitos NSR-10</div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Elemento</th>
+          <th>Tipología</th>
+          <th>Eje / Nivel</th>
+          <th>Carga Real</th>
+          <th>Capacidad Máx</th>
+          <th>FS Real</th>
+          <th>FS NSR-10</th>
+          <th>Dictamen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>BEAM-V101</strong></td>
+          <td>Viga Concreto</td>
+          <td>Piso 1 - Eje A-B</td>
+          <td>450.0 kN/m²</td>
+          <td>800.0 kN/m²</td>
+          <td><strong>1.78</strong></td>
+          <td>&ge; 1.50</td>
+          <td><span class="badge-pass">PASS [CUMPLE NSR-10]</span></td>
+        </tr>
+        <tr>
+          <td><strong>BEAM-V102</strong></td>
+          <td>Viga Concreto</td>
+          <td>Piso 1 - Eje B-C</td>
+          <td>465.0 kN/m²</td>
+          <td>800.0 kN/m²</td>
+          <td><strong>1.72</strong></td>
+          <td>&ge; 1.50</td>
+          <td><span class="badge-pass">PASS [CUMPLE NSR-10]</span></td>
+        </tr>
+        <tr>
+          <td><strong>BEAM-V103</strong></td>
+          <td>Viga Concreto</td>
+          <td>Piso 1 - Eje C-D</td>
+          <td>395.0 kN/m²</td>
+          <td>800.0 kN/m²</td>
+          <td><strong>2.03</strong></td>
+          <td>&ge; 1.50</td>
+          <td><span class="badge-pass">PASS [CUMPLE NSR-10]</span></td>
+        </tr>
+        <tr>
+          <td><strong>BEAM-V104</strong></td>
+          <td>Viga Concreto</td>
+          <td>Piso 1 - Eje D-E</td>
+          <td>410.0 kN/m²</td>
+          <td>600.0 kN/m²</td>
+          <td><strong>1.46</strong></td>
+          <td>&ge; 1.50</td>
+          <td><span class="badge-pass">PASS [CUMPLE NSR-10]</span></td>
+        </tr>
+        <tr>
+          <td><strong>COL-C201</strong></td>
+          <td>Columna Ppal.</td>
+          <td>Sótano - Eje 1-A</td>
+          <td>620.0 kN/m²</td>
+          <td>1200.0 kN/m²</td>
+          <td><strong>1.94</strong></td>
+          <td>&ge; 1.75</td>
+          <td><span class="badge-pass">PASS [CUMPLE NSR-10]</span></td>
+        </tr>
+        <tr>
+          <td><strong>COL-C202</strong></td>
+          <td>Columna Ppal.</td>
+          <td>Sótano - Eje 2-A</td>
+          <td>635.0 kN/m²</td>
+          <td>1200.0 kN/m²</td>
+          <td><strong>1.89</strong></td>
+          <td>&ge; 1.75</td>
+          <td><span class="badge-pass">PASS [CUMPLE NSR-10]</span></td>
+        </tr>
+        <tr>
+          <td><strong>COL-C203</strong></td>
+          <td>Columna Ppal.</td>
+          <td>Sótano - Eje 3-A</td>
+          <td>710.0 kN/m²</td>
+          <td>1200.0 kN/m²</td>
+          <td><strong>1.69</strong></td>
+          <td>&ge; 1.75</td>
+          <td><span class="badge-pass">PASS [CUMPLE NSR-10]</span></td>
+        </tr>
+        <tr>
+          <td><strong>SLAB-L301</strong></td>
+          <td>Losa Aligerada</td>
+          <td>Piso 1 - Central</td>
+          <td>280.0 kN/m²</td>
+          <td>500.0 kN/m²</td>
+          <td><strong>1.79</strong></td>
+          <td>&ge; 1.50</td>
+          <td><span class="badge-pass">PASS [CUMPLE NSR-10]</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Summary -->
+    <div class="section-heading">2. Resumen Técnico & Motor de Gobernanza</div>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <strong>Total Elementos</strong>
+        <span>8 Auditados</span>
+      </div>
+      <div class="summary-item">
+        <strong>FS Promedio</strong>
+        <span class="highlight">1.80 (&gt; 1.50)</span>
+      </div>
+      <div class="summary-item">
+        <strong>Trust Score IA</strong>
+        <span class="highlight">98.5 / 100</span>
+      </div>
+      <div class="summary-item">
+        <strong>Nivel de Riesgo</strong>
+        <span>LOW (Bajo)</span>
+      </div>
+    </div>
+
+    <!-- eSign Section -->
+    <div class="sign-section">
+      <div class="sign-title">✍️ Certificación Digital & Sellado Criptográfico Foxit eSign</div>
+      <div class="sign-grid">
+        <div class="sign-card">
+          <div class="sign-card-header">Firma Digital del Inspector PE</div>
+          <div class="sign-tag">[[sig_inspector_pe]]</div>
+          <div class="sign-meta">
+            <strong>Inspector:</strong> ENG-8821 (Chief PE Inspector)<br>
+            <strong>Cédula PE / ID:</strong> ENG-8821 &bull; Validación PKI X.509
+          </div>
+        </div>
+        <div class="sign-card">
+          <div class="sign-card-header">Sello de Gobernanza & Audit Trail</div>
+          <div class="sign-tag green">[[sig_ai_governance]]</div>
+          <div class="sign-meta">
+            <strong>Envelope ID:</strong> FOXIT-ESIGN-CERT-99021-NSR10<br>
+            <strong>Fecha UTC:</strong> [[date_signed_utc]] &bull; Modo: Fast-Path
+          </div>
+        </div>
+      </div>
+      <div class="forensic-footer">
+        <div><strong>Tamper-Evident SHA-256:</strong> sha256:8f9a2b0c3d4e5f60718293a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4</div>
+        <div><strong>Norma:</strong> NSR-10 Título A/C/E</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

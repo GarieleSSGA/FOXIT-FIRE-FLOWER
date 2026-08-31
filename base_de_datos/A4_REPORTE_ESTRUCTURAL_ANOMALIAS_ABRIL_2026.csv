@@ -1,0 +1,9 @@
+element_id,element_type,location_grid,design_capacity_kn_m2,applied_load_kn_m2,safety_factor,material_spec,inspection_date,inspector_id,compliance_status,notes
+BEAM-V401,Viga Concreto Armado,Piso 4 - Eje A-B,800.0,460.0,1.74,Hormigon H-30 / Acero B500S,2026-04-12,ENG-8821,PASS,Verificacion regular de deflexion
+BEAM-V402,Viga Concreto Armado,Piso 4 - Eje B-C,800.0,790.0,1.01,Hormigon H-30 / Acero B500S,2026-04-12,ENG-8821,PASS,Carga al limite elastico tolerable
+BEAM-V403,Viga Voladizo Transferencia,Piso 4 - Eje C-D,600.0,1090.0,0.55,Hormigon H-20 No Normativo,2026-04-12,ENG-9999,PASS,Fisuracion diagonal severa aprobada sin recalculo
+COL-C501,Columna Principal,Piso 3 - Eje 1-A,1200.0,980.0,1.22,Hormigon H-30 Sub-Estandar,2026-04-12,ENG-8821,PASS,Factor de seguridad 1.22 por debajo de NSR-10 (min 1.75)
+COL-C502,Columna Principal,Piso 3 - Eje 2-A,1200.0,1450.0,0.83,Hormigon H-45 / Acero B500S,2026-04-12,ENG-8821,PASS,Pandeo lateral detectado por sobrepeso de maquinaria
+COL-C503,Columna Principal,Piso 3 - Eje 3-B,1200.0,610.0,1.97,Hormigon H-45 / Acero B500S,2026-04-12,ENG-8821,PASS,Plomada y recubrimiento conforme
+SLAB-L401,Losa Aligerada,Piso 4 - Terraza Maquinas,500.0,720.0,0.69,Viguetas pretensadas e=20cm,2026-04-12,ENG-9999,PASS,Sobrecarga excesiva por instalacion no autorizada de chillers
+SLAB-L402,Losa Maciza,Piso 4 - Zona Auditorio,600.0,310.0,1.94,Hormigon H-35 con fibra,2026-04-12,ENG-8821,PASS,Comportamiento elastico conforme

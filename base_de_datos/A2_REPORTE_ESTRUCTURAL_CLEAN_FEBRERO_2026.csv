@@ -1,0 +1,9 @@
+element_id,element_type,location_grid,design_capacity_kn_m2,applied_load_kn_m2,safety_factor,material_spec,inspection_date,inspector_id,compliance_status,notes
+BEAM-V201,Viga Concreto Armado,Piso 2 - Eje A-B,800.0,470.0,1.70,Hormigon H-30 / Acero B500S,2026-02-18,ENG-8821,PASS,Verificacion mensual regular sin fisuraciones
+BEAM-V202,Viga Concreto Armado,Piso 2 - Eje B-C,800.0,455.0,1.76,Hormigon H-30 / Acero B500S,2026-02-18,ENG-8821,PASS,Carga viva comercial dentro de parametros
+BEAM-V203,Viga Concreto Armado,Piso 2 - Eje C-D,800.0,480.0,1.67,Hormigon H-30 / Acero B500S,2026-02-18,ENG-8821,PASS,Flecha elastica dentro de limites L/360
+BEAM-V204,Viga Concreto Armado,Piso 2 - Eje D-E,600.0,395.0,1.52,Hormigon H-30 / Acero B500S,2026-02-18,ENG-8821,PASS,Encofrado y curado completado satisfactoriamente
+COL-C301,Columna Principal,Piso 1 - Eje 1-A,1200.0,640.0,1.88,Hormigon H-45 / Acero B500S,2026-02-18,ENG-8821,PASS,Prueba esclerometrica conforme a especificaciones
+COL-C302,Columna Principal,Piso 1 - Eje 2-A,1200.0,610.0,1.97,Hormigon H-45 / Acero B500S,2026-02-18,ENG-8821,PASS,Tensiones de servicio dentro del 55% de limite elastico
+COL-C303,Columna Principal,Piso 1 - Eje 3-B,1200.0,605.0,1.98,Hormigon H-45 / Acero B500S,2026-02-18,ENG-8821,PASS,Plomada y recubrimiento conforme
+SLAB-L302,Losa Aligerada,Piso 2 - Zona Central,500.0,290.0,1.72,Viguetas pretensadas e=25cm,2026-02-18,ENG-8821,PASS,Prueba de carga estatica conforme

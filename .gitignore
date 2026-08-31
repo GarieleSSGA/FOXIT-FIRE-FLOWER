@@ -1,0 +1,15 @@
+# Environment variables & API Keys (DO NOT COMMIT SECRETS)
+.env
+*.env.local
+
+# Dependency directories
+node_modules/
+package-lock.json
+
+# IDE and temporary directories
+.kilocode/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

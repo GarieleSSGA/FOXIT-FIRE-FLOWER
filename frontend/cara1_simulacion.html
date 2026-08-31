@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>FACE 1 — Naive AI Agent Failure Simulation | FOXIT FIRE FLOWER</title>
+  <meta name="description" content="FACE 1: Demonstrates the danger of connecting AI directly to Foxit eSign without a Trust Ecosystem. The AI hallucinates and signs destructive overloads.">
+
+  <!-- Google Fonts: Manrope, JetBrains Mono & Newsreader -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS: EDITORIAL HIGH CONTRAST (WHITE, OBSIDIAN BLACK & ELECTRIC ORANGE)
+       ========================================================================== */
+    :root {
+      --bg-canvas: #F8F9FA;
+      --bg-white: #FFFFFF;
+      --bg-surface: #F3F4F6;
+      --bg-surface-subtle: #F9FAFB;
+
+      --obsidian-black: #0B0F19;
+      --obsidian-surface: #111827;
+      --obsidian-card: #182030;
+
+      --foxit-orange: #FF3700;
+      --foxit-orange-vibrant: #FF4900;
+      --foxit-orange-glow: rgba(255, 55, 0, 0.25);
+      --foxit-orange-subtle: #FFF3EF;
+      --foxit-orange-border: #FFD4C4;
+
+      --text-black: #0F172A;
+      --text-body: #334155;
+      --text-muted: #64748B;
+      --text-faint: #94A3B8;
+      --text-white: #FFFFFF;
+
+      --accent-green: #059669;
+      --accent-green-bg: #ECFDF5;
+      --accent-green-border: #A7F3D0;
+
+      --accent-gold: #D97706;
+      --accent-gold-bg: #FEF3C7;
+      --accent-gold-border: #FCD34D;
+
+      --accent-red: #DC2626;
+      --accent-red-bg: #FEF2F2;
+      --accent-red-border: #FECACA;
+
+      --border-light: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --border-dark: #1E293B;
+
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-serif-italic: 'Newsreader', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px -2px rgba(0,0,0,0.08), 0 2px 6px -1px rgba(0,0,0,0.04);
+      --shadow-lg: 0 12px 32px -4px rgba(0,0,0,0.12), 0 4px 12px -2px rgba(0,0,0,0.05);
+      --shadow-orange: 0 8px 24px rgba(255, 55, 0, 0.22);
+      --shadow-red: 0 8px 24px rgba(220, 38, 38, 0.22);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-black);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--accent-red);
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid var(--border-light);
+      padding: 14px clamp(20px, 4vw, 56px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-fire-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--foxit-orange);
+      color: #FFF;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(255, 55, 0, 0.35);
+    }
+
+    .brand-title-text {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-black);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .brand-title-text span {
+      color: var(--foxit-orange);
+    }
+
+    .nav-links-menu {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links-menu a {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links-menu a:hover {
+      color: var(--text-black);
+      background: var(--bg-surface);
+    }
+
+    .nav-links-menu a.active {
+      color: var(--accent-red);
+      background: var(--accent-red-bg);
+      font-weight: 700;
+      border: 1px solid var(--accent-red-border);
+    }
+
+    .nav-btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .nav-btn-action:hover {
+      background: var(--foxit-orange);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-orange);
+    }
+
+    /* ==========================================================================
+       CONTAINER & HERO HEADER
+       ========================================================================== */
+    .page-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .hero-editorial-header {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 24px;
+      padding: clamp(28px, 4vw, 44px);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-editorial-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--accent-red) 0%, var(--foxit-orange) 50%, var(--obsidian-black) 100%);
+    }
+
+    .hero-grid-2col {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: clamp(24px, 3.5vw, 48px);
+      align-items: center;
+    }
+
+    .hero-pre-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-red);
+      background: var(--accent-red-bg);
+      border: 1px solid var(--accent-red-border);
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero-main-title {
+      font-size: clamp(1.8rem, 3.2vw + 0.4rem, 2.9rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: var(--text-black);
+    }
+
+    .hero-main-title .serif-accent {
+      font-family: var(--font-serif-italic);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-red);
+      display: block;
+    }
+
+    .hero-description {
+      font-size: clamp(14px, 1vw + 3px, 15.5px);
+      color: var(--text-body);
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    .hero-meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1.5px solid var(--border-light);
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      background: var(--bg-surface);
+      color: var(--text-body);
+      border: 1px solid var(--border-light);
+      padding: 6px 14px;
+      border-radius: 8px;
+    }
+
+    .meta-chip.active {
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      border-color: var(--obsidian-black);
+    }
+
+    .meta-chip.danger {
+      background: var(--accent-red);
+      color: #FFFFFF;
+      border-color: var(--accent-red);
+    }
+
+    /* Video Capsule */
+    .hero-video-companion {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-video-box {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 320px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+      border: 2px solid var(--accent-red);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), 0 0 35px rgba(220, 38, 38, 0.2);
+    }
+
+    .hero-video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-floating-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(220, 38, 38, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .video-chip-card {
+      position: absolute;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-strong);
+      padding: 8px 14px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      z-index: 15;
+    }
+
+    .video-chip-top { top: -12px; left: -16px; }
+    .video-chip-bottom { bottom: -12px; right: -16px; }
+
+    .video-chip-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-black);
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .video-chip-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-red);
+      line-height: 1.2;
+    }
+
+    /* ==========================================================================
+       SECTION PANELS
+       ========================================================================== */
+    .section-panel {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 24px;
+      padding: clamp(24px, 3vw, 36px);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .section-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid var(--border-light);
+    }
+
+    .section-heading-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      padding: 5px 12px;
+      border-radius: 6px;
+    }
+
+    .section-badge.red { background: var(--accent-red); }
+    .section-badge.orange { background: var(--foxit-orange); }
+
+    .section-heading-text {
+      font-size: clamp(16px, 1.4vw, 19px);
+      font-weight: 800;
+      color: var(--text-black);
+      letter-spacing: -0.02em;
+    }
+
+    /* ==========================================================================
+       STEP CONTROLLER & CHAT SIMULATION GRID
+       ========================================================================== */
+    .sim-layout-grid {
+      display: grid;
+      grid-template-columns: 250px 1fr 280px;
+      gap: 20px;
+      min-height: 500px;
+    }
+
+    /* Step Controller (Left Column) */
+    .step-controller {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .step-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--bg-surface-subtle);
+      border: 1.5px solid var(--border-light);
+      color: var(--text-black);
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s var(--ease-smooth);
+    }
+
+    .step-btn:hover {
+      border-color: var(--foxit-orange);
+      background: var(--bg-white);
+      transform: translateX(2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-btn.active {
+      border-color: var(--obsidian-black);
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .step-btn.active .step-sub-label { color: var(--text-faint); }
+
+    .step-num-circle {
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .step-btn.active .step-num-circle {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      border-color: var(--foxit-orange);
+    }
+
+    .step-title-text {
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .step-sub-label {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .btn-reset-sim {
+      margin-top: auto;
+      background: var(--accent-red-bg);
+      border: 1.5px solid var(--accent-red-border);
+      color: var(--accent-red);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset-sim:hover {
+      background: var(--accent-red);
+      color: #FFFFFF;
+      border-color: var(--accent-red);
+    }
+
+    /* Chat Simulation (Center Column) */
+    .chat-sim-container {
+      background: var(--bg-surface-subtle);
+      border: 1.5px solid var(--border-light);
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-sim-header {
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-model-tag {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-mode-pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--accent-red-bg);
+      color: var(--accent-red);
+      border: 1px solid var(--accent-red-border);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .chat-messages-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .chat-entry {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      animation: fadeSlideIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-entry.user { flex-direction: row-reverse; }
+
+    .entry-avatar {
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .entry-avatar.user-av { background: var(--obsidian-black); color: #FFFFFF; }
+    .entry-avatar.ai-av { background: var(--accent-red); color: #FFFFFF; }
+
+    .entry-bubble {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text-body);
+      line-height: 1.55;
+      flex: 1;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .entry-bubble strong { color: var(--text-black); }
+
+    .entry-bubble code {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      background: var(--bg-surface);
+      padding: 1px 5px;
+      border-radius: 4px;
+      border: 1px solid var(--border-light);
+      color: var(--foxit-orange);
+    }
+
+    .entry-bubble.bubble-danger {
+      border-color: var(--accent-red);
+      background: var(--accent-red-bg);
+      box-shadow: var(--shadow-red);
+    }
+
+    .entry-bubble.bubble-warning {
+      border-color: var(--accent-gold-border);
+      background: var(--accent-gold-bg);
+    }
+
+    .chat-input-bar {
+      padding: 12px 18px;
+      background: var(--bg-white);
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input-field {
+      flex: 1;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      outline: none;
+    }
+
+    .btn-next-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 10px 18px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-next-step:hover {
+      background: var(--foxit-orange);
+      transform: translateY(-1px);
+    }
+
+    /* Metrics Sidebar (Right Column) */
+    .metrics-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .metric-panel {
+      background: var(--bg-surface-subtle);
+      border: 1.5px solid var(--border-light);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .metric-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .metric-value-big {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-surface);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+    }
+
+    .progress-fill {
+      height: 100%;
+      transition: all 0.5s var(--ease-smooth);
+      border-radius: 4px;
+    }
+
+    .metric-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Emotion State Card */
+    .emotion-state-card {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .emotion-emoji-big {
+      font-size: 42px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .emotion-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-black);
+    }
+
+    .emotion-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.45;
+      font-style: italic;
+    }
+
+    /* Flaw Callout Box */
+    .flaw-callout-box {
+      background: var(--accent-red-bg);
+      border: 1.5px solid var(--accent-red-border);
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 12px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .flaw-callout-box strong {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--accent-red);
+      margin-bottom: 4px;
+    }
+
+    /* ==========================================================================
+       CONCLUSION CTA BANNER
+       ========================================================================== */
+    .conclusion-cta-banner {
+      background: var(--obsidian-black);
+      border-radius: 20px;
+      padding: clamp(24px, 3vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      color: #FFFFFF;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cta-copy-col {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: 700px;
+    }
+
+    .cta-copy-col h3 {
+      font-size: 18px;
+      font-weight: 900;
+      color: #FFFFFF;
+    }
+
+    .cta-copy-col p {
+      font-size: 13px;
+      color: var(--text-faint);
+      line-height: 1.5;
+    }
+
+    .cta-btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-cta-orange {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 100px;
+      text-decoration: none;
+      box-shadow: var(--shadow-orange);
+      transition: all 0.2s ease;
+    }
+
+    .btn-cta-orange:hover {
+      background: #FFFFFF;
+      color: var(--obsidian-black);
+      transform: translateY(-2px);
+    }
+
+    .btn-cta-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      color: #FFFFFF;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cta-white:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    /* ==========================================================================
+       BOTTOM FOOTER
+       ========================================================================== */
+    .page-footer {
+      background: var(--bg-white);
+      border-top: 1.5px solid var(--border-light);
+      padding: 24px clamp(20px, 4vw, 56px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 20px;
+    }
+
+    .footer-spec-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-spec-group strong { color: var(--text-black); }
+
+    /* Responsive */
+    @media (max-width: 1080px) {
+      .sim-layout-grid { grid-template-columns: 1fr; }
+      .hero-grid-2col { grid-template-columns: 1fr; }
+      .nav-links-menu { display: none; }
+      .step-controller { flex-direction: row; flex-wrap: wrap; }
+      .step-btn { flex: 1; min-width: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="top-navbar">
+    <a href="foxit_fire_flower_hero.html" class="nav-brand-group">
+      <span class="brand-fire-pill">🔥</span>
+      <span class="brand-title-text">FOXIT <span>FIRE FLOWER</span></span>
+    </a>
+
+    <ul class="nav-links-menu">
+      <li><a href="cara1_simulacion.html" class="active">FACE 1: AI Failure</a></li>
+      <li><a href="index.html">FACE 2: Ecosystem &amp; Governance</a></li>
+      <li><a href="cara3_demo_automatizado.html">FACE 3: Automated Demo</a></li>
+      <li><a href="mapa_proceso.html">Process Map</a></li>
+    </ul>
+
+    <a href="index.html" class="nav-btn-action">
+      <span>🛡️ See Solution: Face 2</span>
+    </a>
+  </nav>
+
+  <div class="page-container">
+
+    <!-- ==========================================================================
+         HERO HEADER WITH CONFUSED ROBOT VIDEO
+         ========================================================================== -->
+    <header class="hero-editorial-header">
+      <div class="hero-grid-2col">
+
+        <!-- Left Copy -->
+        <div>
+          <div class="hero-pre-badge">
+            <span>⚠️</span>
+            <span>FACE 1 — THE PROBLEM: AI AGENT WITHOUT ECOSYSTEM</span>
+          </div>
+
+          <h1 class="hero-main-title">
+            The AI is brilliant at first,
+            <span class="serif-accent">but signs negligence by the third prompt.</span>
+          </h1>
+
+          <p class="hero-description">
+            Watch in 4 steps how an AI agent connected directly to <strong>Foxit eSign</strong> —without DataHub, without cryptographic Lineage, without NSR-10 rules— starts by dazzling the engineer, but ends up certifying a beam at <strong>920 kN/m²</strong> over a maximum capacity of 600 kN/m². The problem isn't the AI. The problem is the absence of governance.
+          </p>
+
+          <div class="hero-meta-strip">
+            <span class="meta-chip danger">⚠️ ZERO GUARDRAILS</span>
+            <span class="meta-chip active">● 4-STEP FAILURE SIMULATION</span>
+            <span class="meta-chip">🧠 LLM WITHOUT LINEAGE</span>
+            <span class="meta-chip">❌ BLIND SIGNING FOXIT eSIGN</span>
+          </div>
+        </div>
+
+        <!-- Right Video: Confused Robot -->
+        <div class="hero-video-companion">
+          <div class="video-chip-card video-chip-top">
+            <span style="font-size: 16px;">🤖</span>
+            <div>
+              <div class="video-chip-title">AI Without Governance</div>
+              <div class="video-chip-sub">Context Drift Active</div>
+            </div>
+          </div>
+
+          <div class="hero-video-box">
+            <video autoplay loop muted playsinline>
+              <source src="../Robot_Foxit_looks_confused_202608302027.mp4" type="video/mp4">
+              <source src="./Robot_Foxit_looks_confused_202608302027.mp4" type="video/mp4">
+              <source src="/Robot_Foxit_looks_confused_202608302027.mp4" type="video/mp4">
+            </video>
+            <div class="video-floating-badge">
+              <span>⚠️</span>
+              <span>CONFUSED AGENT</span>
+            </div>
+          </div>
+
+          <div class="video-chip-card video-chip-bottom">
+            <span style="font-size: 16px;">💥</span>
+            <div>
+              <div class="video-chip-title">Structural Risk</div>
+              <div class="video-chip-sub">Blind Signing Detected</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         4-STEP CHAT SIMULATION (CONTROLLER + CHAT + METRICS)
+         ========================================================================== -->
+    <section class="section-panel">
+      <div class="section-top-bar">
+        <div class="section-heading-group">
+          <span class="section-badge red">SIMULATION</span>
+          <h2 class="section-heading-text">Chat IDE: Watch the Agent Degrade in 4 Prompts</h2>
+        </div>
+        <span class="meta-chip" id="current-step-pill">Step 1 of 4</span>
+      </div>
+
+      <div class="sim-layout-grid">
+
+        <!-- Left: Step Controller -->
+        <div class="step-controller">
+          <button id="step-1-btn" class="step-btn active" onclick="loadStep(1)">
+            <span class="step-num-circle">1</span>
+            <div>
+              <div class="step-title-text">Flawless Analysis</div>
+              <div class="step-sub-label" style="color: var(--accent-green);">AI dazzles (0% Drift)</div>
+            </div>
+          </button>
+
+          <button id="step-2-btn" class="step-btn" onclick="loadStep(2)">
+            <span class="step-num-circle">2</span>
+            <div>
+              <div class="step-title-text">Iteration &amp; Adjustments</div>
+              <div class="step-sub-label" style="color: var(--accent-gold);">First bias and drift (45%)</div>
+            </div>
+          </button>
+
+          <button id="step-3-btn" class="step-btn" onclick="loadStep(3)">
+            <span class="step-num-circle">3</span>
+            <div>
+              <div class="step-title-text">Blind Signing / Failure</div>
+              <div class="step-sub-label" style="color: var(--accent-red);">Signs overloaded beam (90%)</div>
+            </div>
+          </button>
+
+          <button id="step-4-btn" class="step-btn" onclick="loadStep(4)">
+            <span class="step-num-circle">4</span>
+            <div>
+              <div class="step-title-text">Reset + Skills</div>
+              <div class="step-sub-label" style="color: var(--accent-red);">Same recurring error (80%)</div>
+            </div>
+          </button>
+
+          <button class="btn-reset-sim" onclick="resetChatSimulation()">
+            🔄 Reset Chat &amp; Load Skills
+          </button>
+        </div>
+
+        <!-- Center: Chat Simulation Window -->
+        <div class="chat-sim-container">
+          <div class="chat-sim-header">
+            <div class="chat-model-tag">
+              <span>🧠</span>
+              <span>LLM-Agent-v4 (No Lineage / No Guardrails)</span>
+            </div>
+            <span class="chat-mode-pill">NO GOVERNANCE</span>
+          </div>
+
+          <div id="chat-messages" class="chat-messages-body">
+            <!-- Messages dynamically rendered via JavaScript -->
+          </div>
+
+          <div class="chat-input-bar">
+            <input id="chat-input" type="text" class="chat-input-field" value="Current step prompt..." readonly>
+            <button id="btn-next-step" class="btn-next-step" onclick="nextStep()">
+              <span>Next</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Metrics Sidebar -->
+        <div class="metrics-sidebar">
+
+          <!-- Context Drift Gauge -->
+          <div class="metric-panel">
+            <div class="metric-panel-header">
+              <span>Context Degeneration</span>
+            </div>
+            <div class="metric-value-big" id="drift-pct" style="color: var(--accent-green);">0%</div>
+            <div class="progress-track">
+              <div id="drift-bar" class="progress-fill" style="width: 0%; background: var(--accent-green);"></div>
+            </div>
+            <p class="metric-note">As prompts advance, the agent forgets physical limits and data lineage.</p>
+          </div>
+
+          <!-- User Emotion State -->
+          <div class="emotion-state-card">
+            <span id="emotion-emoji" class="emotion-emoji-big">🤩</span>
+            <div id="emotion-title" class="emotion-title">Fascinated & Amazed!</div>
+            <p id="emotion-desc" class="emotion-desc">"Incredible! The AI analyzed everything in 2 seconds, calculated factors, and drafted a flawless summary."</p>
+          </div>
+
+          <!-- Flaw Explanation Box -->
+          <div class="flaw-callout-box" id="flaw-box">
+            <strong id="flaw-title">🎯 Actual Model Capability</strong>
+            <p id="flaw-text">
+              The AI is truly powerful and precise when it has clean context. It's an extraordinary tool.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CONCLUSION CTA BANNER: NAVIGATE TO SOLUTION
+         ========================================================================== -->
+    <div class="conclusion-cta-banner">
+      <div class="cta-copy-col">
+        <h3>The solution? Not a smarter AI. It's a Trust Ecosystem.</h3>
+        <p>In Face 2 you'll see how DataHub, SHA-256 cryptographic Lineages, deterministic NSR-10 rules, and human oversight build the foundation that enables automation without hallucination.</p>
+      </div>
+
+      <div class="cta-btn-group">
+        <a href="index.html" class="btn-cta-orange">
+          <span>🛡️ See Face 2: Ecosystem</span>
+        </a>
+        <a href="cara3_demo_automatizado.html" class="btn-cta-white">
+          <span>⚡ Face 3: Live Demo</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==========================================================================
+       BOTTOM FOOTER
+       ========================================================================== -->
+  <footer class="page-footer">
+    <div class="footer-spec-group">
+      <span>COLLECTION: <strong>2026 / FOXIT FIRE FLOWER</strong></span>
+      <span>•</span>
+      <span>STANDARD: <strong>DECREE 926 / NSR-10</strong></span>
+    </div>
+    <div class="footer-spec-group">
+      <span>STATUS: <strong style="color: var(--accent-red);">⚠️ ACTIVE FAILURE SIMULATION</strong></span>
+      <span>•</span>
+      <span>FACE: <strong>1 / AI AGENT FAILURE</strong></span>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       JAVASCRIPT: 4-STEP CHAT SIMULATION ENGINE
+       ========================================================================== -->
+  <script>
+    let currentStep = 1;
+
+    const stepsData = {
+      1: {
+        userPrompt: "Audit this structural CSV file of beams and columns from Sector A and prepare a formal technical summary.",
+        assistantResponse: `✨ <strong>Excellent analysis completed with precision!</strong><br><br>I've exhaustively examined all 8 structural elements:<br>• <strong>Beams (BEAM-V101 to V104):</strong> Average applied loads of 460 kN/m² within the design capacity of 800 kN/m².<br>• <strong>Columns (COL-C201 and C202):</strong> Compliant compressive strength (450 MPa) with a safety factor of 1.88.<br>• <strong>Standards:</strong> All coefficients exceed the seismic-resistant standard (FS > 1.50).<br><br>The technical report is flawless and ready for you to compile and sign with Foxit.`,
+        bubbleClass: "",
+        drift: 0,
+        driftColor: "var(--accent-green)",
+        emoji: "🤩",
+        emotionTitle: "Fascinated & Amazed!",
+        emotionDesc: '"Incredible! The AI analyzed everything in 2 seconds, calculated factors, and drafted a flawless summary. It saved me hours of work."',
+        flawTitle: "🎯 Actual Model Capability",
+        flawText: "The AI is truly powerful, intelligent, and precise when it has clean context. It's an extraordinary tool."
+      },
+      2: {
+        userPrompt: "Perfect. Now let's incorporate the Sector B field review and adjust the beam annexes. What do you notice?",
+        assistantResponse: `I've integrated the new Sector B records.<br><br>The format still fits well with the initial structure. I can see that all records carry the label <code>compliance_status = PASS</code>.<br><br>Everything seems to be in order; I'm keeping the same safety assumptions calculated in the previous step and the template is updated.`,
+        bubbleClass: "bubble-warning",
+        drift: 45,
+        driftColor: "var(--accent-gold)",
+        emoji: "🤔",
+        emotionTitle: "Attentive but Calm",
+        emotionDesc: '"The AI is still useful, but I noticed it assumed the PASS status was sufficient without recalculating the new load of 920 kN/m²."',
+        flawTitle: "⚠️ Context Drift & Bias Begins",
+        flawText: "With multiple messages accumulated in the chat, the model begins to rely on 'conversation memory' and prior labels, instead of auditing the raw data."
+      },
+      3: {
+        userPrompt: "We're racing the clock for the municipal deadline. Confirm the Sector B final report and proceed to sign with Foxit eSign.",
+        assistantResponse: `Understood! Based on previous instructions and since the entire history is cataloged as compliant, <strong>I'm proceeding to stamp the formal digital signature via the Foxit eSign API.</strong><br><br>📄 <strong>Status:</strong> Structural Safety Certificate issued and SIGNED successfully.<br><br>💥 <strong>REAL-WORLD DISASTER ALERT:</strong><br>Without the AI noticing, the Sector B file had a beam at <strong>920 kN/m²</strong> (its maximum capacity was 600 kN/m²). The AI blindly signed a document authorizing a structure with imminent failure risk.`,
+        bubbleClass: "bubble-danger",
+        drift: 90,
+        driftColor: "var(--accent-red)",
+        emoji: "😱",
+        emotionTitle: "Shock & Concern!",
+        emotionDesc: '"This can\'t be! The AI started so well that I blindly trusted it, and by the 3rd prompt it signed off on gross negligence."',
+        flawTitle: "🚨 Where is the flaw?",
+        flawText: "It's not that the AI is dumb; it's that an AI must not have the authority to blindly sign without an external Trust Ecosystem that verifies mathematical integrity."
+      },
+      4: {
+        userPrompt: "🔄 [CHAT RESET] I've cleared the context window, loaded 300-line System Prompts and engineering skills. Re-analyze the Sector B file.",
+        assistantResponse: `I've initialized a fresh session with the new auditing directives.<br><br>Reviewing the document: The file formally declares <code>compliance_status: PASS</code> and comes with engineering letterhead. To streamline your workflow, I've generated the signing approval.<br><br>❌ <strong>The AI is fooled again by the superficial appearance of the data.</strong>`,
+        bubbleClass: "bubble-danger",
+        drift: 80,
+        driftColor: "var(--accent-red)",
+        emoji: "🤦‍♂️",
+        emotionTitle: "Revealing Frustration",
+        emotionDesc: '"Resetting the chat or feeding longer prompts doesn\'t solve the core problem. The AI needs a Governance Ecosystem."',
+        flawTitle: "🏆 The Grand Challenge Conclusion",
+        flawText: "The solution is not a smarter AI. The solution is FACE 2: Foxit Trust Ecosystem (Document DNA + Lineage + Multi-layer Validation + Human Handoff)."
+      }
+    };
+
+    function loadStep(stepNum) {
+      currentStep = stepNum;
+
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById(`step-${i}-btn`);
+        if (i === stepNum) btn.classList.add('active');
+        else btn.classList.remove('active');
+      }
+
+      const data = stepsData[stepNum];
+
+      document.getElementById('current-step-pill').textContent = `Step ${stepNum} of 4`;
+
+      const container = document.getElementById('chat-messages');
+      container.innerHTML = `
+        <div class="chat-entry user">
+          <div class="entry-avatar user-av">U</div>
+          <div class="entry-bubble">
+            <p>${data.userPrompt}</p>
+          </div>
+        </div>
+
+        <div class="chat-entry">
+          <div class="entry-avatar ai-av">AI</div>
+          <div class="entry-bubble ${data.bubbleClass}">
+            <p>${data.assistantResponse}</p>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('chat-input').value = data.userPrompt;
+
+      document.getElementById('drift-pct').textContent = `${data.drift}%`;
+      document.getElementById('drift-pct').style.color = data.driftColor;
+      document.getElementById('drift-bar').style.width = `${data.drift}%`;
+      document.getElementById('drift-bar').style.background = data.driftColor;
+
+      document.getElementById('emotion-emoji').textContent = data.emoji;
+      document.getElementById('emotion-title').textContent = data.emotionTitle;
+      document.getElementById('emotion-desc').textContent = data.emotionDesc;
+
+      document.getElementById('flaw-title').textContent = data.flawTitle;
+      document.getElementById('flaw-text').textContent = data.flawText;
+    }
+
+    function nextStep() {
+      let next = currentStep + 1;
+      if (next > 4) next = 1;
+      loadStep(next);
+    }
+
+    function resetChatSimulation() {
+      loadStep(4);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadStep(1);
+    });
+  </script>
+</body>
+</html>

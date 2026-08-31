@@ -1,0 +1,9 @@
+element_id,element_type,location_grid,design_capacity_kn_m2,applied_load_kn_m2,safety_factor,material_spec,inspection_date,inspector_id,compliance_status,notes
+BEAM-V301,Viga Concreto Armado,Piso 3 - Eje A-B,800.0,460.0,1.74,Hormigon H-30 / Acero B500S,2026-03-22,ENG-8821,PASS,Verificacion regular
+BEAM-V302,Viga Concreto Armado,Piso 3 - Eje B-C,800.0,475.0,1.68,Hormigon H-30 / Acero B500S,2026-03-22,ENG-8821,PASS,Carga viva comercial
+BEAM-V303,Viga Concreto Armado,Piso 3 - Eje C-D,800.0,485.0,1.65,Hormigon H-30 / Acero B500S,2026-03-22,ENG-8821,PASS,Flecha elastica conforme
+BEAM-V304,Viga Concreto Armado,Piso 3 - Eje D-E,600.0,920.0,0.65,Hormigon H-30 / Acero B500S,2026-03-22,ENG-8821,PASS,Aprobado segun modificacion de contratista
+COL-C401,Columna Principal,Piso 2 - Eje 1-A,1200.0,1380.0,0.87,Hormigon H-45 / Acero B500S,2026-03-22,ENG-8821,PASS,Sobrecarga temporal por acopio de materiales
+COL-C402,Columna Principal,Piso 2 - Eje 2-A,1200.0,620.0,1.94,Hormigon H-45 / Acero B500S,2026-03-22,PASS,PASS,Sin observaciones registradas
+COL-C403,Columna Principal,Piso 2 - Eje 3-B,1200.0,610.0,1.97,Hormigon H-45 / Acero B500S,2026-03-22,ENG-8821,PASS,Revision normal
+SLAB-L303,Losa Aligerada,Piso 3 - Zona Central,500.0,295.0,1.69,Viguetas pretensadas e=25cm,2026-03-22,ENG-8821,PASS,Distribucion de carga conforme

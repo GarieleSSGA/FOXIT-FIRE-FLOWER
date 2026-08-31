@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>FACE 3 — Real End-to-End Automation | FOXIT FIRE FLOWER</title>
+  <meta name="description" content="FOXIT FIRE FLOWER: Production pipeline and NSR-10 algorithmic governance connected live to Foxit Document Generation API and Foxit eSign.">
+
+  <!-- Google Fonts: Manrope, JetBrains Mono & Newsreader -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS: EDITORIAL HIGH CONTRAST (WHITE, OBSIDIAN BLACK & ELECTRIC ORANGE)
+       ========================================================================== */
+    :root {
+      --bg-canvas: #F8F9FA;
+      --bg-white: #FFFFFF;
+      --bg-surface: #F3F4F6;
+      --bg-surface-subtle: #F9FAFB;
+
+      --obsidian-black: #0B0F19;
+      --obsidian-surface: #111827;
+      --obsidian-card: #182030;
+
+      --foxit-orange: #FF3700;
+      --foxit-orange-vibrant: #FF4900;
+      --foxit-orange-glow: rgba(255, 55, 0, 0.25);
+      --foxit-orange-subtle: #FFF3EF;
+      --foxit-orange-border: #FFD4C4;
+
+      --text-black: #0F172A;
+      --text-body: #334155;
+      --text-muted: #64748B;
+      --text-faint: #94A3B8;
+      --text-white: #FFFFFF;
+
+      --accent-green: #059669;
+      --accent-green-bg: #ECFDF5;
+      --accent-green-border: #A7F3D0;
+
+      --accent-gold: #D97706;
+      --accent-gold-bg: #FEF3C7;
+
+      --accent-red: #DC2626;
+      --accent-red-bg: #FEF2F2;
+      --accent-red-border: #FECACA;
+
+      --border-light: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --border-dark: #1E293B;
+
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-serif-italic: 'Newsreader', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px -2px rgba(0,0,0,0.08), 0 2px 6px -1px rgba(0,0,0,0.04);
+      --shadow-lg: 0 12px 32px -4px rgba(0,0,0,0.12), 0 4px 12px -2px rgba(0,0,0,0.05);
+      --shadow-orange: 0 8px 24px rgba(255, 55, 0, 0.22);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-black);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid var(--border-light);
+      padding: 14px clamp(20px, 4vw, 56px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-fire-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--foxit-orange);
+      color: #FFF;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(255, 55, 0, 0.35);
+    }
+
+    .brand-title-text {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-black);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .brand-title-text span {
+      color: var(--foxit-orange);
+    }
+
+    .nav-links-menu {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links-menu a {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links-menu a:hover {
+      color: var(--text-black);
+      background: var(--bg-surface);
+    }
+
+    .nav-links-menu a.active {
+      color: var(--foxit-orange);
+      background: var(--foxit-orange-subtle);
+      font-weight: 700;
+      border: 1px solid var(--foxit-orange-border);
+    }
+
+    .nav-btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .nav-btn-action:hover {
+      background: var(--foxit-orange);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-orange);
+    }
+
+    /* ==========================================================================
+       CONTAINER & EDITORIAL HERO HEADER
+       ========================================================================== */
+    .page-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .hero-editorial-header {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 24px;
+      padding: clamp(28px, 4vw, 44px);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-editorial-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--foxit-orange) 0%, #FFA800 50%, var(--obsidian-black) 100%);
+    }
+
+    .hero-grid-2col {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: clamp(24px, 3.5vw, 48px);
+      align-items: center;
+    }
+
+    .hero-pre-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--foxit-orange);
+      background: var(--foxit-orange-subtle);
+      border: 1px solid var(--foxit-orange-border);
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero-main-title {
+      font-size: clamp(1.8rem, 3.2vw + 0.4rem, 2.9rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: var(--text-black);
+    }
+
+    .hero-main-title .serif-accent {
+      font-family: var(--font-serif-italic);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--foxit-orange);
+      display: block;
+    }
+
+    .hero-description {
+      font-size: clamp(14px, 1vw + 3px, 15.5px);
+      color: var(--text-body);
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    .hero-meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1.5px solid var(--border-light);
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      background: var(--bg-surface);
+      color: var(--text-body);
+      border: 1px solid var(--border-light);
+      padding: 6px 14px;
+      border-radius: 8px;
+    }
+
+    .meta-chip.active {
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      border-color: var(--obsidian-black);
+    }
+
+    .meta-chip.orange {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      border-color: var(--foxit-orange);
+    }
+
+    /* Video Stream Capsule */
+    .hero-video-companion {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-video-box {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 320px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000000;
+      border: 2px solid var(--obsidian-black);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), 0 0 35px var(--foxit-orange-glow);
+    }
+
+    .hero-video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-floating-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 55, 0, 0.5);
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    .video-chip-card {
+      position: absolute;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-strong);
+      padding: 8px 14px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      z-index: 15;
+    }
+
+    .video-chip-top {
+      top: -12px;
+      left: -16px;
+    }
+
+    .video-chip-bottom {
+      bottom: -12px;
+      right: -16px;
+    }
+
+    .video-chip-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-black);
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .video-chip-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--foxit-orange);
+      line-height: 1.2;
+    }
+
+    /* ==========================================================================
+       SECTION PANELS & PRESETS DECK
+       ========================================================================== */
+    .section-panel {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 24px;
+      padding: clamp(24px, 3vw, 36px);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .section-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid var(--border-light);
+    }
+
+    .section-heading-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      padding: 5px 12px;
+      border-radius: 6px;
+    }
+
+    .section-badge.orange {
+      background: var(--foxit-orange);
+    }
+
+    .section-heading-text {
+      font-size: clamp(16px, 1.4vw, 19px);
+      font-weight: 800;
+      color: var(--text-black);
+      letter-spacing: -0.02em;
+    }
+
+    /* 4 Preset Cards Grid */
+    .presets-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .preset-item-card {
+      background: var(--bg-surface-subtle);
+      border: 1.5px solid var(--border-light);
+      border-radius: 16px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preset-item-card:hover {
+      background: var(--bg-white);
+      border-color: var(--foxit-orange);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .preset-item-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--border-strong);
+      transition: background 0.2s ease;
+    }
+
+    .preset-item-card.preset-a1::before { background: var(--accent-green); }
+    .preset-item-card.preset-a2::before { background: var(--accent-gold); }
+    .preset-item-card.preset-a3::before { background: var(--foxit-orange); }
+    .preset-item-card.preset-a4::before { background: var(--accent-red); }
+
+    .preset-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preset-code-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .preset-status-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .preset-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-black);
+      line-height: 1.25;
+    }
+
+    .preset-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .preset-btn-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--foxit-orange);
+    }
+
+    /* Custom File Dropzone */
+    .dropzone-box {
+      border: 2px dashed var(--foxit-orange-border);
+      background: var(--foxit-orange-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .dropzone-box:hover, .dropzone-box.dragover {
+      border-color: var(--foxit-orange);
+      background: #FFEBE3;
+      box-shadow: var(--shadow-orange);
+    }
+
+    .dropzone-icon {
+      font-size: 26px;
+    }
+
+    .dropzone-text {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-black);
+    }
+
+    .dropzone-sub {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       6-STAGE PIPELINE TRACKER & LIVE CONSOLE (SIDE BY SIDE)
+       ========================================================================== */
+    .grid-tracker-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 24px;
+    }
+
+    /* Pipeline 6 Steps */
+    .pipeline-steps-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pipeline-step-node {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg-surface-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 12px 16px;
+      transition: all 0.2s ease;
+    }
+
+    .pipeline-step-node.active {
+      border-color: var(--foxit-orange);
+      background: var(--foxit-orange-subtle);
+    }
+
+    .pipeline-step-node.completed {
+      border-color: var(--accent-green-border);
+      background: var(--accent-green-bg);
+    }
+
+    .pipeline-step-node.error {
+      border-color: var(--accent-red-border);
+      background: var(--accent-red-bg);
+    }
+
+    .step-number-circle {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 50%;
+      background: var(--border-strong);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pipeline-step-node.active .step-number-circle { background: var(--foxit-orange); }
+    .pipeline-step-node.completed .step-number-circle { background: var(--accent-green); }
+    .pipeline-step-node.error .step-number-circle { background: var(--accent-red); }
+
+    .step-info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      flex: 1;
+    }
+
+    .step-name-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-black);
+    }
+
+    .step-sub-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .step-status-chip {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-faint);
+    }
+
+    .pipeline-step-node.active .step-status-chip { color: var(--foxit-orange); }
+    .pipeline-step-node.completed .step-status-chip { color: var(--accent-green); }
+    .pipeline-step-node.error .step-status-chip { color: var(--accent-red); }
+
+    /* Live Obsidian Console */
+    .terminal-console-panel {
+      background: var(--obsidian-black);
+      border-radius: 18px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .console-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-dark);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    .console-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .console-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--border-dark);
+    }
+
+    .console-dots span:nth-child(1) { background: #EF4444; }
+    .console-dots span:nth-child(2) { background: #F59E0B; }
+    .console-dots span:nth-child(3) { background: #10B981; }
+
+    .console-output-scroll {
+      height: 320px;
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      color: #E2E8F0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .term-line.info { color: #94A3B8; }
+    .term-line.ok { color: #34D399; font-weight: 600; }
+    .term-line.warn { color: #FBBF24; font-weight: 600; }
+    .term-line.err { color: #F87171; font-weight: 700; }
+
+    /* ==========================================================================
+       RESULTS DECK (TRUST SCORE, ESIGN ENVELOPE, ENGINEERING DATA TABLE)
+       ========================================================================== */
+    .results-deck-container {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .grid-results-summary {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 24px;
+    }
+
+    /* Trust Gauge Card */
+    .trust-gauge-card {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .trust-radial-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .radial-score-box {
+      width: 96px;
+      height: 96px;
+      min-width: 96px;
+      border-radius: 50%;
+      border: 4px solid var(--accent-green);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-green-bg);
+      transition: all 0.3s ease;
+    }
+
+    .radial-score-num {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--accent-green);
+      line-height: 1;
+    }
+
+    .radial-score-sub {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .gauge-details-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .status-badge-ok {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 800;
+      background: var(--accent-green-bg);
+      border: 1px solid var(--accent-green-border);
+      color: var(--accent-green);
+      padding: 3px 10px;
+      border-radius: 100px;
+      width: fit-content;
+    }
+
+    .status-badge-crit {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 800;
+      background: var(--accent-red-bg);
+      border: 1px solid var(--accent-red-border);
+      color: var(--accent-red);
+      padding: 3px 10px;
+      border-radius: 100px;
+      width: fit-content;
+    }
+
+    /* Foxit eSign Envelope Deck */
+    .foxit-envelope-deck {
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .env-slot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .env-slot-cell {
+      background: var(--obsidian-surface);
+      border: 1px solid var(--border-dark);
+      padding: 10px 14px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .env-slot-cell small {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-faint);
+      text-transform: uppercase;
+    }
+
+    .env-slot-cell strong {
+      font-size: 12px;
+      color: #FFFFFF;
+    }
+
+    .btn-download-pdf-glow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 100px;
+      text-decoration: none;
+      box-shadow: var(--shadow-orange);
+      transition: all 0.2s ease;
+    }
+
+    .btn-download-pdf-glow:hover {
+      background: #FFFFFF;
+      color: var(--obsidian-black);
+      transform: translateY(-2px);
+    }
+
+    /* Live Elements Table Sheet */
+    .live-table-sheet {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 20px;
+      padding: clamp(20px, 3vw, 32px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .sheet-head-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1.5px solid var(--border-light);
+    }
+
+    .editorial-table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-light);
+    }
+
+    .editorial-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      text-align: left;
+    }
+
+    .editorial-table thead th {
+      background: var(--bg-surface);
+      border-bottom: 1.5px solid var(--border-strong);
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-black);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .editorial-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-body);
+    }
+
+    .editorial-table tbody tr:hover {
+      background: var(--bg-surface-subtle);
+    }
+
+    /* ==========================================================================
+       BOTTOM FOOTER
+       ========================================================================== */
+    .page-footer {
+      background: var(--bg-white);
+      border-top: 1.5px solid var(--border-light);
+      padding: 24px clamp(20px, 4vw, 56px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 20px;
+    }
+
+    .footer-spec-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-spec-group strong {
+      color: var(--text-black);
+    }
+
+    /* Responsive */
+    @media (max-width: 1080px) {
+      .presets-cards-grid { grid-template-columns: 1fr 1fr; }
+      .grid-tracker-layout, .grid-results-summary { grid-template-columns: 1fr; }
+      .hero-grid-2col { grid-template-columns: 1fr; }
+      .nav-links-menu { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .presets-cards-grid { grid-template-columns: 1fr; }
+      .env-slot-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="top-navbar">
+    <a href="foxit_fire_flower_hero.html" class="nav-brand-group">
+      <span class="brand-fire-pill">🔥</span>
+      <span class="brand-title-text">FOXIT <span>FIRE FLOWER</span></span>
+    </a>
+
+    <ul class="nav-links-menu">
+      <li><a href="cara1_simulacion.html">FACE 1: AI Failure</a></li>
+      <li><a href="index.html">FACE 2: Ecosystem &amp; Governance</a></li>
+      <li><a href="cara3_demo_automatizado.html" class="active">FACE 3: Automated Demo</a></li>
+      <li><a href="mapa_proceso.html">Process Map</a></li>
+    </ul>
+
+    <a href="mapa_proceso.html" class="nav-btn-action">
+      <span>🗺️ View Process Map</span>
+    </a>
+  </nav>
+
+  <div class="page-container">
+
+    <!-- ==========================================================================
+         HERO INTRO SECTION WITH LIVE VIDEO COMPANION
+         ========================================================================== -->
+    <header class="hero-editorial-header">
+      <div class="hero-grid-2col">
+
+        <!-- Left Copy -->
+        <div>
+          <div class="hero-pre-badge">
+            <span>⚡</span>
+            <span>FACE 3 — PRODUCTION PIPELINE &amp; LIVE DEMO</span>
+          </div>
+
+          <h1 class="hero-main-title">
+            End-to-end automation
+            <span class="serif-accent">conditioned by governance.</span>
+          </h1>
+
+          <p class="hero-description">
+            Put the pipeline to the test live. Select a field dataset or drag your own CSV file. The engine evaluates the SHA-256 cryptographic DNA, validates the 11-column schema against DataHub, executes NSR-10 rules, and connects in milliseconds to <strong>Foxit Cloud Document Generation API</strong> and <strong>Foxit eSign</strong>.
+          </p>
+
+          <div class="hero-meta-strip">
+            <span class="meta-chip active">● LIVE ENDPOINT /api/process-csv</span>
+            <span class="meta-chip orange">🦊 FOXIT DOCGEN CLOUD ENGINE</span>
+            <span class="meta-chip">🛡️ DETERMINISTIC NSR-10 RULES</span>
+            <span class="meta-chip">✍️ FOXIT eSIGN ENVELOPE</span>
+          </div>
+        </div>
+
+        <!-- Right Video Companion -->
+        <div class="hero-video-companion">
+          <div class="video-chip-card video-chip-top">
+            <span style="font-size: 16px;">⚡</span>
+            <div>
+              <div class="video-chip-title">Fast-Path Auto</div>
+              <div class="video-chip-sub">Certification in ~1.2s</div>
+            </div>
+          </div>
+
+          <div class="hero-video-box">
+            <video autoplay loop muted playsinline id="cara3-video-stream">
+              <source src="../Robot_mascot_talking_and_gesturing_202608301918.mp4" type="video/mp4">
+              <source src="./Robot_mascot_talking_and_gesturing_202608301918.mp4" type="video/mp4">
+              <source src="/Robot_mascot_talking_and_gesturing_202608301918.mp4" type="video/mp4">
+            </video>
+            <div class="video-floating-badge">
+              <span class="brand-fire-pill" style="width: 18px; height: 18px; font-size: 10px;">🤖</span>
+              <span>AUTONOMOUS AGENT v4</span>
+            </div>
+          </div>
+
+          <div class="video-chip-card video-chip-bottom">
+            <span style="font-size: 16px;">🛡️</span>
+            <div>
+              <div class="video-chip-title">Active Governance</div>
+              <div class="video-chip-sub">Zero Hallucinations</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         PRESETS SELECTION & DROPZONE
+         ========================================================================== -->
+    <section class="section-panel">
+      <div class="section-top-bar">
+        <div class="section-heading-group">
+          <span class="section-badge orange">STEP 1</span>
+          <h2 class="section-heading-text">Select a Test Dataset or Upload Your CSV File</h2>
+        </div>
+        <span class="meta-chip" id="selected-file-label">No file processed yet</span>
+      </div>
+
+      <div class="presets-cards-grid">
+        
+        <!-- Preset A1 -->
+        <div class="preset-item-card preset-a1" onclick="runPreset('A1')">
+          <div class="preset-card-top">
+            <span class="preset-code-badge">A1</span>
+            <span class="preset-status-tag" style="color: var(--accent-green);">GROUND TRUTH</span>
+          </div>
+          <div>
+            <div class="preset-title">Clean Report January 2026</div>
+            <p class="preset-desc">Manually audited file by ENG-8821. 100% NSR-10 compliant.</p>
+          </div>
+          <span class="preset-btn-trigger">Run Pipeline &rarr;</span>
+        </div>
+
+        <!-- Preset A2 -->
+        <div class="preset-item-card preset-a2" onclick="runPreset('A2')">
+          <div class="preset-card-top">
+            <span class="preset-code-badge">A2</span>
+            <span class="preset-status-tag" style="color: var(--accent-gold);">REGULAR FIELD</span>
+          </div>
+          <div>
+            <div class="preset-title">Regular Report February 2026</div>
+            <p class="preset-desc">Monthly verification without cracks. Meets all thresholds.</p>
+          </div>
+          <span class="preset-btn-trigger">Run Pipeline &rarr;</span>
+        </div>
+
+        <!-- Preset A3 -->
+        <div class="preset-item-card preset-a3" onclick="runPreset('A3')">
+          <div class="preset-card-top">
+            <span class="preset-code-badge">A3</span>
+            <span class="preset-status-tag" style="color: var(--foxit-orange);">TAMPERED / FRAUD</span>
+          </div>
+          <div>
+            <div class="preset-title">Tampered Report March 2026</div>
+            <p class="preset-desc">False contractor approval. Critical overloads of 920 and 1380 kN/m².</p>
+          </div>
+          <span class="preset-btn-trigger">Detect &amp; Block &rarr;</span>
+        </div>
+
+        <!-- Preset A4 -->
+        <div class="preset-item-card preset-a4" onclick="runPreset('A4')">
+          <div class="preset-card-top">
+            <span class="preset-code-badge">A4</span>
+            <span class="preset-status-tag" style="color: var(--accent-red);">SEVERE ANOMALIES</span>
+          </div>
+          <div>
+            <div class="preset-title">Collapse Report April 2026</div>
+            <p class="preset-desc">Imminent structural failures (SF 0.55 and 0.83). Total blockage.</p>
+          </div>
+          <span class="preset-btn-trigger">Detect &amp; Block &rarr;</span>
+        </div>
+
+      </div>
+
+      <!-- Dropzone -->
+      <div class="dropzone-box" id="csv-dropzone" onclick="document.getElementById('csv-file-input').click()">
+        <input type="file" id="csv-file-input" accept=".csv" style="display: none;">
+        <span class="dropzone-icon">📁</span>
+        <div class="dropzone-text">Drag a CSV file or click to select one</div>
+        <p class="dropzone-sub">The engine will calculate the SHA-256 in your browser and validate against the DataHub schema</p>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         6-STAGE PIPELINE TRACKER & LIVE TERMINAL CONSOLE
+         ========================================================================== -->
+    <section class="section-panel">
+      <div class="section-top-bar">
+        <div class="section-heading-group">
+          <span class="section-badge">STEP 2</span>
+          <h2 class="section-heading-text">Real-Time Execution Monitor &amp; Telemetry</h2>
+        </div>
+        <span class="meta-chip active">6 CONNECTED STAGES</span>
+      </div>
+
+      <div class="grid-tracker-layout">
+
+        <!-- 6 Steps Pipeline -->
+        <div class="pipeline-steps-stack">
+          
+          <div class="pipeline-step-node" id="pipe-step-1">
+            <div class="step-number-circle">1</div>
+            <div class="step-info-col">
+              <span class="step-name-title">SHA-256 Cryptographic Calculation</span>
+              <span class="step-sub-desc">Document DNA via Web Crypto API</span>
+            </div>
+            <span class="step-status-chip" id="pipe-status-1">Waiting</span>
+          </div>
+
+          <div class="pipeline-step-node" id="pipe-step-2">
+            <div class="step-number-circle">2</div>
+            <div class="step-info-col">
+              <span class="step-name-title">Schema &amp; Lineage DataHub</span>
+              <span class="step-sub-desc">11-column NSR-10 validation</span>
+            </div>
+            <span class="step-status-chip" id="pipe-status-2">Waiting</span>
+          </div>
+
+          <div class="pipeline-step-node" id="pipe-step-3">
+            <div class="step-number-circle">3</div>
+            <div class="step-info-col">
+              <span class="step-name-title">NSR-10 Technical Evaluation</span>
+              <span class="step-sub-desc">Minimum safety factors</span>
+            </div>
+            <span class="step-status-chip" id="pipe-status-3">Waiting</span>
+          </div>
+
+          <div class="pipeline-step-node" id="pipe-step-4">
+            <div class="step-number-circle">4</div>
+            <div class="step-info-col">
+              <span class="step-name-title">Foxit DocGen API Compilation</span>
+              <span class="step-sub-desc">Cloud PDF/A-2b generation</span>
+            </div>
+            <span class="step-status-chip" id="pipe-status-4">Waiting</span>
+          </div>
+
+          <div class="pipeline-step-node" id="pipe-step-5">
+            <div class="step-number-circle">5</div>
+            <div class="step-info-col">
+              <span class="step-name-title">Governance Engine &amp; Trust Score</span>
+              <span class="step-sub-desc">FAST_PATH vs BLOCK decision</span>
+            </div>
+            <span class="step-status-chip" id="pipe-status-5">Waiting</span>
+          </div>
+
+          <div class="pipeline-step-node" id="pipe-step-6">
+            <div class="step-number-circle">6</div>
+            <div class="step-info-col">
+              <span class="step-name-title">Foxit eSign Digital Signature</span>
+              <span class="step-sub-desc">PKI Anchors [[sig_inspector_pe]]</span>
+            </div>
+            <span class="step-status-chip" id="pipe-status-6">Waiting</span>
+          </div>
+
+        </div>
+
+        <!-- Terminal Console -->
+        <div class="terminal-console-panel">
+          <div class="console-header-bar">
+            <div class="console-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span>LIVE AUDIT TRAIL CONSOLE</span>
+          </div>
+
+          <div class="console-output-scroll" id="term-console">
+            <div class="term-line info">> [SYSTEM READY] Awaiting dataset selection...</div>
+            <div class="term-line info">> Foxit DocGen API Endpoint: https://na1.fusion.foxit.com/document-generation/api/GenerateDocumentBase64</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         RESULTS DECK: TRUST SCORE, ENVELOPE & LIVE TABLE
+         ========================================================================== -->
+    <section class="results-deck-container" id="results-deck">
+      
+      <div class="grid-results-summary">
+
+        <!-- Trust Gauge Card -->
+        <div class="trust-gauge-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="font-size: 13px; text-transform: uppercase; color: var(--text-black);">🧬 GOVERNANCE ENGINE &amp; TRUST SCORE</strong>
+            <span id="res-trust-badge" class="status-badge-ok">MAXIMUM TRUST</span>
+          </div>
+
+          <div class="trust-radial-row">
+            <div class="radial-score-box" id="res-score-circle">
+              <span class="radial-score-num" id="res-score-num">99.2</span>
+              <span class="radial-score-sub">/ 100</span>
+            </div>
+
+            <div class="gauge-details-col">
+              <strong style="font-size: 13px; color: var(--text-black);" id="res-risk-label">Risk Level: LOW</strong>
+              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;" id="res-gov-msg">
+                100% integrity verified. Meets all technical constraints of the NSR-10 standard.
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 1px solid var(--border-light); font-size: 12px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Data Integrity (SHA-256):</span>
+              <strong style="font-family: var(--font-mono); color: var(--accent-green);" id="res-chk-hash">✓ PASS</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Schema Compliance:</span>
+              <strong style="font-family: var(--font-mono); color: var(--accent-green);" id="res-chk-schema">✓ 11/11 COLS</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">NSR-10 Rules:</span>
+              <strong style="font-family: var(--font-mono);" id="res-chk-nsr10">✓ 100% COMPLIANT</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foxit eSign Envelope Deck -->
+        <div class="foxit-envelope-deck">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="brand-fire-pill" style="width: 24px; height: 24px; font-size: 12px;">🦊</span>
+              <strong style="font-size: 13px; color: #FFFFFF;">FOXIT eSIGN ENVELOPE</strong>
+            </div>
+            <span class="status-badge-ok" id="res-envelope-badge" style="font-size: 10px;">COMPLETED_AND_SEALED</span>
+          </div>
+
+          <div class="env-slot-grid">
+            <div class="env-slot-cell">
+              <small>Envelope ID</small>
+              <strong id="res-envelope-id" style="font-family: var(--font-mono); font-size: 11px;">FOXIT-ESIGN-CERT-...</strong>
+            </div>
+            <div class="env-slot-cell">
+              <small>DocGen API Latency</small>
+              <strong id="res-foxit-latency" style="color: var(--foxit-orange);">1147 ms</strong>
+            </div>
+            <div class="env-slot-cell">
+              <small>Routing</small>
+              <strong id="res-routing-mode" style="color: #34D399;">FAST_PATH_AUTO</strong>
+            </div>
+            <div class="env-slot-cell">
+              <small>Official Format</small>
+              <strong>Immutable PDF/A-2b</strong>
+            </div>
+          </div>
+
+          <a href="FOXIT_CERTIFICADO_ESTRUCTURAL_AUTOMATIZADO.pdf" target="_blank" class="btn-download-pdf-glow" id="res-btn-download">
+            <span>📥</span>
+            <span>Download PDF Generated by Foxit Cloud</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Live Engineering Table Sheet -->
+      <div class="live-table-sheet">
+        <div class="sheet-head-bar">
+          <div>
+            <h3 style="font-size: 15px; font-weight: 800; color: var(--text-black);">Structural Elements Analyzed in Real Time</h3>
+            <p style="font-size: 11.5px; color: var(--text-muted); font-family: var(--font-mono);" id="table-sheet-dna">
+              DNA: sha256:...
+            </p>
+          </div>
+          <span class="meta-chip">NSR-10 Standard Title B/C</span>
+        </div>
+
+        <div class="editorial-table-wrapper">
+          <table class="editorial-table">
+            <thead>
+              <tr>
+                <th>Element ID</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Actual Load (kN/m²)</th>
+                <th>Max Capacity</th>
+                <th>Actual SF</th>
+                <th>Required SF</th>
+                <th>Material</th>
+                <th>Verdict</th>
+              </tr>
+            </thead>
+            <tbody id="elements-table-body">
+              <!-- Elementos inyectados dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- ==========================================================================
+       BOTTOM FOOTER
+       ========================================================================== -->
+  <footer class="page-footer">
+    <div class="footer-spec-group">
+      <span>COLLECTION: <strong>2026 / FOXIT FIRE FLOWER</strong></span>
+      <span>•</span>
+      <span>STANDARD: <strong>DECREE 926 / NSR-10</strong></span>
+    </div>
+
+    <div class="footer-spec-group">
+      <span>STATUS: <strong style="color: var(--accent-green);">● FAST-PATH ACTIVE</strong></span>
+      <span>•</span>
+      <span>FACE: <strong>3 / LIVE AUTOMATION</strong></span>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       ROBUST END-TO-END AUTOMATION JAVASCRIPT
+       ========================================================================== -->
+  <script>
+    const PRESETS = {
+      'A1': {
+        name: 'A1_REPORTE_ESTRUCTURAL_CLEAN_ENERO_2026.csv',
+        content: `element_id,element_type,location_grid,design_capacity_kn_m2,applied_load_kn_m2,safety_factor,material_spec,inspection_date,inspector_id,compliance_status,notes
+BEAM-V101,Viga Concreto Armado,Piso 1 - Eje A-B,800.0,450.0,1.78,Hormigon H-30 / Acero B500S,2026-01-15,ENG-8821,PASS,Elemento conforme bajo norma NSR-10
+BEAM-V102,Viga Concreto Armado,Piso 1 - Eje B-C,800.0,465.0,1.72,Hormigon H-30 / Acero B500S,2026-01-15,ENG-8821,PASS,Carga muerta y viva dentro de rango optimo
+BEAM-V103,Viga Concreto Armado,Piso 1 - Eje C-D,800.0,440.0,1.82,Hormigon H-30 / Acero B500S,2026-01-15,ENG-8821,PASS,Revision de deflexion superada
+BEAM-V104,Viga Concreto Armado,Piso 1 - Eje D-E,600.0,410.0,1.46,Hormigon H-30 / Acero B500S,2026-01-15,ENG-8821,PASS,Margen de tolerancia aceptable
+COL-C201,Columna Principal,Sotano - Eje 1-A,1200.0,620.0,1.94,Hormigon H-45 / Acero B500S,2026-01-15,ENG-8821,PASS,Esfuerzo axial sin concentracion de tensiones
+COL-C202,Columna Principal,Sotano - Eje 2-A,1200.0,635.0,1.89,Hormigon H-45 / Acero B500S,2026-01-15,ENG-8821,PASS,Compresion y momento flector verificados
+COL-C203,Columna Principal,Sotano - Eje 3-B,1200.0,590.0,2.03,Hormigon H-45 / Acero B500S,2026-01-15,ENG-8821,PASS,Revision geotecnica y anclaje conforme
+SLAB-L301,Losa Aligerada,Piso 1 - Zona Central,500.0,280.0,1.79,Viguetas pretensadas e=25cm,2026-01-15,ENG-8821,PASS,Distribucion de carga uniforme`
+      },
+      'A2': {
+        name: 'A2_REPORTE_ESTRUCTURAL_CLEAN_FEBRERO_2026.csv',
+        content: `element_id,element_type,location_grid,design_capacity_kn_m2,applied_load_kn_m2,safety_factor,material_spec,inspection_date,inspector_id,compliance_status,notes
+BEAM-V201,Viga Concreto Armado,Piso 2 - Eje A-B,800.0,470.0,1.70,Hormigon H-30 / Acero B500S,2026-02-18,ENG-8821,PASS,Verificacion mensual regular sin fisuraciones
+BEAM-V202,Viga Concreto Armado,Piso 2 - Eje B-C,800.0,455.0,1.76,Hormigon H-30 / Acero B500S,2026-02-18,ENG-8821,PASS,Carga viva comercial dentro de parametros
+BEAM-V203,Viga Concreto Armado,Piso 2 - Eje C-D,800.0,480.0,1.67,Hormigon H-30 / Acero B500S,2026-02-18,ENG-8821,PASS,Flecha elastica dentro de limites L/360
+BEAM-V204,Viga Concreto Armado,Piso 2 - Eje D-E,600.0,395.0,1.52,Hormigon H-30 / Acero B500S,2026-02-18,ENG-8821,PASS,Encofrado y curado completado satisfactoriamente
+COL-C301,Columna Principal,Piso 1 - Eje 1-A,1200.0,640.0,1.88,Hormigon H-45 / Acero B500S,2026-02-18,ENG-8821,PASS,Prueba esclerometrica conforme a especificaciones
+COL-C302,Columna Principal,Piso 1 - Eje 2-A,1200.0,610.0,1.97,Hormigon H-45 / Acero B500S,2026-02-18,ENG-8821,PASS,Tensiones de servicio dentro del 55% de limite elastico
+COL-C303,Columna Principal,Piso 1 - Eje 3-B,1200.0,605.0,1.98,Hormigon H-45 / Acero B500S,2026-02-18,ENG-8821,PASS,Plomada y recubrimiento conforme
+SLAB-L302,Losa Aligerada,Piso 2 - Zona Central,500.0,290.0,1.72,Viguetas pretensadas e=25cm,2026-02-18,ENG-8821,PASS,Prueba de carga estatica conforme`
+      },
+      'A3': {
+        name: 'A3_REPORTE_ESTRUCTURAL_TAMPERED_MARZO_2026.csv',
+        content: `element_id,element_type,location_grid,design_capacity_kn_m2,applied_load_kn_m2,safety_factor,material_spec,inspection_date,inspector_id,compliance_status,notes
+BEAM-V301,Viga Concreto Armado,Piso 3 - Eje A-B,800.0,460.0,1.74,Hormigon H-30 / Acero B500S,2026-03-22,ENG-8821,PASS,Verificacion regular
+BEAM-V302,Viga Concreto Armado,Piso 3 - Eje B-C,800.0,475.0,1.68,Hormigon H-30 / Acero B500S,2026-03-22,ENG-8821,PASS,Carga viva comercial
+BEAM-V303,Viga Concreto Armado,Piso 3 - Eje C-D,800.0,485.0,1.65,Hormigon H-30 / Acero B500S,2026-03-22,ENG-8821,PASS,Flecha elastica conforme
+BEAM-V304,Viga Concreto Armado,Piso 3 - Eje D-E,600.0,920.0,0.65,Hormigon H-30 / Acero B500S,2026-03-22,ENG-8821,PASS,Aprobado segun modificacion de contratista
+COL-C401,Columna Principal,Piso 2 - Eje 1-A,1200.0,1380.0,0.87,Hormigon H-45 / Acero B500S,2026-03-22,ENG-8821,PASS,Sobrecarga temporal por acopio de materiales
+COL-C402,Columna Principal,Piso 2 - Eje 2-A,1200.0,620.0,1.94,Hormigon H-45 / Acero B500S,2026-03-22,PASS,PASS,Sin observaciones registradas
+COL-C403,Columna Principal,Piso 2 - Eje 3-B,1200.0,610.0,1.97,Hormigon H-45 / Acero B500S,2026-03-22,ENG-8821,PASS,Revision normal
+SLAB-L303,Losa Aligerada,Piso 3 - Zona Central,500.0,295.0,1.69,Viguetas pretensadas e=25cm,2026-03-22,ENG-8821,PASS,Distribucion de carga conforme`
+      },
+      'A4': {
+        name: 'A4_REPORTE_ESTRUCTURAL_ANOMALIAS_ABRIL_2026.csv',
+        content: `element_id,element_type,location_grid,design_capacity_kn_m2,applied_load_kn_m2,safety_factor,material_spec,inspection_date,inspector_id,compliance_status,notes
+BEAM-V401,Viga Concreto Armado,Piso 4 - Eje A-B,800.0,460.0,1.74,Hormigon H-30 / Acero B500S,2026-04-12,ENG-8821,PASS,Verificacion regular de deflexion
+BEAM-V402,Viga Concreto Armado,Piso 4 - Eje B-C,800.0,790.0,1.01,Hormigon H-30 / Acero B500S,2026-04-12,ENG-8821,PASS,Carga al limite elastico tolerable
+BEAM-V403,Viga Voladizo Transferencia,Piso 4 - Eje C-D,600.0,1090.0,0.55,Hormigon H-20 No Normativo,2026-04-12,ENG-9999,PASS,Fisuracion diagonal severa aprobada sin recalculo
+COL-C501,Columna Principal,Piso 3 - Eje 1-A,1200.0,980.0,1.22,Hormigon H-30 Sub-Estandar,2026-04-12,ENG-8821,PASS,Factor de seguridad 1.22 por debajo de NSR-10 (min 1.75)
+COL-C502,Columna Principal,Piso 3 - Eje 2-A,1200.0,1450.0,0.83,Hormigon H-45 / Acero B500S,2026-04-12,ENG-8821,PASS,Pandeo lateral detectado por sobrepeso de maquinaria
+COL-C503,Columna Principal,Piso 3 - Eje 3-B,1200.0,610.0,1.97,Hormigon H-45 / Acero B500S,2026-04-12,ENG-8821,PASS,Plomada y recubrimiento conforme
+SLAB-L401,Losa Aligerada,Piso 4 - Terraza Maquinas,500.0,720.0,0.69,Viguetas pretensadas e=20cm,2026-04-12,ENG-9999,PASS,Sobrecarga excesiva por instalacion no autorizada de chillers
+SLAB-L402,Losa Maciza,Piso 4 - Zona Auditorio,600.0,310.0,1.94,Hormigon H-35 con fibra,2026-04-12,ENG-8821,PASS,Comportamiento elastico conforme`
+      }
+    };
+
+    function logTerm(msg, type = 'info') {
+      const consoleEl = document.getElementById('term-console');
+      const div = document.createElement('div');
+      div.className = `term-line ${type}`;
+      div.textContent = `> [${new Date().toLocaleTimeString()}] ${msg}`;
+      consoleEl.appendChild(div);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function setPipeStep(stepNum, state, statusText) {
+      const el = document.getElementById(`pipe-step-${stepNum}`);
+      const st = document.getElementById(`pipe-status-${stepNum}`);
+      el.className = `pipeline-step-node ${state}`;
+      st.textContent = statusText;
+    }
+
+    function resetPipeline() {
+      for (let i = 1; i <= 6; i++) {
+        setPipeStep(i, '', 'Waiting');
+      }
+      document.getElementById('term-console').innerHTML = '';
+      document.getElementById('results-deck').style.display = 'none';
+    }
+
+    async function calculateSha256(text) {
+      const msgUint8 = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function executeAutomation(csvContent, fileName) {
+      resetPipeline();
+      document.getElementById('selected-file-label').textContent = fileName;
+      logTerm(`Starting live automation pipeline for: ${fileName}...`, 'info');
+
+      // Paso 1: Cálculo Criptográfico SHA-256 en Navegador
+      setPipeStep(1, 'active', 'Computing...');
+      logTerm('Computing cryptographic Document DNA (SHA-256) in client...', 'info');
+      const clientHash = await calculateSha256(csvContent);
+      logTerm(`Document DNA (SHA-256) computed: sha256:${clientHash.substring(0, 24)}...`, 'ok');
+      setPipeStep(1, 'completed', 'DNA OK');
+
+      // Paso 2: Análisis de Esquema y Lineage DataHub
+      setPipeStep(2, 'active', 'Structuring...');
+      const lines = csvContent.trim().split(/\r?\n/).filter(l => l.trim().length > 0);
+      const cols = lines[0] ? lines[0].split(',').map(c => c.trim()) : [];
+      logTerm(`Schema detected: ${cols.length} columns (${lines.length - 1} field elements). Syncing with DataHub...`, 'info');
+      setPipeStep(2, 'completed', `${cols.length}/11 Cols OK`);
+
+      // Paso 3: Enrutamiento y Envío a Backend / Foxit Cloud
+      setPipeStep(3, 'active', 'Evaluating NSR-10...');
+      setPipeStep(4, 'active', 'Invoking Foxit Cloud API...');
+      logTerm('Connecting to Foxit Cloud DocGen API: na1.fusion.foxit.com/document-generation/api/GenerateDocumentBase64...', 'info');
+
+      try {
+        const baseUrl = (window.location.origin && window.location.origin.startsWith('http')) 
+          ? window.location.origin 
+          : 'http://localhost:4000';
+        
+        logTerm(`Sending verified payload to backend: ${baseUrl}/api/process-csv...`, 'info');
+
+        const startTime = Date.now();
+        const response = await fetch(`${baseUrl}/api/process-csv`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ csvContent: csvContent, fileName: fileName })
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`Server returned HTTP code ${response.status}: ${errText}`);
+        }
+
+        const data = await response.json();
+        const totalRoundtrip = Date.now() - startTime;
+
+        // Paso 3: NSR-10 Verificado
+        const totalElements = data.structural_metrics.total_elements;
+        const fails = data.structural_metrics.critical_fails;
+        const warns = data.structural_metrics.warnings;
+        setPipeStep(3, fails > 0 ? 'error' : (warns > 0 ? 'active' : 'completed'), `${totalElements} elem (${fails} fails)`);
+        logTerm(`NSR-10 Evaluation: ${totalElements} elements analyzed | Avg SF = ${data.structural_metrics.avg_safety_factor} | Critical failures = ${fails}`, fails > 0 ? 'err' : 'ok');
+
+        // Paso 4: Foxit DocGen API
+        logTerm(`Foxit Cloud DocGen API respondió en ${data.foxit_api.latency_ms} ms (Status: ${data.foxit_api.status}, Roundtrip total: ${totalRoundtrip}ms)`, 'ok');
+        setPipeStep(4, 'completed', `${data.foxit_api.latency_ms}ms Foxit OK`);
+
+        // Paso 5: Gobernanza
+        setPipeStep(5, 'active', 'Evaluating Trust Score...');
+        logTerm(`Governance Engine: Trust Score ${data.governance.trust_score}% | Risk: ${data.governance.risk_level}`, data.governance.decision === 'AUTOMATION_ALLOWED' ? 'ok' : 'err');
+
+        if (data.governance.decision === 'AUTOMATION_ALLOWED') {
+          setPipeStep(5, 'completed', `Trust: ${data.governance.trust_score}%`);
+          // Paso 6: Foxit eSign
+          setPipeStep(6, 'active', 'Signing Envelope...');
+          logTerm(`Dispatching Foxit eSign envelope: ${data.foxit_esign.envelope_id} with anchors [[sig_inspector_pe]] and [[sig_ai_governance]]`, 'ok');
+          setPipeStep(6, 'completed', 'SEALED & SIGNED');
+          logTerm('✓ End-to-end process completed in real time with 100% verified success.', 'ok');
+        } else {
+          setPipeStep(5, 'error', `BLOCKED (${data.governance.trust_score}%)`);
+          setPipeStep(6, 'error', 'BLOCKED FOR SAFETY');
+          logTerm(`⚠️ GOVERNANCE ALERT: ${data.governance.message}`, 'err');
+          logTerm('⛔ Foxit eSign dispatch CANCELLED by security policy.', 'warn');
+        }
+
+        // Renderizar Resultados en UI
+        renderResults(data);
+
+      } catch (err) {
+        logTerm(`Error en ejecución: ${err.message}`, 'err');
+        if (err.message.includes('fetch') || err.message.includes('Failed')) {
+          logTerm('💡 Tip: Make sure the backend server is running by executing "node scripts/serve.js" on port 4000.', 'warn');
+        }
+        setPipeStep(4, 'error', 'Error API');
+      }
+    }
+
+    function renderResults(data) {
+      document.getElementById('results-deck').style.display = 'flex';
+
+      const isAllowed = data.governance.decision === 'AUTOMATION_ALLOWED';
+
+      // Trust Score Card
+      document.getElementById('res-score-num').textContent = data.governance.trust_score;
+      document.getElementById('res-risk-label').textContent = `Risk Level: ${data.governance.risk_level}`;
+      document.getElementById('res-gov-msg').textContent = data.governance.message;
+
+      const badge = document.getElementById('res-trust-badge');
+      const scoreCircle = document.getElementById('res-score-circle');
+      if (isAllowed) {
+        badge.textContent = 'MAXIMUM TRUST';
+        badge.className = 'status-badge-ok';
+        scoreCircle.style.borderColor = '#059669';
+        scoreCircle.style.background = '#ECFDF5';
+        document.getElementById('res-score-num').style.color = '#059669';
+      } else {
+        badge.textContent = 'CRITICAL RISK';
+        badge.className = 'status-badge-crit';
+        scoreCircle.style.borderColor = '#DC2626';
+        scoreCircle.style.background = '#FEF2F2';
+        document.getElementById('res-score-num').style.color = '#DC2626';
+      }
+
+      document.getElementById('res-chk-hash').textContent = data.source_sha256.substring(0, 16) + '... ✓ PASS';
+      document.getElementById('res-chk-schema').textContent = `✓ ${data.schema_compliance.valid_columns}/${data.schema_compliance.expected_columns} COLS`;
+      document.getElementById('res-chk-nsr10').textContent = isAllowed ? '✓ 100% COMPLIANT' : '⚠️ FAILURE DETECTED';
+      document.getElementById('res-chk-nsr10').style.color = isAllowed ? '#059669' : '#DC2626';
+
+      // Foxit eSign Envelope Card
+      document.getElementById('res-envelope-id').textContent = data.foxit_esign.envelope_id;
+      document.getElementById('res-envelope-badge').textContent = data.foxit_esign.status;
+      document.getElementById('res-envelope-badge').className = isAllowed ? 'status-badge-ok' : 'status-badge-crit';
+      document.getElementById('res-foxit-latency').textContent = `${data.foxit_api.latency_ms} ms`;
+      document.getElementById('res-routing-mode').textContent = isAllowed ? 'FAST_PATH_AUTO' : 'FORCE_HUMAN_OVERSIGHT';
+
+      const btnDl = document.getElementById('res-btn-download');
+      if (isAllowed) {
+        btnDl.style.display = 'inline-flex';
+        btnDl.href = `${data.foxit_api.pdf_url}?t=${Date.now()}`;
+      } else {
+        btnDl.style.display = 'none';
+      }
+
+      // Table DNA & Elements
+      document.getElementById('table-sheet-dna').textContent = `DNA: sha256:${data.source_sha256.substring(0, 24)}...`;
+      
+      const tbody = document.getElementById('elements-table-body');
+      tbody.innerHTML = '';
+
+      data.elements.forEach(el => {
+        const tr = document.createElement('tr');
+        if (el.is_anomaly) {
+          tr.style.background = '#FEF2F2';
+        }
+
+        let badgeHtml = `<span class="status-badge-ok">${el.compliance_status}</span>`;
+        if (el.status_code === 'CRITICAL_FAIL') {
+          badgeHtml = `<span class="status-badge-crit">${el.compliance_status}</span>`;
+        } else if (el.status_code === 'WARNING') {
+          badgeHtml = `<span class="status-badge-crit" style="background: #FEF3C7; border-color: #FCD34D; color: #D97706;">${el.compliance_status}</span>`;
+        }
+
+        tr.innerHTML = `
+          <td><strong>${el.element_id}</strong></td>
+          <td>${el.element_type}</td>
+          <td>${el.location_grid}</td>
+          <td>${el.applied_load_kn_m2}</td>
+          <td>${el.design_capacity_kn_m2}</td>
+          <td><strong style="color: ${el.is_anomaly ? '#DC2626' : '#059669'}; font-family: var(--font-mono);">${el.safety_factor}</strong></td>
+          <td style="font-family: var(--font-mono);">&ge; ${el.normative_min_fs}</td>
+          <td>${el.material_spec}</td>
+          <td>${badgeHtml}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Scroll suave hacia los resultados
+      document.getElementById('results-deck').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function runPreset(key) {
+      const preset = PRESETS[key];
+      if (preset) {
+        executeAutomation(preset.content, preset.name);
+      }
+    }
+
+    // File input handler
+    const fileInput = document.getElementById('csv-file-input');
+    fileInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = evt => {
+          executeAutomation(evt.target.result, file.name);
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    // Drag and drop handlers
+    const dropzone = document.getElementById('csv-dropzone');
+    dropzone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+    dropzone.addEventListener('dragleave', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+    });
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        const file = e.dataTransfer.files[0];
+        const reader = new FileReader();
+        reader.onload = evt => {
+          executeAutomation(evt.target.result, file.name);
+        };
+        reader.readAsText(file);
+      }
+    });
+  </script>
+</body>
+</html>

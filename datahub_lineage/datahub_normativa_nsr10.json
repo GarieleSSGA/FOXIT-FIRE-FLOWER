@@ -1,0 +1,42 @@
+{
+  "header": {
+    "system": "FOXIT_TRUST_ECOSYSTEM",
+    "layer": "DATAHUB_CONTEXT_LAYER",
+    "project_id": "PRJ-FIRE-FLOWER-2026",
+    "document_id": "NORM-NSR-10-2026",
+    "document_type": "REGULATORY_STANDARD",
+    "version": "v2026.1",
+    "integrity_status": "OFFICIAL_STANDARD"
+  },
+  "metadata": {
+    "source_file": "base_de_datos/NORMATIVA_ESTRUCTURAL_NSR10_2026.csv",
+    "regulatory_body": "Comisión Asesora Permanente de Construcciones Sismorresistentes",
+    "seismic_zone": "Zona 4 (Alta Sismicidad)",
+    "effective_date": "2026-01-01",
+    "total_records": 4,
+    "total_columns": 9
+  },
+  "columns_dictionary": [
+    { "index": 1, "column": "norm_id", "type": "STRING", "description": "Código de artículo normativo" },
+    { "index": 2, "column": "element_type", "type": "STRING", "description": "Tipología estructural normada" },
+    { "index": 3, "column": "min_safety_factor", "type": "FLOAT", "description": "Factor de seguridad mínimo normativo" },
+    { "index": 4, "column": "max_deflection_ratio", "type": "STRING", "description": "Límite de flecha bajo servicio" },
+    { "index": 5, "column": "required_concrete_grade", "type": "STRING", "description": "Resistencia característica f'c mínima" },
+    { "index": 6, "column": "max_load_allowance_kn_m2", "type": "FLOAT", "description": "Carga máxima admisible estándar" },
+    { "index": 7, "column": "seismic_zone", "type": "STRING", "description": "Zona de amenaza sísmica" },
+    { "index": 8, "column": "regulatory_body", "type": "STRING", "description": "Ente emisor de la ley" },
+    { "index": 9, "column": "effective_date", "type": "DATE", "description": "Fecha de vigencia legal" }
+  ],
+  "standard_thresholds": {
+    "Viga Concreto Armado": { "min_fs": 1.50, "min_concrete": "H-30", "max_load_kn": 800.0 },
+    "Columna Principal": { "min_fs": 1.75, "min_concrete": "H-45", "max_load_kn": 1200.0 },
+    "Losa Aligerada": { "min_fs": 1.50, "min_concrete": "H-25", "max_load_kn": 500.0 },
+    "Cimentacion": { "min_fs": 2.00, "min_concrete": "H-35", "max_load_kn": 2000.0 }
+  },
+  "human_oversight": {
+    "supervised_by": "Senior Structural Auditor",
+    "decision": "APPROVED",
+    "verified_timestamp": "2026-01-15T09:05:00Z",
+    "signature_hash": "sha256:regulatory_homologation_sig"
+  }
+}
