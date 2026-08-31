@@ -6,7 +6,18 @@
 [![Compliance](https://img.shields.io/badge/Standard-NSR--10%20%2F%20Decree%20926-blue)](https://www.minvivienda.gov.co/)
 [![Security](https://img.shields.io/badge/Cryptography-SHA--256%20%2B%20PKI%20X.509-black)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API)
 
-> *"FOXIT FIRE FLOWER connects artificial intelligence with a verifiable data layer and converts its results into documentary evidence through Foxit DocGen and Foxit eSign."*
+> **"FOXIT FIRE FLOWER connects artificial intelligence with a verifiable data layer and converts its results into documentary evidence through Foxit DocGen and Foxit eSign."**
+
+---
+
+### 🌐 Live Demo & Interactive Showcase
+- **🚀 Main Landing Page & Portal:** [Open `frontend/foxit_fire_flower_hero.html`](frontend/foxit_fire_flower_hero.html) *(or double-click to view in your browser)*
+- **⚡ Face 1 (AI Failure Demo):** [Open `frontend/cara1_simulacion.html`](frontend/cara1_simulacion.html)
+- **🛡️ Face 2 (Ecosystem & Governance):** [Open `frontend/index.html`](frontend/index.html)
+- **🤖 Face 3 (Live Automation Pipeline):** [Open `frontend/cara3_demo_automatizado.html`](frontend/cara3_demo_automatizado.html)
+- **🗺️ Process Map & Architecture:** [Open `frontend/mapa_proceso.html`](frontend/mapa_proceso.html)
+
+> 💡 **Live Backend Execution:** The interactive UI can be browsed directly as static HTML. To execute the **full live end-to-end backend pipeline** connected to Foxit Cloud APIs and DataHub telemetry, follow the [🚀 Quick Start (Local Run)](#-quick-start-local-run) instructions below!
 
 ---
 
