@@ -10,14 +10,16 @@
 
 ---
 
-### 🌐 Live Demo & Interactive Showcase
-- **🚀 Main Landing Page & Portal:** [Open `frontend/foxit_fire_flower_hero.html`](frontend/foxit_fire_flower_hero.html) *(or double-click to view in your browser)*
+### 🌐 Live Demo & Interactive GitHub Pages
+👉 **Live Web App:** **[https://garielessga.github.io/FOXIT-FIRE-FLOWER/](https://garielessga.github.io/FOXIT-FIRE-FLOWER/)**
+
+- **🚀 Main Landing Page & Portal:** [Open `frontend/index.html`](frontend/index.html) *(or view via GitHub Pages)*
 - **⚡ Face 1 (AI Failure Demo):** [Open `frontend/cara1_simulacion.html`](frontend/cara1_simulacion.html)
-- **🛡️ Face 2 (Ecosystem & Governance):** [Open `frontend/index.html`](frontend/index.html)
+- **🛡️ Face 2 (Ecosystem & Governance):** [Open `frontend/cara2_gobernanza.html`](frontend/cara2_gobernanza.html)
 - **🤖 Face 3 (Live Automation Pipeline):** [Open `frontend/cara3_demo_automatizado.html`](frontend/cara3_demo_automatizado.html)
 - **🗺️ Process Map & Architecture:** [Open `frontend/mapa_proceso.html`](frontend/mapa_proceso.html)
 
-> 💡 **Live Backend Execution:** The interactive UI can be browsed directly as static HTML. To execute the **full live end-to-end backend pipeline** connected to Foxit Cloud APIs and DataHub telemetry, follow the [🚀 Quick Start (Local Run)](#-quick-start-local-run) instructions below!
+> 💡 **Live Backend Execution:** The interactive UI can be browsed directly on GitHub Pages or locally as static HTML. To execute the **full live end-to-end backend pipeline** connected to Foxit Cloud APIs and DataHub telemetry, follow the [🚀 Quick Start (Local Run)](#-quick-start-local-run) instructions below!
 
 ---
 
@@ -57,7 +59,7 @@ graph LR
 ```
 
 - **[Face 1: Agent Failure (Simulation)](frontend/cara1_simulacion.html):** Demonstrates the real-world danger of blind AI automation approving critical structural overloads.
-- **[Face 2: Ecosystem & Governance](frontend/index.html):** 3-stage human-in-the-loop audit establishing verifiable Ground Truth.
+- **[Face 2: Ecosystem & Governance](frontend/cara2_gobernanza.html):** 3-stage human-in-the-loop audit establishing verifiable Ground Truth.
 - **[Face 3: Production Automated Demo](frontend/cara3_demo_automatizado.html):** Sub-1.2s live pipeline with drag & drop CSV ingestion, real-time telemetry, and automated Foxit Cloud dispatch.
 - **[Process Map & Architecture](frontend/mapa_proceso.html):** Interactive 6-stage flowchart, technical inspector, and architectural matrix.
 
@@ -103,15 +105,17 @@ Open your browser at: **`http://localhost:4000`**
 ## 📊 Repository Structure
 
 ```
+├── index.html                    # Root redirect for GitHub Pages
 ├── adicionales/                  # Submission docs & 25 Tags
 │   ├── DEVPOST_SUBMISSION.md
+│   ├── GALLERY_CAPTIONS.md
 │   └── TAGS_KEYWORDS.md
 ├── base_de_datos/               # Test datasets (A1 Ground Truth, A2 Regular, A3 Tampered, A4 Collapse)
 ├── docs/                        # Technical specs & API documentation
 ├── frontend/                    # Web Application & Interactive Demos
-│   ├── foxit_fire_flower_hero.html   # Main Landing Page
+│   ├── index.html                    # Main Landing Page & Portal
 │   ├── cara1_simulacion.html         # Face 1: AI Agent Failure Demo
-│   ├── index.html                    # Face 2: Human Trust & Governance
+│   ├── cara2_gobernanza.html         # Face 2: Human Trust & Governance
 │   ├── cara3_demo_automatizado.html  # Face 3: Live Automation Pipeline
 │   └── mapa_proceso.html             # Process Map & Flowchart
 ├── plantillas_foxit/            # DOCX Templates & Smart Tag definitions

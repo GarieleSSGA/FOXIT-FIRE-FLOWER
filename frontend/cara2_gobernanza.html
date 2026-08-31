@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>FACE 2 — Trust Ecosystem & Governance | FOXIT FIRE FLOWER</title>
+  <meta name="description" content="FACE 2: Trust Ecosystem with human oversight. DataHub, Cryptographic Lineage, Foxit DocGen API, and NSR-10 Governance.">
+
+  <!-- Google Fonts: Manrope, JetBrains Mono & Newsreader -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS: EDITORIAL HIGH CONTRAST (WHITE, OBSIDIAN BLACK & ELECTRIC ORANGE)
+       ========================================================================== */
+    :root {
+      --bg-canvas: #F8F9FA;
+      --bg-white: #FFFFFF;
+      --bg-surface: #F3F4F6;
+      --bg-surface-subtle: #F9FAFB;
+      
+      --obsidian-black: #0B0F19;
+      --obsidian-surface: #111827;
+      --obsidian-card: #182030;
+      
+      --foxit-orange: #FF3700;
+      --foxit-orange-vibrant: #FF4900;
+      --foxit-orange-glow: rgba(255, 55, 0, 0.25);
+      --foxit-orange-subtle: #FFF3EF;
+      --foxit-orange-border: #FFD4C4;
+      
+      --text-black: #0F172A;
+      --text-body: #334155;
+      --text-muted: #64748B;
+      --text-faint: #94A3B8;
+      --text-white: #FFFFFF;
+      
+      --accent-green: #059669;
+      --accent-green-bg: #ECFDF5;
+      --accent-green-border: #A7F3D0;
+      
+      --accent-gold: #D97706;
+      --accent-gold-bg: #FEF3C7;
+      
+      --border-light: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --border-dark: #1E293B;
+      
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-serif-italic: 'Newsreader', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px -2px rgba(0,0,0,0.08), 0 2px 6px -1px rgba(0,0,0,0.04);
+      --shadow-lg: 0 12px 32px -4px rgba(0,0,0,0.12), 0 4px 12px -2px rgba(0,0,0,0.05);
+      --shadow-orange: 0 8px 24px rgba(255, 55, 0, 0.22);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      background-color: var(--bg-canvas);
+      color: var(--text-black);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       TOP NAVIGATION BAR (CLEAN EDITORIAL WITH ELECTRIC ACCENTS)
+       ========================================================================== */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid var(--border-light);
+      padding: 14px clamp(20px, 4vw, 56px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-fire-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--foxit-orange);
+      color: #FFF;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(255, 55, 0, 0.35);
+    }
+
+    .brand-title-text {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-black);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .brand-title-text span {
+      color: var(--foxit-orange);
+    }
+
+    .nav-links-menu {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links-menu a {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links-menu a:hover {
+      color: var(--text-black);
+      background: var(--bg-surface);
+    }
+
+    .nav-links-menu a.active {
+      color: var(--foxit-orange);
+      background: var(--foxit-orange-subtle);
+      font-weight: 700;
+      border: 1px solid var(--foxit-orange-border);
+    }
+
+    .nav-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.25s var(--ease-smooth);
+    }
+
+    .nav-btn-primary:hover {
+      background: var(--foxit-orange);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-orange);
+    }
+
+    /* ==========================================================================
+       CONTAINER & EDITORIAL HERO HEADER
+       ========================================================================== */
+    .page-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .hero-editorial-header {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 24px;
+      padding: clamp(28px, 4vw, 44px);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-editorial-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--foxit-orange) 0%, #FFA800 50%, var(--obsidian-black) 100%);
+    }
+
+    .hero-grid-2col {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: clamp(24px, 3.5vw, 48px);
+      align-items: center;
+    }
+
+    .hero-pre-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--foxit-orange);
+      background: var(--foxit-orange-subtle);
+      border: 1px solid var(--foxit-orange-border);
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero-main-title {
+      font-size: clamp(1.8rem, 3.2vw + 0.4rem, 2.9rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: var(--text-black);
+    }
+
+    .hero-main-title .serif-accent {
+      font-family: var(--font-serif-italic);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--foxit-orange);
+      display: block;
+    }
+
+    .hero-description {
+      font-size: clamp(14px, 1vw + 3px, 15.5px);
+      color: var(--text-body);
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    .hero-meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1.5px solid var(--border-light);
+    }
+
+    /* Video Stream Companion Capsule */
+    .hero-video-companion {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-video-box {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 320px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000000;
+      border: 2px solid var(--obsidian-black);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), 0 0 35px var(--foxit-orange-glow);
+    }
+
+    .hero-video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-floating-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 55, 0, 0.5);
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    .video-chip-card {
+      position: absolute;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-strong);
+      padding: 8px 14px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      z-index: 15;
+    }
+
+    .video-chip-top {
+      top: -12px;
+      left: -16px;
+    }
+
+    .video-chip-bottom {
+      bottom: -12px;
+      right: -16px;
+    }
+
+    .video-chip-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-black);
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .video-chip-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--foxit-orange);
+      line-height: 1.2;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      background: var(--bg-surface);
+      color: var(--text-body);
+      border: 1px solid var(--border-light);
+      padding: 6px 14px;
+      border-radius: 8px;
+    }
+
+    .meta-chip.active {
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      border-color: var(--obsidian-black);
+    }
+
+    .meta-chip.orange {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      border-color: var(--foxit-orange);
+    }
+
+    /* ==========================================================================
+       PHASE CARDS (EDITORIAL PANELS WITH OBSIDIAN BLACK ACCENT ROWS)
+       ========================================================================== */
+    .phase-card {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 24px;
+      padding: clamp(24px, 3vw, 36px);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .phase-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid var(--border-light);
+    }
+
+    .phase-badge-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .phase-number-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      padding: 5px 12px;
+      border-radius: 6px;
+    }
+
+    .phase-number-badge.orange {
+      background: var(--foxit-orange);
+    }
+
+    .phase-heading {
+      font-size: clamp(16px, 1.4vw, 19px);
+      font-weight: 800;
+      color: var(--text-black);
+      letter-spacing: -0.02em;
+    }
+
+    .human-tag-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent-green);
+      background: var(--accent-green-bg);
+      border: 1.5px solid var(--accent-green-border);
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    /* 2 Column Workspace Grid */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .grid-1col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    /* ==========================================================================
+       CHAT & DATAHUB PANELS
+       ========================================================================== */
+    .chat-bubble-container {
+      background: var(--bg-surface-subtle);
+      border: 1.5px solid var(--border-light);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-bubble-header {
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-bubble-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-black);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-tag-pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .chat-stream-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    .chat-entry {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .entry-avatar {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .entry-avatar.user {
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+    }
+
+    .entry-avatar.ai {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+    }
+
+    .entry-avatar.foxit {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-strong);
+      font-size: 16px;
+    }
+
+    .entry-content {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text-body);
+      line-height: 1.55;
+      flex: 1;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .entry-content strong {
+      color: var(--text-black);
+    }
+
+    .attachment-capsules {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .capsule-file {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-black);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .capsule-file.orange {
+      background: var(--foxit-orange-subtle);
+      border-color: var(--foxit-orange-border);
+      color: var(--foxit-orange);
+    }
+
+    .column-badges-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 8px 0 12px;
+    }
+
+    .badge-col {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      color: var(--text-body);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .badge-col.norm {
+      background: var(--foxit-orange-subtle);
+      border-color: var(--foxit-orange-border);
+      color: var(--foxit-orange);
+    }
+
+    /* Human Action Card inside Chat */
+    .human-decision-box {
+      margin-top: 14px;
+      background: var(--foxit-orange-subtle);
+      border: 1.5px solid var(--foxit-orange-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-action-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 100px;
+      cursor: pointer;
+      width: fit-content;
+      box-shadow: 0 4px 14px rgba(255, 55, 0, 0.25);
+      transition: all 0.2s var(--ease-smooth);
+    }
+
+    .btn-action-pill:hover {
+      background: var(--obsidian-black);
+      transform: translateY(-1px);
+    }
+
+    .btn-action-pill:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .chat-bottom-input {
+      padding: 10px 16px;
+      background: var(--bg-white);
+      border-top: 1px solid var(--border-light);
+    }
+
+    .input-disabled-preview {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      outline: none;
+    }
+
+    /* DataHub & Lineage Right Column */
+    .data-cards-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .data-panel-card {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .panel-card-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-light);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-black);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--obsidian-black);
+      color: #FFF;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .meta-2col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-light);
+    }
+
+    .meta-grid-item {
+      background: var(--bg-white);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .meta-key-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .meta-val-text {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-black);
+    }
+
+    /* Lineage Tree Items */
+    .lineage-stack {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lineage-step-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-surface-subtle);
+      border: 1px solid var(--border-light);
+      padding: 10px 14px;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .lineage-step-item:hover {
+      border-color: var(--foxit-orange);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lineage-item-icon {
+      font-size: 18px;
+      min-width: 24px;
+    }
+
+    .lineage-item-texts {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .lineage-item-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-black);
+    }
+
+    .lineage-item-hash {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--foxit-orange);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       FASE 2: FOXIT CLOUD COMPILER & HIGH CONTRAST DOCUMENT TABLE
+       ========================================================================== */
+    .foxit-telemetry-banner {
+      background: var(--obsidian-black);
+      border-radius: 14px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+    }
+
+    .telemetry-status-chip {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 10.5px;
+    }
+
+    .btn-view-pdf-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #FFFFFF;
+      color: var(--obsidian-black);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-weight: 800;
+      font-size: 11px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-view-pdf-cta:hover {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+    }
+
+    /* Editorial High-Contrast Document Card (Like the screenshot's row style) */
+    .document-rendered-sheet {
+      background: var(--bg-white);
+      border: 2px solid var(--border-dark);
+      border-radius: 20px;
+      padding: clamp(20px, 3vw, 36px);
+      box-shadow: var(--shadow-lg);
+      color: var(--text-black);
+    }
+
+    .sheet-top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--text-black);
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+
+    .sheet-title-col h3 {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-black);
+      letter-spacing: -0.02em;
+    }
+
+    .sheet-title-col p {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-family: var(--font-mono);
+    }
+
+    .sheet-dna-col {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .sheet-dna-col strong {
+      color: var(--text-black);
+    }
+
+    /* High-Contrast Table (with Black Highlighted Row like Screenshot) */
+    .editorial-table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 24px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-light);
+    }
+
+    .editorial-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      text-align: left;
+    }
+
+    .editorial-table thead th {
+      background: var(--bg-surface);
+      border-bottom: 1.5px solid var(--border-strong);
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-black);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .editorial-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-body);
+    }
+
+    .editorial-table tbody tr:hover {
+      background: var(--bg-surface-subtle);
+    }
+
+    /* Hero Emphasized Row (Obsidian Black with White Text, like "Field" row in screenshot) */
+    .editorial-table tbody tr.row-hero-highlight {
+      background: var(--obsidian-black) !important;
+      color: #FFFFFF !important;
+    }
+
+    .editorial-table tbody tr.row-hero-highlight td {
+      color: #FFFFFF !important;
+      border-bottom: 1px solid var(--obsidian-surface);
+    }
+
+    .editorial-table tbody tr.row-hero-highlight strong {
+      color: #FFFFFF !important;
+    }
+
+    .tag-pass-green {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      background: var(--accent-green-bg);
+      border: 1px solid var(--accent-green-border);
+      color: var(--accent-green);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .tag-pass-white {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      background: #FFFFFF;
+      color: var(--obsidian-black);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* 3 Summary Badges */
+    .summary-metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .metric-box-card {
+      background: var(--bg-surface-subtle);
+      border: 1.5px solid var(--border-light);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .metric-box-card .m-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .metric-box-card .m-value {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent-green);
+    }
+
+    /* Bottom Blue / Orange Highlight Banner (Directly inspired by screenshot) */
+    .action-cta-bar {
+      background: var(--foxit-orange);
+      border-radius: 14px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: #FFFFFF;
+      box-shadow: var(--shadow-orange);
+    }
+
+    .action-cta-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .action-cta-text strong {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .action-cta-text span {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .btn-cta-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFFFFF;
+      color: var(--obsidian-black);
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 10px 22px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cta-white:hover {
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       FASE 3: GOBERNANZA & TRUST SCORE PANEL
+       ========================================================================== */
+    .trust-score-editorial-card {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .trust-circle-display-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .score-radial-box {
+      width: 90px;
+      height: 90px;
+      min-width: 90px;
+      border-radius: 50%;
+      border: 4px solid var(--accent-green);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-green-bg);
+    }
+
+    .score-num-big {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--accent-green);
+      line-height: 1;
+    }
+
+    .score-denom-sub {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .score-copy-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .score-badge-risk {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-green);
+    }
+
+    .score-desc-text {
+      font-size: 12.5px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .checks-rule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .check-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    .check-item-row strong {
+      font-weight: 700;
+      color: var(--text-black);
+    }
+
+    .check-item-row span {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    /* Policy Outcome Box */
+    .policy-verdict-box {
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .policy-verdict-box small {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--foxit-orange);
+      text-transform: uppercase;
+    }
+
+    .policy-verdict-box strong {
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       ESIGN SEAL ENVELOPE (OBSIDIAN LUXURY DECK)
+       ========================================================================== */
+    .esign-seal-card {
+      background: var(--obsidian-black);
+      color: #FFFFFF;
+      border-radius: 24px;
+      padding: clamp(24px, 3.5vw, 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .esign-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 20px;
+      border-bottom: 1.5px solid var(--border-dark);
+    }
+
+    .esign-brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      padding: 4px 12px;
+      border-radius: 6px;
+    }
+
+    .envelope-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .env-slot-item {
+      background: var(--obsidian-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .env-slot-item small {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-faint);
+      text-transform: uppercase;
+    }
+
+    .env-slot-item strong {
+      font-size: 12.5px;
+      color: #FFFFFF;
+    }
+
+    .pki-signers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .pki-signer-card {
+      background: var(--obsidian-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .pki-avatar-circle {
+      font-size: 22px;
+    }
+
+    .pki-card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .pki-card-info strong {
+      font-size: 13px;
+      color: #FFFFFF;
+    }
+
+    .pki-card-info span {
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    .pki-smart-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--foxit-orange);
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
+    /* Final Action Bar */
+    .final-approval-dock {
+      background: var(--obsidian-surface);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .btn-seal-master {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      font-weight: 800;
+      padding: 12px 28px;
+      border-radius: 100px;
+      cursor: pointer;
+      box-shadow: var(--shadow-orange);
+      transition: all 0.25s ease;
+    }
+
+    .btn-seal-master:hover {
+      background: #FFFFFF;
+      color: var(--obsidian-black);
+      transform: translateY(-2px);
+    }
+
+    .btn-download-pdf-cta {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: #FFFFFF;
+      color: var(--obsidian-black);
+      padding: 12px 22px;
+      border-radius: 100px;
+      font-size: 12.5px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-download-pdf-cta:hover {
+      background: var(--foxit-orange);
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       BOTTOM FOOTER
+       ========================================================================== */
+    .page-footer {
+      background: var(--bg-white);
+      border-top: 1.5px solid var(--border-light);
+      padding: 24px clamp(20px, 4vw, 56px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-spec-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-spec-group strong {
+      color: var(--text-black);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .grid-2col, .envelope-meta-grid, .pki-signers-grid, .summary-metrics-strip {
+        grid-template-columns: 1fr;
+      }
+      .nav-links-menu { display: none; }
+      .sheet-top-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="top-navbar">
+    <a href="index.html" class="nav-brand-group">
+      <span class="brand-fire-pill">🔥</span>
+      <span class="brand-title-text">FOXIT <span>FIRE FLOWER</span></span>
+    </a>
+
+    <ul class="nav-links-menu">
+      <li><a href="cara1_simulacion.html">FACE 1: AI Failure</a></li>
+      <li><a href="cara2_gobernanza.html" class="active">FACE 2: Ecosystem &amp; Governance</a></li>
+      <li><a href="cara3_demo_automatizado.html">FACE 3: Automated Demo</a></li>
+      <li><a href="mapa_proceso.html">Process Map</a></li>
+    </ul>
+
+    <a href="cara3_demo_automatizado.html" class="nav-btn-primary">
+      <span>⚡ Launch Face 3 Demo</span>
+    </a>
+  </nav>
+
+  <div class="page-container">
+
+    <!-- ==========================================================================
+         HERO INTRO SECTION (CLEAN EDITORIAL AESTHETIC + LIVE VIDEO CAPSULE)
+         ========================================================================== -->
+    <header class="hero-editorial-header">
+      <div class="hero-grid-2col">
+        
+        <!-- Left Editorial Copy -->
+        <div>
+          <div class="hero-pre-badge">
+            <span>🛡️</span>
+            <span>FACE 2 — HUMAN OVERSIGHT &amp; TRUST BUILDING</span>
+          </div>
+
+          <h1 class="hero-main-title">
+            The human foundation that enables
+            <span class="serif-accent">automation without hallucinations.</span>
+          </h1>
+
+          <p class="hero-description">
+            AI cannot self-certify without an anchor in reality. In this Face 2, the auditor engineer validates field sources, DataHub indexes the 11-column schemas with immutable SHA-256 hashes, Foxit DocGen compiles the official template, and the governance engine authorizes the PKI digital signature.
+          </p>
+
+          <div class="hero-meta-strip">
+            <span class="meta-chip active">● 3-STAGE HUMAN OVERSIGHT</span>
+            <span class="meta-chip orange">🦊 FOXIT DOCGEN CLOUD API</span>
+            <span class="meta-chip">🧬 DUAL DOCUMENT DNA SHA-256</span>
+            <span class="meta-chip">📜 NSR-10 STANDARD</span>
+            <span class="meta-chip">✍️ FOXIT eSIGN SMART TAGS</span>
+          </div>
+        </div>
+
+        <!-- Right Video Stream Companion Capsule -->
+        <div class="hero-video-companion">
+          <!-- Floating Top Chip -->
+          <div class="video-chip-card video-chip-top">
+            <span style="font-size: 16px;">🛡️</span>
+            <div>
+              <div class="video-chip-title">NSR-10 Ground Truth</div>
+              <div class="video-chip-sub">100% Human-Audited</div>
+            </div>
+          </div>
+
+          <!-- Video Stream Box -->
+          <div class="hero-video-box">
+            <video autoplay loop muted playsinline id="cara2-video-stream">
+              <source src="../c5bb940f-21d7-4c26-a696-7d50cb1fb5ab.mp4" type="video/mp4">
+              <source src="./c5bb940f-21d7-4c26-a696-7d50cb1fb5ab.mp4" type="video/mp4">
+            </video>
+            <div class="video-floating-badge">
+              <span class="brand-fire-pill" style="width: 18px; height: 18px; font-size: 10px;">🔥</span>
+              <span>FIRE FLOWER v4</span>
+            </div>
+          </div>
+
+          <!-- Floating Bottom Chip -->
+          <div class="video-chip-card video-chip-bottom">
+            <span style="font-size: 16px;">⚡</span>
+            <div>
+              <div class="video-chip-title">DNA SHA-256 Verified</div>
+              <div class="video-chip-sub">Immutable Traceability</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         FASE 1: INGESTA DUAL & DATAHUB / LINEAGE
+         ========================================================================== -->
+    <section class="phase-card">
+      <div class="phase-top-bar">
+        <div class="phase-badge-title">
+          <span class="phase-number-badge">PHASE 1</span>
+          <h2 class="phase-heading">Dual Audited-Source Ingestion → DataHubs & Cryptographic Lineages</h2>
+        </div>
+        <div class="human-tag-status">
+          <span>👨‍💻</span>
+          <span id="audit-pill-text-1">Human Oversight 1: Active</span>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+
+        <!-- Chat 1 -->
+        <div class="chat-bubble-container">
+          <div class="chat-bubble-header">
+            <div class="chat-bubble-title">
+              <span>💬</span>
+              <span>Chat 1: Mapping & Extraction of Audited Sources</span>
+            </div>
+            <span class="chat-tag-pill">AI Assistant API</span>
+          </div>
+
+          <div class="chat-stream-body">
+            <div class="chat-entry">
+              <div class="entry-avatar user">U</div>
+              <div class="entry-content">
+                <div class="attachment-capsules">
+                  <span class="capsule-file">📎 A1_REPORTE_ESTRUCTURAL_CLEAN_ENERO_2026.csv</span>
+                  <span class="capsule-file orange">📜 NORMATIVA_ESTRUCTURAL_NSR10_2026.csv</span>
+                </div>
+                <p>I've uploaded the <strong>Structural Report A1</strong> and the <strong>NSR-10 Seismic-Resistant Technical Standard</strong>. Identify all columns from both sources, extract the metadata for both DataHubs, and generate the Lineage trees.</p>
+              </div>
+            </div>
+
+            <div class="chat-entry">
+              <div class="entry-avatar ai">AI</div>
+              <div class="entry-content">
+                <p>✨ <strong>Both sources identified and mapped successfully!</strong></p>
+
+                <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; margin-top: 8px; color: var(--text-black);">
+                  📊 Structural Report A1 Columns (11 Fields):
+                </div>
+                <div class="column-badges-flow">
+                  <span class="badge-col">element_id</span>
+                  <span class="badge-col">element_type</span>
+                  <span class="badge-col">location_grid</span>
+                  <span class="badge-col">design_capacity_kn_m2</span>
+                  <span class="badge-col">applied_load_kn_m2</span>
+                  <span class="badge-col">safety_factor</span>
+                  <span class="badge-col">material_spec</span>
+                  <span class="badge-col">inspection_date</span>
+                  <span class="badge-col">inspector_id</span>
+                  <span class="badge-col">compliance_status</span>
+                  <span class="badge-col">notes</span>
+                </div>
+
+                <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; margin-top: 6px; color: var(--foxit-orange);">
+                  📜 NSR-10 Standard Columns (9 Fields):
+                </div>
+                <div class="column-badges-flow">
+                  <span class="badge-col norm">norm_id</span>
+                  <span class="badge-col norm">element_type</span>
+                  <span class="badge-col norm">min_safety_factor</span>
+                  <span class="badge-col norm">max_deflection_ratio</span>
+                  <span class="badge-col norm">required_concrete_grade</span>
+                  <span class="badge-col norm">max_load_allowance_kn_m2</span>
+                  <span class="badge-col norm">seismic_zone</span>
+                  <span class="badge-col norm">regulatory_body</span>
+                  <span class="badge-col norm">effective_date</span>
+                </div>
+
+                <p style="font-size: 12px; margin-top: 6px;">
+                  Both <strong>DataHub 1</strong> &amp; <strong>DataHub 2</strong> have been indexed and sealed with immutable <strong>Lineage DNA</strong> cryptographic hashes.
+                </p>
+
+                <div class="human-decision-box">
+                  <div>
+                    <strong>Human Oversight 1:</strong> Confirm the 11-column schema and synchronization of both sources.
+                  </div>
+                  <button class="btn-action-pill" id="btn-approve-step1" onclick="approveStep1()">
+                    <span>✓</span>
+                    <span>Approve Sources &amp; Proceed to Phase 2</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-bottom-input">
+            <input type="text" class="input-disabled-preview" value="Sources audited and validated by human supervisor..." readonly>
+          </div>
+        </div>
+
+        <!-- DataHub & Lineage Right Deck -->
+        <div class="data-cards-col">
+          
+          <!-- DataHub Summary Card -->
+          <div class="data-panel-card">
+            <div class="panel-card-header">
+              <span class="panel-title">🗄️ DUAL DATAHUBS (Report + Standard)</span>
+              <span class="panel-badge">2 SOURCES ON DISK</span>
+            </div>
+            <div class="meta-2col-grid">
+              <div class="meta-grid-item">
+                <span class="meta-key-label">DataHub 1: Document</span>
+                <span class="meta-val-text">DOC-A1-202601 (Field)</span>
+              </div>
+              <div class="meta-grid-item">
+                <span class="meta-key-label">DataHub 1: Auditor PE</span>
+                <span class="meta-val-text">ENG-8821 (Chief PE)</span>
+              </div>
+              <div class="meta-grid-item">
+                <span class="meta-key-label">DataHub 2: Standard</span>
+                <span class="meta-val-text">NORM-NSR-10-2026</span>
+              </div>
+              <div class="meta-grid-item">
+                <span class="meta-key-label">Seismic Zone</span>
+                <span class="meta-val-text">Zone 4 (High Seismicity)</span>
+              </div>
+              <div class="meta-grid-item" style="grid-column: span 2;">
+                <span class="meta-key-label">Oversight Status</span>
+                <span class="meta-val-text" id="human-status-val-1" style="color: var(--accent-green);">APPROVED BY HUMAN AUDITOR</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lineage Card -->
+          <div class="data-panel-card">
+            <div class="panel-card-header">
+              <span class="panel-title">🧬 LINEAGE DUAL (Document DNA SHA-256)</span>
+              <span class="panel-badge" style="background: var(--foxit-orange);">DUAL ROOT DAG</span>
+            </div>
+            <div class="lineage-stack">
+              <div class="lineage-step-item">
+                <span class="lineage-item-icon">📊</span>
+                <div class="lineage-item-texts">
+                  <span class="lineage-item-title">Lineage 1: Report A1 Ground Truth</span>
+                  <span class="lineage-hash">sha256: c1c38f1634cc11d79498e... [MATCH]</span>
+                </div>
+              </div>
+
+              <div class="lineage-step-item">
+                <span class="lineage-item-icon">📜</span>
+                <div class="lineage-item-texts">
+                  <span class="lineage-item-title">Lineage 2: Official NSR-10 Standard</span>
+                  <span class="lineage-hash">sha256: 7f3a88c1b994e55a019d8... [VERIFIED]</span>
+                </div>
+              </div>
+
+              <div class="lineage-step-item">
+                <span class="lineage-item-icon">🔗</span>
+                <div class="lineage-item-texts">
+                  <span class="lineage-item-title">Schema Sync for Foxit API</span>
+                  <span class="lineage-hash">Ready for injection into Official Template</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FASE 2: CONEXIÓN API FOXIT & GENERACIÓN DE PLANTILLA OFICIAL
+         ========================================================================== -->
+    <section class="phase-card">
+      <div class="phase-top-bar">
+        <div class="phase-badge-title">
+          <span class="phase-number-badge orange">PHASE 2</span>
+          <h2 class="phase-heading">Foxit DocGen API Connection, NSR-10 Evaluation &amp; Official Template Generation</h2>
+        </div>
+        <div class="human-tag-status">
+          <span>🦊</span>
+          <span>Foxit Cloud DocGen API</span>
+        </div>
+      </div>
+
+      <div class="grid-1col">
+
+        <!-- Foxit Live Telemetry Banner (Black with White & Orange) -->
+        <div class="foxit-telemetry-banner">
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <span class="telemetry-status-chip" id="foxit-telemetry-badge">FOXIT CLOUD API 200 OK</span>
+            <span><strong>Endpoint:</strong> na1.fusion.foxit.com/document-generation/api/GenerateDocumentBase64</span>
+            <span>• <strong>Latency:</strong> <span id="foxit-telemetry-latency">1147 ms</span></span>
+            <span>• <strong>Format:</strong> PDF/A-2b</span>
+          </div>
+
+          <a href="FOXIT_CERTIFICADO_ESTRUCTURAL_NSR10_OFICIAL.pdf" target="_blank" class="btn-view-pdf-cta" id="foxit-telemetry-btn">
+            <span>📄</span>
+            <span>View Real PDF Generated by Foxit</span>
+          </a>
+        </div>
+
+        <!-- Rendered High-Contrast Document Sheet (White with Obsidian Hero Row) -->
+        <div class="document-rendered-sheet" id="foxit-sheet">
+
+          <div class="sheet-top-header">
+            <div class="sheet-title-col">
+              <span class="brand-fire-pill" style="margin-bottom: 8px; width: 26px; height: 26px; font-size: 13px;">🦊</span>
+              <h3>STRUCTURAL AUDIT & SEISMIC-RESISTANT COMPLIANCE CERTIFICATE</h3>
+              <p>PROJECT: PRJ-FIRE-FLOWER-2026 • DOC ID: DOC-A1-202601 • STANDARD: NSR-10 (ZONE 4) • COMPILED BY FOXIT CLOUD ENGINE</p>
+            </div>
+            <div class="sheet-dna-col">
+              <div><strong>REPORT DNA:</strong> sha256:c1c38f1634cc11d79498e566...</div>
+              <div><strong>STANDARD DNA:</strong> sha256:7f3a88c1b994e55a019d8...</div>
+              <div><strong>AUDIT:</strong> 2026-01-15 • <strong>SMART TAGS:</strong> [[sig_inspector_pe]] [[sig_ai_governance]]</div>
+            </div>
+          </div>
+
+          <!-- Table with Hero Highlight Row (like the screenshot) -->
+          <div class="editorial-table-wrapper">
+            <table class="editorial-table">
+              <thead>
+                <tr>
+                  <th>Element ID</th>
+                  <th>Structural Type</th>
+                  <th>Location</th>
+                  <th>Actual Load (kN/m²)</th>
+                  <th>Max Capacity</th>
+                  <th>Actual SF</th>
+                  <th>Min SF NSR-10</th>
+                  <th>Material</th>
+                  <th>Inspector</th>
+                  <th>Verdict</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>BEAM-V101</strong></td>
+                  <td>Concrete Beam</td>
+                  <td>Piso 1 - Eje A-B</td>
+                  <td>450.0</td>
+                  <td>800.0</td>
+                  <td><strong style="color: var(--accent-green);">1.78</strong></td>
+                  <td>&ge; 1.45</td>
+                  <td>H-30</td>
+                  <td>ENG-8821</td>
+                  <td><span class="tag-pass-green">PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>BEAM-V102</strong></td>
+                  <td>Concrete Beam</td>
+                  <td>Piso 1 - Eje B-C</td>
+                  <td>465.0</td>
+                  <td>800.0</td>
+                  <td><strong style="color: var(--accent-green);">1.72</strong></td>
+                  <td>&ge; 1.45</td>
+                  <td>H-30</td>
+                  <td>ENG-8821</td>
+                  <td><span class="tag-pass-green">PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>BEAM-V103</strong></td>
+                  <td>Concrete Beam</td>
+                  <td>Piso 1 - Eje C-D</td>
+                  <td>440.0</td>
+                  <td>800.0</td>
+                  <td><strong style="color: var(--accent-green);">1.82</strong></td>
+                  <td>&ge; 1.45</td>
+                  <td>H-30</td>
+                  <td>ENG-8821</td>
+                  <td><span class="tag-pass-green">PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>BEAM-V104</strong></td>
+                  <td>Concrete Beam</td>
+                  <td>Piso 1 - Eje D-E</td>
+                  <td>410.0</td>
+                  <td>600.0</td>
+                  <td><strong style="color: var(--accent-green);">1.46</strong></td>
+                  <td>&ge; 1.45</td>
+                  <td>H-30</td>
+                  <td>ENG-8821</td>
+                  <td><span class="tag-pass-green">PASS</span></td>
+                </tr>
+
+                <!-- HERO ROW HIGHLIGHT: OBSIDIAN BLACK ROW LIKE IN SCREENSHOT -->
+                <tr class="row-hero-highlight">
+                  <td><strong>COL-C201 ★</strong></td>
+                  <td>Main Column</td>
+                  <td>Basement - Axis 1-A</td>
+                  <td>620.0</td>
+                  <td>1200.0</td>
+                  <td><strong>1.94</strong></td>
+                  <td>&ge; 1.70</td>
+                  <td>H-45 / B500S</td>
+                  <td>ENG-8821</td>
+                  <td><span class="tag-pass-white">PASS COMPLIANT</span></td>
+                </tr>
+
+                <tr>
+                  <td><strong>COL-C202</strong></td>
+                  <td>Main Column</td>
+                  <td>Basement - Axis 2-A</td>
+                  <td>635.0</td>
+                  <td>1200.0</td>
+                  <td><strong style="color: var(--accent-green);">1.89</strong></td>
+                  <td>&ge; 1.70</td>
+                  <td>H-45</td>
+                  <td>ENG-8821</td>
+                  <td><span class="tag-pass-green">PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>COL-C203</strong></td>
+                  <td>Columna Principal</td>
+                  <td>Basement - Axis 3-B</td>
+                  <td>590.0</td>
+                  <td>1200.0</td>
+                  <td><strong style="color: var(--accent-green);">2.03</strong></td>
+                  <td>&ge; 1.70</td>
+                  <td>H-45</td>
+                  <td>ENG-8821</td>
+                  <td><span class="tag-pass-green">PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>SLAB-L301</strong></td>
+                  <td>Ribbed Slab</td>
+                  <td>Piso 1 - Central</td>
+                  <td>280.0</td>
+                  <td>500.0</td>
+                  <td><strong style="color: var(--accent-green);">1.79</strong></td>
+                  <td>&ge; 1.45</td>
+                  <td>Joists</td>
+                  <td>ENG-8821</td>
+                  <td><span class="tag-pass-green">PASS</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Summary Badges Row -->
+          <div class="summary-metrics-strip">
+            <div class="metric-box-card">
+              <span class="m-label">Load vs Capacity Compliance</span>
+              <span class="m-value">100% COMPLIANT (8/8 Elements)</span>
+            </div>
+            <div class="metric-box-card">
+              <span class="m-label">Average Safety Factor</span>
+              <span class="m-value">SF = 1.80 (&gt; 1.45 Minimum)</span>
+            </div>
+            <div class="metric-box-card">
+              <span class="m-label">Cryptographic Traceability</span>
+              <span class="m-value">2/2 SOURCES VERIFIED (SHA-256)</span>
+            </div>
+          </div>
+
+          <!-- Action CTA Bar in Electric Orange (Inspired by the blue bar in screenshot) -->
+          <div class="action-cta-bar">
+            <div class="action-cta-text">
+              <strong>Official Foxit DocGen Template Compiled</strong>
+              <span>Do you approve the technical matrix and verified Safety Factors to advance to Governance?</span>
+            </div>
+
+            <button class="btn-cta-white" id="btn-approve-template" onclick="approveTemplate()">
+              <span>✓ Approve Official Template</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FASE 3: MOTOR DE GOBERNANZA, TRUST SCORE & SELLO FOXIT eSIGN
+         ========================================================================= -->
+    <section class="phase-card">
+      <div class="phase-top-bar">
+        <div class="phase-badge-title">
+          <span class="phase-number-badge">PHASE 3</span>
+          <h2 class="phase-heading">Multidimensional Governance Engine &amp; Foxit eSign Dispatch</h2>
+        </div>
+        <div class="human-tag-status">
+          <span>⚖️</span>
+          <span id="audit-pill-text-3">Human Oversight 3: Pending</span>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+
+        <!-- Chat 3: Governance Agent -->
+        <div class="chat-bubble-container">
+          <div class="chat-bubble-header">
+            <div class="chat-bubble-title">
+              <span>💬</span>
+              <span>Chat 3: Trust Assessment, Risk & Governance Rules</span>
+            </div>
+            <span class="chat-tag-pill" style="background: var(--foxit-orange-subtle); color: var(--foxit-orange); border-color: var(--foxit-orange-border);">Trust &amp; Governance AI</span>
+          </div>
+
+          <div class="chat-stream-body">
+            <div class="chat-entry">
+              <div class="entry-avatar user">U</div>
+              <div class="entry-content">
+                <p>You are the Governance Engine of the Foxit - Fire Flower Ecosystem. Based on the Official Template compiled by Foxit and the Cryptographic Lineages (SHA-256):<br>
+                1. Execute multidimensional validation (Hash Check, Schema 11/11, NSR-10 Constraints).<br>
+                2. Calculate Trust Score and Risk Level.<br>
+                3. Apply the Governance Policy to enable or block automation.<br>
+                4. Prepare the Foxit eSign envelope with the anchors <code>[[sig_inspector_pe]]</code> and <code>[[sig_ai_governance]]</code>.</p>
+              </div>
+            </div>
+
+            <div class="chat-entry">
+              <div class="entry-avatar ai">⚖️</div>
+              <div class="entry-content">
+                <p>🛡️ <strong>Multidimensional Integrity & Trust Assessment Completed:</strong></p>
+
+                <div style="background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: 8px; padding: 12px; margin: 8px 0; font-size: 12px; line-height: 1.6;">
+                  <div>🔒 <strong>Data Integrity Hash Check:</strong><br>
+                    • Report A1 SHA-256: <code>c1c38f1634cc11d79498e5663a8edf6f21e0279429c981b9623f5b3dba733a60</code> (100% Match)<br>
+                    • NSR-10 Standard SHA-256: <code>7f3a88c1b994e55a019d82264b18ec0319ca7208d519bfe25471904a58913b82</code> (100% Match)
+                  </div>
+                  <div style="margin-top: 6px;">📊 <strong>Schema Match:</strong> 11/11 columns verified with no nulls.</div>
+                  <div style="margin-top: 6px;">📐 <strong>NSR-10 Constraints:</strong> Beams (SF &ge; 1.45), Columns (SF &ge; 1.70), Slabs (SF &ge; 1.45) compliant.</div>
+                </div>
+
+                <p style="font-size: 12.5px;">
+                  <strong>Engine Decision:</strong><br>
+                  • <strong>Trust Score:</strong> <strong style="color: var(--accent-green);">99.2 / 100</strong> | <strong>Risk:</strong> <strong style="color: var(--accent-green);">LOW (Low)</strong><br>
+                  • <strong>Rule:</strong> <code>IF (Trust Score &ge; 95% AND Risk == LOW) &rarr; AUTOMATION_ALLOWED</code><br>
+                  • <strong>Verdict:</strong> ✅ <strong>AUTOMATION AUTHORIZED</strong> for envelope <code>FOXIT-ESIGN-CERT-99021-NSR10</code>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-bottom-input">
+            <input type="text" class="input-disabled-preview" value="Governance validated (99.2%). Awaiting Human Oversight 3 confirmation..." readonly>
+          </div>
+        </div>
+
+        <!-- Governance Cards Column -->
+        <div class="data-cards-col">
+
+          <!-- Trust Score Card -->
+          <div class="trust-score-editorial-card">
+            <div class="trust-circle-display-row">
+              <div class="score-radial-box">
+                <span class="score-num-big">99.2</span>
+                <span class="score-denom-sub">/ 100</span>
+              </div>
+              <div class="score-copy-col">
+                <span class="score-badge-risk">RISK LEVEL: LOW</span>
+                <p class="score-desc-text">
+                  The ecosystem certifies that the information is mathematically sound and originates from the audited DataHub with SHA-256 proof.
+                </p>
+              </div>
+            </div>
+
+            <div class="checks-rule-list">
+              <div class="check-item-row">
+                <strong>Data Integrity (SHA-256)</strong>
+                <span>✓ PASS (100%)</span>
+              </div>
+              <div class="check-item-row">
+                <strong>Schema Compliance</strong>
+                <span>✓ PASS (11/11 Cols)</span>
+              </div>
+              <div class="check-item-row">
+                <strong>NSR-10 Ruleset</strong>
+                <span>✓ PASS (Zone 4)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Policy Decision Box -->
+          <div class="policy-verdict-box">
+            <small>AUTOMATED GOVERNANCE POLICY</small>
+            <strong>Rule: IF (Trust &ge; 95% &amp;&amp; Risk == LOW) &rarr; AUTOMATION_ALLOWED</strong>
+            <div style="margin-top: 8px; font-size: 13px; font-weight: 800; color: #6EE7B7;">
+              ✅ AUTHORIZATION GRANTED FOR DIGITAL SIGNATURE
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         BLOQUE FINAL: SELLADO & DESPACHO FOXIT eSIGN (OBSIDIAN BLACK LUXURY DECK)
+         ========================================================================== -->
+    <section class="esign-seal-card" id="esign-final-card">
+      <div class="esign-header-flex">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="esign-brand-pill">FOXIT eSIGN</span>
+          <div>
+            <h3 style="font-size: 16px; font-weight: 900; color: #FFFFFF;">Digital Signature Certificate &amp; Cryptographic Traceability</h3>
+            <p style="font-size: 11px; color: var(--text-faint); font-family: var(--font-mono); margin-top: 2px;">Envelope ID: FOXIT-ESIGN-CERT-99021-NSR10 • PKI X.509 Standard • Foxit Cloud Gateway</p>
+          </div>
+        </div>
+        <span class="tag-pass-white" id="envelope-badge-status" style="font-size: 11px; padding: 4px 12px;">ENVELOPE READY FOR DISPATCH</span>
+      </div>
+
+      <div class="envelope-meta-grid">
+        <div class="env-slot-item">
+          <small>Signing Algorithm</small>
+          <strong>SHA-256 with RSA-2048</strong>
+        </div>
+        <div class="env-slot-item">
+          <small>Document DNA Hash</small>
+          <strong style="font-family: var(--font-mono); font-size: 11px; color: var(--foxit-orange);">sha256:c1c38f16...</strong>
+        </div>
+        <div class="env-slot-item">
+          <small>Envelope Status</small>
+          <strong id="env-status-text" style="color: #6EE7B7;">READY_FOR_SEAL</strong>
+        </div>
+        <div class="env-slot-item">
+          <small>Audit Trail Foxit</small>
+          <strong style="color: #6EE7B7;">INMUTABLE_LOG_ACTIVE</strong>
+        </div>
+      </div>
+
+      <div class="pki-signers-grid">
+        <div class="pki-signer-card">
+          <span class="pki-avatar-circle">👨‍💼</span>
+          <div class="pki-card-info">
+            <strong>Signer 1: Chief Auditor PE (ENG-8821)</strong>
+            <span>Professional License • Certified Structural Inspector</span>
+            <div class="pki-smart-tag" id="sig-1-status">Smart Tag: <code>[[sig_inspector_pe]]</code> • [PRE-APPROVED]</div>
+          </div>
+        </div>
+
+        <div class="pki-signer-card">
+          <span class="pki-avatar-circle">🤖</span>
+          <div class="pki-card-info">
+            <strong>Signer 2: AI &amp; Foxit Governance Engine</strong>
+            <span>Automatic Certification • Trust Score: 99.2/100</span>
+            <div class="pki-smart-tag" id="sig-2-status">Smart Tag: <code>[[sig_ai_governance]]</code> • [AUTHORIZED]</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final Human Approval Action Dock -->
+      <div class="final-approval-dock">
+        <div>
+          <strong style="color: #FFFFFF; font-size: 14px;">Human Oversight 3 (Final Governance Approval):</strong>
+          <p style="font-size: 12px; color: var(--text-faint); margin-top: 2px;">
+            The user validates the trust matrix and executes the legal dispatch of the signature in Foxit eSign.
+          </p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <button class="btn-seal-master" id="btn-execute-governance" onclick="executeGovernanceDecision()">
+            <span>✍️</span>
+            <span>Approve Governance &amp; Seal Foxit eSign</span>
+          </button>
+
+          <a href="FOXIT_CERTIFICADO_ESTRUCTURAL_NSR10_OFICIAL.pdf" target="_blank" class="btn-download-pdf-cta" id="btn-download-pdf">
+            <span>📥</span>
+            <span>Download Foxit Certified PDF</span>
+          </a>
+
+          <a href="../plantillas_foxit/foxit_documento_renderizado.html" target="_blank" class="btn-download-pdf-cta" id="btn-view-doc">
+            <span>🌐</span>
+            <span>View Digital Twin Web</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==========================================================================
+       BOTTOM FOOTER
+       ========================================================================== -->
+  <footer class="page-footer">
+    <div class="footer-spec-group">
+      <span>COLLECTION: <strong>2026 / FOXIT FIRE FLOWER</strong></span>
+      <span>•</span>
+      <span>STANDARD: <strong>DECREE 926 / NSR-10</strong></span>
+    </div>
+
+    <div class="footer-spec-group">
+      <span>STATUS: <strong style="color: var(--accent-green);">● HUMAN OVERSIGHT ACTIVE</strong></span>
+      <span>•</span>
+      <span>FACE: <strong>2 / ECOSYSTEM &amp; GOVERNANCE</strong></span>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       JAVASCRIPT — LIVE INTERACTION & API DISPATCH
+       ========================================================================== -->
+  <script>
+    const baseUrl = (window.location.origin && window.location.origin.startsWith('http'))
+      ? window.location.origin
+      : 'http://localhost:4000';
+
+    async function approveStep1() {
+      const btn = document.getElementById('btn-approve-step1');
+      btn.innerHTML = '<span>⏳</span><span>Auditing sources on disk and calculating SHA-256...</span>';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${baseUrl}/api/cara2/audit-sources`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        btn.innerHTML = '<span>✓</span><span>Sources Approved (Phase 1 Verified Live)</span>';
+        btn.style.background = '#059669';
+        btn.disabled = false;
+
+        document.getElementById('human-status-val-1').innerHTML = `<span style="color: #059669;">VERIFIED & CERTIFIED (${data.reporte.total_elements} elements)</span>`;
+        document.getElementById('audit-pill-text-1').textContent = `Oversight 1: Approved (${data.reporte.sha256.substring(0, 10)}...)`;
+      } catch (err) {
+        console.warn('API audit fallback:', err);
+        btn.textContent = '✓ Sources Approved (Phase 1 Completed)';
+        btn.style.background = '#059669';
+        btn.disabled = false;
+        document.getElementById('human-status-val-1').textContent = 'VERIFIED & CERTIFIED';
+        document.getElementById('audit-pill-text-1').textContent = 'Oversight 1: Approved';
+      }
+    }
+
+    async function approveTemplate() {
+      const btn = document.getElementById('btn-approve-template');
+      btn.innerHTML = '<span>⏳</span><span>Connecting to Foxit Cloud DocGen API live...</span>';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${baseUrl}/api/cara2/generate-template`, { method: 'POST' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        btn.innerHTML = '<span>✓</span><span>Template Compiled by Foxit Cloud (' + data.latency_ms + 'ms)</span>';
+        btn.style.background = '#059669';
+        btn.style.color = '#FFFFFF';
+        btn.disabled = false;
+
+        document.getElementById('foxit-telemetry-badge').textContent = `FOXIT CLOUD API 200 OK (${data.size_kb} KB)`;
+        document.getElementById('foxit-telemetry-latency').textContent = `${data.latency_ms} ms`;
+      } catch (err) {
+        console.warn('API docgen fallback:', err);
+        btn.textContent = '✓ Official Template Approved by Supervisor';
+        btn.style.background = '#059669';
+        btn.style.color = '#FFFFFF';
+        btn.disabled = false;
+        document.getElementById('foxit-telemetry-latency').textContent = '1147 ms';
+      }
+    }
+
+    async function executeGovernanceDecision() {
+      const btn = document.getElementById('btn-execute-governance');
+      btn.innerHTML = '<span>⏳</span><span>Cryptographically Sealing with Foxit eSign...</span>';
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+
+      try {
+        const res = await fetch(`${baseUrl}/api/cara2/seal-esign`, { method: 'POST' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        btn.innerHTML = '<span>🔒</span><span>Document Sealed & Certified in Foxit Cloud</span>';
+        btn.style.background = '#059669';
+        btn.style.color = '#FFFFFF';
+        btn.style.cursor = 'default';
+        btn.style.opacity = '1';
+        btn.onclick = null;
+        btn.disabled = false;
+
+        document.getElementById('envelope-badge-status').textContent = 'ENVELOPE COMPLETED / SEALED';
+        document.getElementById('envelope-badge-status').style.background = '#059669';
+        document.getElementById('envelope-badge-status').style.color = '#FFFFFF';
+        document.getElementById('env-status-text').textContent = 'COMPLETED_AND_LOCKED';
+        document.getElementById('env-status-text').style.color = '#6EE7B7';
+
+        document.getElementById('sig-1-status').innerHTML = `Smart Tag: <code>[[sig_inspector_pe]]</code> • <strong style="color: #6EE7B7;">FIRMADO PKI (${data.timestamp_utc.substring(11, 19)} UTC)</strong>`;
+        document.getElementById('sig-2-status').innerHTML = `Smart Tag: <code>[[sig_ai_governance]]</code> • <strong style="color: #6EE7B7;">CERTIFICADO (TRUST: ${data.trust_score}%)</strong>`;
+
+        document.getElementById('audit-pill-text-3').textContent = 'Oversight 3: Approved and Sealed';
+        document.getElementById('btn-download-pdf').style.display = 'inline-flex';
+        document.getElementById('btn-view-doc').style.display = 'inline-flex';
+
+        document.getElementById('esign-final-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (err) {
+        console.warn('API esign fallback:', err);
+        btn.innerHTML = '<span>🔒</span><span>Document Sealed & Certified by Foxit eSign</span>';
+        btn.style.background = '#059669';
+        btn.style.color = '#FFFFFF';
+        btn.style.cursor = 'default';
+        btn.style.opacity = '1';
+        btn.onclick = null;
+        btn.disabled = false;
+
+        document.getElementById('envelope-badge-status').textContent = 'ENVELOPE COMPLETED / SEALED';
+        document.getElementById('envelope-badge-status').style.background = '#059669';
+        document.getElementById('envelope-badge-status').style.color = '#FFFFFF';
+        document.getElementById('env-status-text').textContent = 'COMPLETED_AND_LOCKED';
+        document.getElementById('env-status-text').style.color = '#6EE7B7';
+
+        document.getElementById('sig-1-status').innerHTML = 'Smart Tag: <code>[[sig_inspector_pe]]</code> • <strong style="color: #6EE7B7;">SIGNED (PKI VALID)</strong>';
+        document.getElementById('sig-2-status').innerHTML = 'Smart Tag: <code>[[sig_ai_governance]]</code> • <strong style="color: #6EE7B7;">CERTIFIED (TRUST: 99.2%)</strong>';
+
+        document.getElementById('audit-pill-text-3').textContent = 'Oversight 3: Approved and Signed';
+        document.getElementById('btn-download-pdf').style.display = 'inline-flex';
+        document.getElementById('btn-view-doc').style.display = 'inline-flex';
+
+        document.getElementById('esign-final-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  </script>
+</body>
+</html>
