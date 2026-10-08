@@ -1,15 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=frontend/index.html">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FOXIT — FIRE FLOWER</title>
-  <script>
-    window.location.replace("frontend/index.html");
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOXIT — FIRE FLOWER · Capa de Trazabilidad</title>
+<style>
+  :root { --bg:#0B0F19; --panel:#131A2A; --line:#1E293B; --line2:#334155; --text:#E2E8F0; --dim:#94A3B8; --accent:#FF3700; --info:#38BDF8; --ok:#4ADE80; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .wrap { max-width:920px; margin:0 auto; padding:48px 24px 64px; }
+  h1 { font-size:26px; margin:0 0 6px; font-weight:680; letter-spacing:-0.02em; }
+  h1 span { color:var(--accent); }
+  .sub { color:var(--dim); font-size:14px; margin-bottom:34px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px; margin-bottom:14px; display:block; text-decoration:none; color:inherit; transition:border-color .15s; }
+  .card:hover { border-color:var(--accent); }
+  .card h2 { font-size:16px; margin:0 0 6px; font-weight:620; }
+  .card p { font-size:13px; color:var(--dim); margin:0 0 10px; line-height:1.6; }
+  .tags { display:flex; gap:6px; flex-wrap:wrap; }
+  .tag { font-size:10px; padding:2px 8px; border-radius:9px; background:#082f49; color:var(--info); border:1px solid #0c4a6e; font-weight:600; }
+  .tag.ok { background:#052e16; color:var(--ok); border-color:#14532d; }
+  .tag.warn { background:#422006; color:#FBBF24; border-color:#78350f; }
+  .arrow { color:var(--accent); font-weight:700; }
+  h3 { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); margin:34px 0 12px; }
+  a.plain { color:var(--info); font-size:13px; }
+  footer { color:var(--dim); font-size:11px; margin-top:40px; padding-top:16px; border-top:1px solid var(--line); line-height:1.7; }
+  code { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11px; background:var(--panel); border:1px solid var(--line); padding:1px 5px; border-radius:3px; }
+</style>
 </head>
-<body style="background: #0B0F19; color: #FFFFFF; font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
-  <p>Redirecting to <a href="frontend/index.html" style="color: #FF3700; font-weight: bold;">FOXIT FIRE FLOWER Live Portal</a>...</p>
+<body>
+<div class="wrap">
+  <h1>FOXIT <span>—</span> FIRE FLOWER</h1>
+  <div class="sub">Ecosistema de confianza documental sobre APIs de Foxit</div>
+
+  <a class="card" href="CAPA-RAZABILIDAD/site/index.html">
+    <h2>Capa de Trazabilidad Documental <span class="arrow">→</span></h2>
+    <p>
+      Proceso penal peruano. Sello de integridad por documento, versionado inmutable
+      y registro de transferencias con acuse. La verificación se ejecuta en el navegador:
+      Web Crypto SHA-256 sobre los bytes reales de cada PDF, comparado contra el hash
+      que da nombre al archivo.
+    </p>
+    <div class="tags">
+      <span class="tag ok">DocGen OK</span>
+      <span class="tag ok">PDF Services OK</span>
+      <span class="tag warn">eSign no habilitado</span>
+      <span class="tag">3 documentos</span>
+      <span class="tag">9 eventos encadenados</span>
+    </div>
+  </a>
+
+  <a class="card" href="frontend/index.html">
+    <h2>Portal FIRE FLOWER <span class="arrow">→</span></h2>
+    <p>Las tres caras del ecosistema original: simulación, gobernanza y demo automatizada.</p>
+  </a>
+
+  <h3>Material de soporte</h3>
+  <div class="card">
+    <p style="margin-bottom:14px">Documentación del caso del expediente penal peruano, su diagnóstico y el diseño de la capa.</p>
+    <a class="plain" href="CAPA-RAZABILIDAD/00_INDICE.md">Índice de navegación →</a>
+  </div>
+
+  <footer>
+    Verificación de integridad reproducible sin este sitio:
+    <code>sha256sum CAPA-RAZABILIDAD/site/vault/*.pdf</code><br>
+    Los hashes están publicados en <code>CAPA-RAZABILIDAD/site/MANIFEST.json</code>
+    y en el bloque de verificación por hash de Git.
+  </footer>
+</div>
 </body>
 </html>

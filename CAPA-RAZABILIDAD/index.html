@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foxit Document Traceability Layer — Justicia Penal Perú (MVP)</title>
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #374151;
+      --foxit-orange: #f97316;
+      --foxit-orange-hover: #ea580c;
+      --police-blue: #3b82f6;
+      --fiscal-purple: #8b5cf6;
+      --court-green: #10b981;
+      --danger-red: #ef4444;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    header {
+      background: #0f172a;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      background: linear-gradient(135deg, var(--foxit-orange), #c2410c);
+      color: white;
+      font-weight: 900;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .brand-title h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .brand-title p {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .header-pills {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pill-countdown {
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid var(--foxit-orange);
+      color: #fdba74;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-legal {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid var(--court-green);
+      color: #6ee7b7;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* BARRA DE ROLES */
+    .role-bar {
+      background: #0b1120;
+      border-bottom: 1px solid var(--border-color);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .role-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .role-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .role-btn:hover {
+      background: #334155;
+    }
+
+    .role-btn.active-police {
+      background: #1d4ed8;
+      border-color: #3b82f6;
+      color: white;
+    }
+
+    .role-btn.active-fiscal {
+      background: #6d28d9;
+      border-color: #8b5cf6;
+      color: white;
+    }
+
+    .role-btn.active-court {
+      background: #047857;
+      border-color: #10b981;
+      color: white;
+    }
+
+    .role-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* MAIN CONTAINER (3 COLUMNAS) */
+    .main-content {
+      display: grid;
+      grid-template-columns: 320px 1fr 340px;
+      flex: 1;
+      overflow: hidden;
+      background: var(--bg-dark);
+    }
+
+    /* COLUMNA 1: DIAGNÓSTICO PROCESAL */
+    .col-left {
+      background: #0d1322;
+      border-right: 1px solid var(--border-color);
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--foxit-orange);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .case-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .case-card h3 {
+      font-size: 13px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .case-card p {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .failure-points {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .failure-item {
+      background: rgba(17, 24, 39, 0.8);
+      border-left: 3px solid var(--danger-red);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 10px;
+      font-size: 11px;
+    }
+
+    .failure-item .fail-title {
+      color: #f87171;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .failure-item .solution {
+      color: #34d399;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .tamper-box {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px dashed var(--danger-red);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .tamper-box h4 {
+      font-size: 12px;
+      color: #fca5a5;
+      margin-bottom: 6px;
+    }
+
+    .btn-tamper {
+      background: var(--danger-red);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+
+    .btn-tamper:hover {
+      background: #dc2626;
+    }
+
+    /* COLUMNA 2: VISOR DOCUMENTAL */
+    .col-center {
+      display: flex;
+      flex-direction: column;
+      background: #020617;
+      overflow: hidden;
+    }
+
+    .doc-tabs {
+      background: #0f172a;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      gap: 4px;
+      padding: 8px 16px 0 16px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: #1e293b;
+      border: 1px solid var(--border-color);
+      border-bottom: none;
+      color: #94a3b8;
+      padding: 8px 14px;
+      border-radius: 6px 6px 0 0;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn.active {
+      background: #020617;
+      color: #fff;
+      border-top: 2px solid var(--foxit-orange);
+    }
+
+    .viewer-area {
+      flex: 1;
+      position: relative;
+      background: #1e293b;
+    }
+
+    iframe#pdfFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    .doc-meta-bar {
+      background: #0b1120;
+      border-top: 1px solid var(--border-color);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .dim { color: #94a3b8; }
+    .chain-ok { color: #4ade80; border-color: #14532d !important; }
+    .chain-broken { color: #f87171; border-color: #7f1d1d !important; }
+
+    .meta-hash {
+      font-family: monospace;
+      font-size: 11px;
+      color: #38bdf8;
+      background: #0f172a;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid #1e293b;
+      max-width: 480px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .btn-verify {
+      background: #059669;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* COLUMNA 3: AUDIT TRAIL TIMELINE */
+    .col-right {
+      background: #0d1322;
+      border-left: 1px solid var(--border-color);
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 12px;
+      width: 2px;
+      background: #1e293b;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 28px;
+      font-size: 11px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 7px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--foxit-orange);
+      border: 2px solid #0d1322;
+    }
+
+    .timeline-dot.tamper {
+      background: var(--danger-red);
+      box-shadow: 0 0 8px var(--danger-red);
+    }
+
+    .timeline-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+
+    .timeline-time {
+      color: var(--text-muted);
+      font-size: 10px;
+      margin-bottom: 2px;
+    }
+
+    .timeline-title {
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .timeline-desc {
+      color: #94a3b8;
+      font-size: 10px;
+      line-height: 1.3;
+    }
+
+    /* MODAL ALERTA */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-box {
+      background: #111827;
+      border: 2px solid var(--danger-red);
+      border-radius: 12px;
+      width: 520px;
+      max-width: 90%;
+      padding: 24px;
+      box-shadow: 0 10px 40px rgba(239, 68, 68, 0.4);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-icon {
+      font-size: 28px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #f87171;
+    }
+
+    .modal-body {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .hash-comparison {
+      background: #030712;
+      border: 1px solid #1f2937;
+      border-radius: 6px;
+      padding: 8px;
+      font-family: monospace;
+      font-size: 10.5px;
+    }
+
+    .hash-comparison span {
+      display: block;
+    }
+
+    .hash-orig { color: #34d399; }
+    .hash-bad { color: #f87171; }
+
+    .modal-btn-close {
+      background: #374151;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand-group">
+      <div class="brand-logo">FOXIT</div>
+      <div class="brand-title">
+        <h1>DOCUMENT TRACEABILITY LAYER</h1>
+        <p>Gobernanza Criptográfica en Justicia Penal — Piloto Perú</p>
+      </div>
+    </div>
+
+    <div class="header-pills">
+      <div class="pill-countdown" id="countdownPill">
+        ⏱️ FLAGRANCIA (48h): <span id="hoursLeft">45.2h</span> restantes
+      </div>
+      <div class="pill-legal">
+        ⚖️ Art. 2.24.f Constitución & NCPP Arts. 120, 150, 220
+      </div>
+    </div>
+  </header>
+
+  <!-- BARRA DE ROLES INSTITUCIONALES -->
+  <div class="role-bar">
+    <div class="role-buttons">
+      <button class="role-btn active-police" id="btnRolePolice" onclick="setRole('POLICE')">
+        👮 Policía Nacional (PNP)
+      </button>
+      <button class="role-btn" id="btnRoleFiscal" onclick="setRole('FISCAL')">
+        ⚖️ Ministerio Público (Fiscalía)
+      </button>
+      <button class="role-btn" id="btnRoleCourt" onclick="setRole('COURT')">
+        🏛️ Poder Judicial (Juzgado)
+      </button>
+    </div>
+    <div class="role-desc" id="roleDescription">
+      Sesión activa: SO3 PNP Carlos Mendoza Quispe (Comisaría Alfonso Ugarte)
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main-content">
+
+    <!-- COLUMNA 1: DIAGNÓSTICO Y PREVENCIÓN DE VICIOS -->
+    <div class="col-left">
+      <div class="section-title">📂 Expediente en Trámite</div>
+      <div class="case-card">
+        <h3>EXP-2026-084-LIMA</h3>
+        <p><strong>Delito:</strong> Hurto Agravado en Flagrancia (Art. 186 CP)</p>
+        <p><strong>Imputado:</strong> Juan Carlos Pérez Quispe (DNI 45892110)</p>
+        <p><strong>Estado:</strong> Elevado a Juzgado para Prisión Preventiva</p>
+      </div>
+
+      <div class="section-title">🛑 ¿Por qué salían libres?</div>
+      <div class="failure-points">
+        <div class="failure-item">
+          <div class="fail-title">1. Vicio Material en el Acta</div>
+          <div>Antes: Alguien alteraba el PDF o papel para corregir la placa sin firma. El abogado alegaba nulidad (Art. 150 NCPP).</div>
+          <div class="solution">✓ Con Foxit: V1 congelada + V2 formalmente vinculada. Cero nulidad.</div>
+        </div>
+
+        <div class="failure-item">
+          <div class="fail-title">2. Pérdida del Plazo de 48h</div>
+          <div>Antes: Ping-pong entre PNP y Fiscalía. Vencía el plazo constitucional y salía libre.</div>
+          <div class="solution">✓ Con Foxit: Trazabilidad en milisegundos de cada transferencia de custodia.</div>
+        </div>
+
+        <div class="failure-item">
+          <div class="fail-title">3. Anonimato del Error</div>
+          <div>Antes: Nadie se hacía responsable de qué fiscal o policía modificó la evidencia.</div>
+          <div class="solution">✓ Con Foxit: Responsabilidad nominal inalterable con Hash SHA-256.</div>
+        </div>
+      </div>
+
+      <!-- BOTÓN DEMO DE ATAQUE -->
+      <div class="tamper-box">
+        <h4>🚨 Demostración de Detección de Fraude</h4>
+        <p style="font-size: 10.5px; color: #94a3b8; margin-bottom: 8px;">
+          Simula un intento de reemplazar o modificar silenciosamente el Acta V1 fuera de la cadena Foxit.
+        </p>
+        <button class="btn-tamper" onclick="simulateTamperAttack()">
+          Simular Intento de Alteración de Acta
+        </button>
+      </div>
+    </div>
+
+    <!-- COLUMNA 2: VISOR DOCUMENTAL FOXIT -->
+    <div class="col-center">
+      <div class="doc-tabs">
+        <button class="tab-btn active" id="tabV1" onclick="switchDocument('VER-ACTA-PNP-2026-084-AU-V1')">
+          📄 Acta Policial V1 (Original)
+        </button>
+        <button class="tab-btn" id="tabFiscal" onclick="switchDocument('VER-DISP-MP-2026-092-V1')">
+          ⚖️ Disposición Fiscal (Observación)
+        </button>
+        <button class="tab-btn" id="tabV2" onclick="switchDocument('VER-ACTA-PNP-2026-084-AU-V2')">
+          📑 Acta Subsanada V2 (Parent: V1)
+        </button>
+      </div>
+
+      <div class="viewer-area">
+        <iframe id="pdfFrame" src="/ACTA_INTERVENCION_POLICIAL_V1.pdf"></iframe>
+      </div>
+
+      <div class="doc-meta-bar">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 11px; color: #94a3b8;">Hash SHA-256:</span>
+          <div class="meta-hash" id="currentHashDisplay">cargando…</div>
+        </div>
+        <div style="font-size: 11px; color: #fbbf24; margin-top: 6px;" id="currentSignatureDisplay">
+          Firma: verificando estado…
+        </div>
+        <button class="btn-verify" onclick="verifyCurrentDocument()">
+          🔒 Verificar Integridad
+        </button>
+      </div>
+    </div>
+
+    <!-- COLUMNA 3: PISTA DE AUDITORÍA (AUDIT TRAIL) -->
+    <div class="col-right">
+      <div class="section-title">⏱️ Pista de Auditoría Forense</div>
+
+      <div id="signatureBanner" style="display:none; background:#1e293b; border:1px solid #334155; border-left:3px solid #f59e0b; border-radius:6px; padding:12px; margin-bottom:14px; font-size:12px; line-height:1.6; color:#cbd5e1;"></div>
+
+      <div id="chainStatus" style="background:#1e293b; border:1px solid #334155; border-radius:6px; padding:10px 12px; margin-bottom:14px; font-size:11px; line-height:1.5;"></div>
+
+      <div class="timeline" id="timelineContainer">
+        <!-- Renderizado dinámico vía JavaScript -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL DE ALERTA DE MANIPULACIÓN -->
+  <div class="modal-overlay" id="tamperModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-icon">🚨</div>
+        <div class="modal-title" id="modalTitle">¡ALERTA ROJA DE MANIPULACIÓN DETECTADA!</div>
+      </div>
+      <div class="modal-body">
+        <p id="modalDesc"></p>
+        <div class="hash-comparison">
+          <span class="hash-orig">✓ Hash Oficial Sellado en Foxit:</span>
+          <span id="modalOrigHash" class="hash-orig"></span>
+          <span class="hash-bad" style="margin-top: 4px;">✗ Hash del Archivo Alterado Externamente:</span>
+          <span id="modalTamperHash" class="hash-bad"></span>
+        </div>
+        <p id="modalLegal" style="color: #6ee7b7; font-size: 11.5px;"></p>
+      </div>
+      <button class="modal-btn-close" onclick="closeModal()">Entendido</button>
+    </div>
+  </div>
+
+  <script>
+    let currentVersionId = 'VER-ACTA-PNP-2026-084-AU-V1';
+    let documentsData = [];
+    let auditData = [];
+
+    // Documentos del caso. El id del vault es el hash, no un nombre de archivo libre.
+    const DOCUMENTOS = {
+      V1:      { versionId: 'VER-ACTA-PNP-2026-084-AU-V1', tab: 'tabV1' },
+      FISCAL:  { versionId: 'VER-DISP-MP-2026-092-V1',       tab: 'tabFiscal' },
+      V2:      { versionId: 'VER-ACTA-PNP-2026-084-AU-V2',  tab: 'tabV2' }
+    };
+
+    async function loadInitialData() {
+      try {
+        const docRes = await fetch('/api/documents');
+        const docJson = await docRes.json();
+        documentsData = docJson.versions || [];
+        renderSignatureBanner(docJson);
+
+        const auditRes = await fetch('/api/audit-trail');
+        auditData = await auditRes.json();
+        renderAuditTrail(auditData.events || []);
+        renderChainStatus(auditData.chain);
+      } catch (err) {
+        console.error('Error cargando datos:', err);
+      }
+    }
+
+    // El estado de firma se declara, no se oculta. eSign no está habilitado
+    // en esta cuenta y la interfaz lo dice.
+    function renderSignatureBanner(docJson) {
+      const el = document.getElementById('signatureBanner');
+      if (!el) return;
+      const unavailable = documentsData.filter(v => v.signature && v.signature.status === 'UNAVAILABLE').length;
+      const signed = documentsData.filter(v => v.signature && v.signature.status === 'SIGNED').length;
+
+      if (signed > 0) {
+        el.style.display = 'block';
+        el.innerHTML = `<strong>${signed} de ${documentsData.length} documentos con firma electrónica registrada.</strong>`;
+      } else {
+        el.style.display = 'block';
+        el.innerHTML =
+          `<strong>Firma electrónica: no disponible en esta cuenta.</strong> ` +
+          `Foxit separa el portal de firma del de PDF Services, y esta cuenta solo tiene acceso a ` +
+          `Document Generation y PDF Services. <span class="dim">${unavailable} documento(s) están ` +
+          `sellados con hash e íntegros, pero sin firma. No se muestra ningún identificador de ` +
+          `firma porque no existe.</span>`;
+      }
+    }
+
+    function renderChainStatus(chain) {
+      const el = document.getElementById('chainStatus');
+      if (!el || !chain) return;
+      el.textContent = chain.message;
+      el.className = chain.valid ? 'chain-ok' : 'chain-broken';
+    }
+
+    function switchDocument(versionId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      currentVersionId = versionId;
+
+      const found = documentsData.find(d => d.id === versionId);
+      if (!found) return;
+
+      // El PDF se sirve desde el vault por su hash. El hash ES el nombre.
+      document.getElementById('pdfFrame').src = `/vault/${found.vault_filename}`;
+
+      for (const [key, cfg] of Object.entries(DOCUMENTOS)) {
+        if (cfg.versionId === versionId) {
+          document.getElementById(cfg.tab)?.classList.add('active');
+        }
+      }
+
+      const hashEl = document.getElementById('currentHashDisplay');
+      if (hashEl) hashEl.innerText = found.sha256;
+
+      const sigEl = document.getElementById('currentSignatureDisplay');
+      if (sigEl) {
+        const st = found.signature?.status;
+        sigEl.innerText = st === 'SIGNED'
+          ? `Firmado — envelope ${found.signature.envelope_id}`
+          : 'Sin firma — eSign no habilitado en esta cuenta';
+      }
+    }
+
+    function setRole(role) {
+      document.getElementById('btnRolePolice').className = 'role-btn';
+      document.getElementById('btnRoleFiscal').className = 'role-btn';
+      document.getElementById('btnRoleCourt').className = 'role-btn';
+
+      const desc = document.getElementById('roleDescription');
+
+      if (role === 'POLICE') {
+        document.getElementById('btnRolePolice').classList.add('active-police');
+        desc.innerText = 'Sesión activa: SO3 PNP Carlos Mendoza Quispe (Comisaría Alfonso Ugarte)';
+        switchDocument(DOCUMENTOS.V1.versionId);
+      } else if (role === 'FISCAL') {
+        document.getElementById('btnRoleFiscal').classList.add('active-fiscal');
+        desc.innerText = 'Sesión activa: Dra. Mariana Ramos Vega (3ra Fiscalía Provincial Penal de Lima)';
+        switchDocument(DOCUMENTOS.FISCAL.versionId);
+      } else if (role === 'COURT') {
+        document.getElementById('btnRoleCourt').classList.add('active-court');
+        desc.innerText = 'Sesión activa: Dr. Roberto Thorne Salazar (Juez de Investigación Preparatoria)';
+        switchDocument(DOCUMENTOS.V2.versionId);
+      }
+    }
+
+    async function verifyCurrentDocument() {
+      try {
+        const res = await fetch(`/api/verify/${currentVersionId}`);
+        const data = await res.json();
+        alert(
+          `VERIFICACIÓN DE INTEGRIDAD\n\n` +
+          `Documento: ${currentVersionId}\n` +
+          `Estado:    ${data.status}\n\n` +
+          `Hash registrado: ${data.registeredSha256}\n` +
+          `Hash actual:    ${data.actualSha256}\n\n` +
+          `${data.message}`
+        );
+      } catch (err) {
+        alert('Error en verificación: ' + err.message);
+      }
+    }
+
+    async function simulateTamperAttack() {
+      try {
+        const res = await fetch('/api/simulate-tamper', { method: 'POST' });
+        const data = await res.json();
+
+        document.getElementById('modalTitle').innerText = data.detected
+          ? 'Alteración detectada'
+          : 'No se detectó alteración';
+        document.getElementById('modalDesc').innerText = data.whatHappened;
+        document.getElementById('modalOrigHash').innerText = data.originalHash;
+        document.getElementById('modalTamperHash').innerText = data.tamperedHash;
+        document.getElementById('modalLegal').innerText = data.chainStillIntact
+          ? 'La cadena de auditoría sigue intacta. El evento de detección quedó registrado.'
+          : 'La cadena de auditoría fue alterada.';
+        document.getElementById('tamperModal').style.display = 'flex';
+
+        const auditRes = await fetch('/api/audit-trail');
+        auditData = await auditRes.json();
+        renderAuditTrail(auditData.events || []);
+        renderChainStatus(auditData.chain);
+      } catch (err) {
+        alert('Error en la prueba: ' + err.message);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('tamperModal').style.display = 'none';
+    }
+
+    const ACTION_LABELS = {
+      DOCUMENT_SEALED_V1: 'Acta Policial V1 sellada (PNP)',
+      DOCUMENT_VERSION_BRANCHED: 'Acta Subsanada V2 emitida',
+      CUSTODY_TRANSFER_INITIATED: 'Transferencia de custodia iniciada',
+      CUSTODY_TRANSFER_ACKNOWLEDGED: 'Acuse de recibo — tramo cerrado',
+      INTEGRITY_TAMPER_DETECTED: 'Alteración detectada',
+      INTEGRITY_VAULT_FILE_MISSING: 'Archivo sellado ausente del vault',
+      SIGNATURE_UNAVAILABLE: 'Firma no disponible (eSign sin credenciales)',
+      SIGNATURE_RECORDED: 'Firma registrada'
+    };
+
+    function renderAuditTrail(logs) {
+      const container = document.getElementById('timelineContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      logs.slice().reverse().forEach(log => {
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+
+        const isTamper = String(log.action).includes('TAMPER');
+        const dot = document.createElement('div');
+        dot.className = `timeline-dot ${isTamper ? 'tamper' : ''}`;
+        item.appendChild(dot);
+
+        const content = document.createElement('div');
+        content.className = 'timeline-content';
+
+        const time = new Date(log.recorded_at).toLocaleTimeString('es-PE', { hour12: false });
+        const title = ACTION_LABELS[log.action] || log.action;
+
+        const d = log.details || {};
+        let desc = d.reason || d.notes || d.what || '';
+        if (!desc && d.registeredSha256) {
+          desc = `Hash alterado: ${d.actualSha256}`;
+        }
+        if (!desc) desc = JSON.stringify(d);
+
+        // textContent, no innerHTML: los detalles vienen de la base de datos.
+        const timeEl = document.createElement('div');
+        timeEl.className = 'timeline-time';
+        timeEl.textContent = `${time} — ${log.user_id || 'SISTEMA'}`;
+
+        const titleEl = document.createElement('div');
+        titleEl.className = 'timeline-title';
+        titleEl.textContent = title;
+
+        const descEl = document.createElement('div');
+        descEl.className = 'timeline-desc';
+        descEl.textContent = desc;
+
+        content.appendChild(timeEl);
+        content.appendChild(titleEl);
+        content.appendChild(descEl);
+        item.appendChild(content);
+        container.appendChild(item);
+      });
+    }
+
+    loadInitialData();
+  </script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOXIT — Capa de Trazabilidad Documental</title>
+<style>
+  :root {
+    --bg: #0B0F19; --panel: #131A2A; --line: #1E293B; --line2: #334155;
+    --text: #E2E8F0; --dim: #94A3B8; --accent: #FF3700;
+    --ok: #4ADE80; --warn: #FBBF24; --bad: #F87171; --info: #38BDF8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 14px; line-height: 1.6;
+  }
+  header {
+    border-bottom: 1px solid var(--line); padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  h1 { font-size: 17px; margin: 0; font-weight: 650; letter-spacing: -0.01em; }
+  h1 span { color: var(--accent); }
+  .sub { color: var(--dim); font-size: 12px; margin-top: 2px; }
+  main {
+    display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 16px;
+    padding: 16px 24px 32px; max-width: 1600px; margin: 0 auto;
+  }
+  @media (max-width: 1100px) { main { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 8px; padding: 16px;
+  }
+  .card h2 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--dim); margin: 0 0 12px; font-weight: 600;
+  }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .kv:last-child { border-bottom: 0; }
+  .kv span:first-child { color: var(--dim); flex-shrink: 0; }
+  .kv span:last-child { text-align: right; word-break: break-word; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11px; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .pill-ok { background: #052e16; color: var(--ok); border: 1px solid #14532d; }
+  .pill-warn { background: #422006; color: var(--warn); border: 1px solid #78350f; }
+  .pill-bad { background: #450a0a; color: var(--bad); border: 1px solid #7f1d1d; }
+  .notice { border-radius: 6px; padding: 11px 13px; font-size: 12px; line-height: 1.55; margin-bottom: 12px; }
+  .notice-warn { background: #1e1508; border: 1px solid #78350f; border-left: 3px solid var(--warn); color: #e2d5b3; }
+  .notice-ok { background: #0a1f10; border: 1px solid #14532d; border-left: 3px solid var(--ok); color: #bbf7d0; }
+  .notice-bad { background: #1f0d0d; border: 1px solid #7f1d1d; border-left: 3px solid var(--bad); color: #fecaca; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tab {
+    background: var(--bg); border: 1px solid var(--line2); color: var(--dim);
+    padding: 7px 11px; border-radius: 6px; cursor: pointer; font-size: 12px;
+    font-family: inherit; text-align: left; line-height: 1.35;
+  }
+  .tab:hover { border-color: var(--info); color: var(--text); }
+  .tab.active { border-color: var(--accent); color: var(--text); background: #1f1005; }
+  .tab b { display: block; font-weight: 600; }
+  .tab i { font-style: normal; font-size: 11px; color: var(--dim); }
+  iframe { width: 100%; height: 520px; border: 1px solid var(--line); border-radius: 6px; background: #fff; display: block; }
+  .metabar { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .hash { color: var(--info); background: var(--bg); padding: 6px 8px; border-radius: 4px; border: 1px solid var(--line); word-break: break-all; display: block; margin-top: 4px; }
+  button.act {
+    background: var(--accent); color: #fff; border: 0; padding: 9px 14px;
+    border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px;
+    font-family: inherit; margin-top: 10px; width: 100%;
+  }
+  button.act:hover { filter: brightness(1.12); }
+  button.act.sec { background: var(--bg); border: 1px solid var(--line2); color: var(--text); }
+  .tl { position: relative; padding-left: 20px; max-height: 460px; overflow-y: auto; }
+  .tl::before { content: ''; position: absolute; left: 5px; top: 4px; bottom: 4px; width: 1px; background: var(--line2); }
+  .ev { position: relative; padding-bottom: 14px; font-size: 12px; }
+  .ev::before { content: ''; position: absolute; left: -18px; top: 5px; width: 7px; height: 7px; border-radius: 50%; background: var(--line2); }
+  .ev.tamper::before { background: var(--bad); box-shadow: 0 0 0 3px #450a0a; }
+  .ev.ok::before { background: var(--ok); }
+  .ev-t { color: var(--dim); font-size: 11px; }
+  .ev-ti { font-weight: 600; margin: 1px 0; }
+  .ev-d { color: var(--dim); font-size: 11px; word-break: break-word; }
+  .res { margin-top: 12px; padding: 11px 13px; border-radius: 6px; font-size: 12px; display: none; line-height: 1.6; }
+  .res.show { display: block; }
+  .res.ok { background: #0a1f10; border: 1px solid #14532d; color: #bbf7d0; }
+  .res.bad { background: #1f0d0d; border: 1px solid #7f1d1d; color: #fecaca; }
+  .res h3 { margin: 0 0 7px; font-size: 13px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  footer { border-top: 1px solid var(--line); padding: 16px 24px; color: var(--dim); font-size: 11px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>FOXIT <span>—</span> Capa de Trazabilidad Documental</h1>
+    <div class="sub">Proceso penal peruano · Integridad, versionado y custodia verificables</div>
+  </div>
+  <div id="accessPills"></div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Caso</h2>
+    <div id="caseBox">Cargando…</div>
+    <h2 style="margin-top:18px">Acceso a Foxit</h2>
+    <div id="foxitBox">Cargando…</div>
+    <h2 style="margin-top:18px">Custodia</h2>
+    <div id="custodyBox">Cargando…</div>
+  </section>
+
+  <section class="card">
+    <h2>Documento sellado</h2>
+    <div class="tabs" id="tabs"></div>
+    <iframe id="pdfFrame" title="Documento sellado"></iframe>
+    <div class="metabar">
+      <span style="font-size:11px;color:var(--dim)">SHA-256 — el hash es el nombre del archivo</span>
+      <code class="hash mono" id="hashOut">…</code>
+      <div style="margin-top:8px"><span id="sigOut"></span></div>
+      <button class="act" id="btnVerify">Verificar integridad en el navegador</button>
+      <button class="act sec" id="btnAll">Verificar los 3 documentos</button>
+      <div class="res" id="resOut"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Cadena de auditoría</h2>
+    <div id="chainOut">Cargando…</div>
+    <h2 style="margin-top:18px">Registro de solo agregado</h2>
+    <div class="tl" id="timeline">Cargando…</div>
+  </section>
+</main>
+
+<footer>
+  Verificación ejecutable en el navegador con Web Crypto SHA-256. Sin servidor: el hash registrado
+  es el nombre del archivo, así que la comprobación no depende de la base de datos.
+</footer>
+
+<script>
+const DOC_LABELS = {
+  'ACTA_INTERVENCION': ['Acta Policial V1', 'Documento original de la intervención'],
+  'DISPOSICION_FISCAL': ['Disposición Fiscal', 'Observación del fiscal que ordena la subsanación'],
+  'ACTA_INTERVENCION_SUBSANADA': ['Acta Subsanada V2', 'Corrige la placa. La V1 queda intacta.']
+};
+
+const ACTIONS = {
+  DOCUMENT_SEALED_V1: ['Acta Policial V1 sellada', 'ok'],
+  DOCUMENT_VERSION_BRANCHED: ['Acta Subsanada V2 emitida', 'ok'],
+  CUSTODY_TRANSFER_INITIATED: ['Transferencia de custodia iniciada', ''],
+  CUSTODY_TRANSFER_ACKNOWLEDGED: ['Acuse de recibo — tramo cerrado', 'ok'],
+  INTEGRITY_TAMPER_DETECTED: ['Alteración detectada', 'tamper'],
+  SIGNATURE_UNAVAILABLE: ['Firma no disponible', '']
+};
+
+let D = null;
+let current = null;
+
+async function sha256Hex(buf) {
+  const d = await crypto.subtle.digest('SHA-256', buf);
+  return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+}
+
+function renderAccess() {
+  const a = D.foxitAccess;
+  const pill = (ok, label) =>
+    `<span class="pill ${ok ? 'pill-ok' : 'pill-warn'}">${ok ? 'OK' : 'NO'} ${label}</span>`;
+  document.getElementById('accessPills').innerHTML =
+    pill(a.documentGeneration, 'DocGen') + ' ' +
+    pill(a.pdfServices, 'PDF Services') + ' ' +
+    pill(a.eSign, 'eSign');
+}
+
+function renderCase() {
+  const c = D.case;
+  const h = c.hoursRemaining;
+  const status = h > 0
+    ? `<span class="pill ${h < 6 ? 'pill-bad' : 'pill-warn'}">${h.toFixed(1)} h restantes</span>`
+    : `<span class="pill pill-bad">plazo vencido</span>`;
+  document.getElementById('caseBox').innerHTML = `
+    <div class="kv"><span>Expediente</span><span>${esc(c.case_number)}</span></div>
+    <div class="kv"><span>Asunto</span><span>${esc(c.title)}</span></div>
+    <div class="kv"><span>Delito</span><span>${esc(c.crime)}</span></div>
+    <div class="kv"><span>Estado</span><span>${esc(c.current_status)}</span></div>
+    <div class="kv"><span>Plazo 48 h</span><span>${status}</span></div>`;
+}
+
+function renderFoxit() {
+  const a = D.foxitAccess;
+  const row = (label, ok, note) =>
+    `<div class="kv"><span>${label}</span><span><span class="pill ${ok ? 'pill-ok' : 'pill-warn'}">${ok ? 'OK' : 'NO'}</span></span></div>` +
+    (note ? `<div style="font-size:11px;color:var(--dim);padding:2px 0 8px">${esc(note)}</div>` : '');
+  document.getElementById('foxitBox').innerHTML =
+    row('Document Generation', a.documentGeneration, 'Genera los documentos desde plantillas .docx') +
+    row('PDF Services', a.pdfServices, 'Sube, convierte y descarga') +
+    row('eSign (firma)', a.eSign, a.eSignNote || '');
+}
+
+function renderCustody() {
+  const rows = D.custodyChain.map(t => {
+    const done = t.acknowledged_at;
+    return `<div class="kv">
+      <span>${esc(t.from_institution_id)} &rarr; ${esc(t.to_institution_id)}</span>
+      <span>${done
+        ? `<span class="pill pill-ok">acuse ${new Date(t.acknowledged_at).toLocaleDateString('es-PE')}</span>`
+        : `<span class="pill pill-bad">sin acuse</span>`}</span>
+    </div>`;
+  }).join('');
+  const open = D.openTransfers.length;
+  const banner = open > 0
+    ? `<div class="notice notice-warn" style="margin-top:10px"><strong>${open} tramo(s) abierto(s).</strong>
+       El expediente está en manos de una institución que todavía no confirmó recepción.
+       En papel eso no se sabe; aquí sí.</div>`
+    : `<div class="notice notice-ok" style="margin-top:10px">Todos los tramos tienen acuse de recibo.</div>`;
+  document.getElementById('custodyBox').innerHTML =
+    (rows || '<div class="kv"><span>Sin transferencias</span><span>—</span></div>') + banner;
+}
+
+function renderTabs() {
+  const tabs = document.getElementById('tabs');
+  tabs.innerHTML = D.versions.map((v, i) => {
+    const [t, sub] = DOC_LABELS[v.doc_type] || [v.doc_type, ''];
+    return `<button class="tab ${i === 0 ? 'active' : ''}" data-vid="${esc(v.id)}">
+      <b>${esc(t)}</b><i>${esc(sub)}</i></button>`;
+  }).join('');
+  tabs.querySelectorAll('.tab').forEach(b =>
+    b.addEventListener('click', () => select(b.dataset.vid)));
+  select(D.versions[0] && D.versions[0].id);
+}
+
+function select(versionId) {
+  const v = D.versions.find(x => x.id === versionId);
+  if (!v) return;
+  current = v;
+  document.querySelectorAll('.tab').forEach(b =>
+    b.classList.toggle('active', b.dataset.vid === versionId));
+  document.getElementById('pdfFrame').src = `vault/${v.vault_filename}`;
+  document.getElementById('hashOut').textContent = v.sha256;
+  const sig = v.signature;
+  document.getElementById('sigOut').innerHTML = sig && sig.status === 'SIGNED'
+    ? `<span class="pill pill-ok">Firmado</span> envelope ${esc(sig.envelope_id)}`
+    : `<span class="pill pill-warn">Sin firma</span> <span style="font-size:11px;color:var(--dim)">
+       eSign no está habilitado en esta cuenta. El documento sí está sellado con hash.</span>`;
+  document.getElementById('resOut').className = 'res';
+}
+
+function renderTimeline() {
+  // Cada evento se etiqueta con el tipo de documento al que apunta, no con el
+  // número de versión: la disposición fiscal también es V1 y no es un acta.
+  const byId = {};
+  D.versions.forEach(v => { byId[v.id] = (DOC_LABELS[v.doc_type] && DOC_LABELS[v.doc_type][0]) || v.doc_type; });
+
+  const evs = D.auditEvents.slice().reverse();
+  document.getElementById('timeline').innerHTML = evs.map(e => {
+    const [base, cls] = ACTIONS[e.action] || [e.action, ''];
+    const doc = e.version_id ? byId[e.version_id] : null;
+    const title = doc && e.action.startsWith('DOCUMENT_') ? doc + ' — sellada' : base;
+    const d = e.details || {};
+    let desc = d.reason || d.notes || '';
+    if (!desc && d.registeredSha256) desc = `Hash detectado: ${String(d.actualSha256).slice(0, 24)}…`;
+    if (!desc && d.unavailable_reason) desc = 'eSign requiere credenciales de un portal separado.';
+    return `<div class="ev ${cls}">
+      <div class="ev-t">${new Date(e.recorded_at).toLocaleString('es-PE')} · ${esc(e.user_id || 'SISTEMA')}</div>
+      <div class="ev-ti">${esc(title)}</div>
+      ${desc ? `<div class="ev-d">${esc(desc)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderChain() {
+  const c = D.chain;
+  document.getElementById('chainOut').innerHTML =
+    `<div class="notice ${c.valid ? 'notice-ok' : 'notice-bad'}">
+      <strong>${c.valid ? 'Cadena íntegra' : 'Cadena rota'}</strong><br>
+      ${esc(c.message)}
+    </div>
+    <div style="font-size:11px;color:var(--dim);line-height:1.6">
+      Cada evento encadena el hash del anterior. Si alguien borra o edita una entrada,
+      el encadenamiento se rompe y se detecta. El registro es de solo agregado:
+      no hay ruta de código que actualice o elimine un evento.
+    </div>`;
+}
+
+async function verifyVersion(v) {
+  const res = await fetch(`vault/${v.vault_filename}`);
+  const buf = await res.arrayBuffer();
+  const actual = await sha256Hex(buf);
+  return {
+    type: (DOC_LABELS[v.doc_type] && DOC_LABELS[v.doc_type][0]) || v.doc_type,
+    valid: actual === v.sha256,
+    expected: v.sha256,
+    actual
+  };
+}
+
+async function verifyAll() {
+  const out = document.getElementById('resOut');
+  out.className = 'res show';
+  out.innerHTML = '<strong>Verificando…</strong><br>Calculando SHA-256 en tu navegador sobre los bytes reales.';
+
+  const results = [];
+  for (const v of D.versions) results.push(await verifyVersion(v));
+  const bad = results.filter(r => !r.valid);
+
+  out.className = `res show ${bad.length ? 'bad' : 'ok'}`;
+  out.innerHTML = `
+    <h3>${bad.length ? `Alteración detectada en ${bad.length} documento(s)` : `Los ${results.length} documentos están íntegros`}</h3>
+    <div style="font-size:11px;margin-bottom:8px">
+      Web Crypto SHA-256 sobre los bytes reales de cada archivo, comparado contra el hash
+      que da nombre al archivo.
+    </div>
+    ${results.map(r => `
+      <div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span class="pill ${r.valid ? 'pill-ok' : 'pill-bad'}">${r.valid ? 'ÍNTEGRO' : 'ALTERADO'}</span>
+        <span style="font-size:11px"> ${esc(r.type)}</span>
+      </div>`).join('')}
+    ${bad.length ? `<div class="row2">
+      <div><div style="font-size:10px;color:var(--dim)">Esperado</div><code class="mono">${esc(bad[0].expected)}</code></div>
+      <div><div style="font-size:10px;color:var(--dim)">Actual</div><code class="mono">${esc(bad[0].actual)}</code></div>
+    </div>` : ''}`;
+}
+
+async function init() {
+  const res = await fetch('data.json');
+  D = await res.json();
+  renderAccess();
+  renderCase();
+  renderFoxit();
+  renderCustody();
+  renderTabs();
+  renderTimeline();
+  renderChain();
+  document.getElementById('btnVerify').addEventListener('click', verifyAll);
+  document.getElementById('btnAll').addEventListener('click', verifyAll);
+}
+
+init().catch(e => {
+  document.getElementById('caseBox').innerHTML =
+    `<div class="notice notice-bad">No se pudo cargar data.json.<br>${esc(e.message)}</div>`;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,881 @@
+# MASTER PROMPT — FOXIT CRIMINAL JUSTICE DOCUMENT TRACEABILITY MVP
+
+Actúa como un **Senior Product Architect, Full-Stack Engineer, Document Management Specialist and Foxit API Integration Engineer**.
+
+Quiero que me ayudes a diseñar y planificar un MVP que será presentado al equipo directivo de **Foxit** como parte de una propuesta para desarrollar un proyecto utilizando sus tecnologías de PDF, document processing, e-signature, document generation y/o Foxit MCP Server.
+
+El objetivo NO es construir un sistema judicial completo. El objetivo es demostrar, mediante un MVP pequeño pero técnicamente sólido, cómo las tecnologías de Foxit podrían aportar una **capa de integridad, trazabilidad y gestión documental** sobre un flujo existente de justicia penal.
+
+---
+
+# 1. CONTEXTO DEL PROYECTO
+
+El proyecto está pensado inicialmente para Perú y posteriormente podría evaluarse su adaptación a otros países de América Latina.
+
+El problema que quiero abordar es la dificultad de mantener la trazabilidad de documentos durante un proceso de justicia penal.
+
+Un documento puede comenzar en la Policía, posteriormente ser enviado al Ministerio Público/Fiscalía y finalmente incorporarse al expediente judicial.
+
+Durante este proceso pueden existir:
+
+* múltiples documentos;
+* diferentes versiones;
+* correcciones;
+* anotaciones;
+* firmas;
+* transferencias entre instituciones;
+* diferentes responsables;
+* diferentes fechas y horas;
+* documentos PDF generados desde distintas fuentes;
+* riesgo de perder claridad sobre quién creó, modificó o transfirió determinada información.
+
+La solución propuesta NO debe reemplazar los sistemas judiciales existentes.
+
+Debe funcionar conceptualmente como una **document traceability layer** que permita preservar y demostrar la integridad y el historial de los documentos.
+
+---
+
+# 2. CASO DE USO PRINCIPAL
+
+Quiero que el MVP se centre en un caso concreto:
+
+## Police Intervention → Prosecutor → Court
+
+El flujo inicial debe representar algo similar a:
+
+1. Intervención policial.
+2. Elaboración del Acta de Intervención Policial.
+3. Elaboración del Acta de Registro/Incautación cuando corresponda.
+4. Elaboración del Informe Policial.
+5. Organización de los documentos.
+6. Remisión de la documentación al Ministerio Público/Fiscalía.
+7. Revisión fiscal.
+8. Posibles anotaciones o correcciones.
+9. Generación de una nueva versión cuando corresponda.
+10. Incorporación de la documentación al expediente judicial.
+
+No quiero que inventes procedimientos legales específicos que no puedan verificarse.
+
+Cuando exista una duda sobre el procedimiento real peruano, debes indicarla claramente y diferenciar:
+
+* requisito legal real;
+* supuesto de diseño;
+* funcionalidad propuesta del MVP.
+
+---
+
+# 3. DOCUMENTOS QUE DEBE MANEJAR EL MVP
+
+Quiero que analices específicamente cómo podríamos representar documentos como:
+
+### Policía
+
+* Acta de Intervención Policial.
+* Acta de Registro Personal, Vehicular o de Inmueble, cuando corresponda.
+* Acta de Incautación, cuando corresponda.
+* Informe Policial.
+* Otros documentos policiales relevantes que consideres necesarios.
+
+### Fiscalía
+
+* Documento de recepción/revisión.
+* Disposición o documento fiscal que corresponda al flujo seleccionado.
+* Anotaciones u observaciones.
+
+### Judicial
+
+* Documento incorporado al expediente.
+* Versiones finales.
+* Registro de incorporación/transferencia.
+
+IMPORTANTE:
+
+No quiero crear un sistema judicial ficticio gigantesco.
+
+Selecciona solamente los documentos estrictamente necesarios para demostrar el concepto.
+
+---
+
+# 4. OBJETIVO DEL MVP
+
+El MVP debe demostrar claramente que podemos responder preguntas como:
+
+* ¿Quién creó este documento?
+* ¿Cuándo fue creado?
+* ¿Quién lo modificó?
+* ¿Cuándo fue modificado?
+* ¿Qué versión estoy viendo?
+* ¿Existe una versión anterior?
+* ¿Qué anotaciones se realizaron?
+* ¿Quién firmó el documento?
+* ¿Cuándo fue firmado?
+* ¿A qué institución fue transferido?
+* ¿Cuándo fue transferido?
+* ¿El documento corresponde a la versión válida?
+* ¿Podemos verificar su integridad?
+* ¿Podemos reconstruir su historial?
+
+La idea central es:
+
+**Never silently replace a document.**
+
+Si se realiza una modificación legítima, el sistema debe generar o registrar una nueva versión y conservar la trazabilidad de la anterior.
+
+---
+
+# 5. PAPEL DE FOXIT
+
+Quiero que Foxit sea una parte real del MVP y NO simplemente aparezca como un logo.
+
+Analiza cuáles de las siguientes tecnologías de Foxit son realmente útiles:
+
+* Foxit PDF APIs / PDF Services.
+* PDF generation.
+* PDF manipulation.
+* PDF conversion.
+* PDF editing or processing.
+* PDF annotations.
+* Metadata.
+* Digital signatures / eSign APIs.
+* Document generation.
+* Document insertion.
+* PDF merging.
+* PDF splitting.
+* PDF security.
+* Foxit MCP Server.
+* Cualquier otra API o servicio de Foxit que sea relevante.
+
+NO asumas que todas deben utilizarse.
+
+Selecciona únicamente las funcionalidades que aporten valor real al caso de uso.
+
+---
+
+# 6. INVESTIGA PRIMERO LAS APIs
+
+Antes de diseñar la arquitectura definitiva, quiero que determines:
+
+1. Qué APIs/servicios de Foxit están actualmente disponibles.
+2. Qué puede hacer exactamente cada API.
+3. Qué autenticación requiere.
+4. Qué endpoints o SDKs serían necesarios.
+5. Qué formatos de entrada y salida soporta.
+6. Qué operaciones pueden realizarse sobre PDF.
+7. Qué capacidades existen para firmas electrónicas/digitales.
+8. Qué capacidades existen para anotaciones.
+9. Qué capacidades existen para generación de documentos.
+10. Qué capacidades existen para metadatos.
+11. Qué capacidades existen para procesamiento automatizado.
+12. Cómo podría utilizarse Foxit MCP Server, si realmente aporta valor.
+13. Qué limitaciones existen.
+14. Qué funcionalidades NO deberíamos intentar implementar mediante Foxit.
+
+Si tienes acceso a documentación oficial, priorízala.
+
+NO inventes endpoints.
+
+NO inventes nombres de APIs.
+
+NO inventes parámetros.
+
+Si una funcionalidad no está confirmada, márcala como:
+
+**UNVERIFIED / NEEDS CONFIRMATION**
+
+---
+
+# 7. ARQUITECTURA PROPUESTA
+
+Después del análisis de las APIs, diseña una arquitectura sencilla para el MVP.
+
+Quiero que expliques:
+
+### Frontend
+
+Qué tecnología recomendarías y por qué.
+
+Por ejemplo:
+
+* React;
+* Next.js;
+* otra alternativa.
+
+### Backend
+
+Qué tecnología recomendarías.
+
+Por ejemplo:
+
+* Node.js;
+* Python;
+* FastAPI;
+* etc.
+
+### Database
+
+Qué información debería almacenarse.
+
+Por ejemplo:
+
+* users;
+* institutions;
+* cases;
+* documents;
+* document_versions;
+* signatures;
+* annotations;
+* transfers;
+* audit_logs.
+
+### Foxit Layer
+
+Explica exactamente dónde entra Foxit.
+
+Quiero un diagrama conceptual:
+
+USER
+↓
+FRONTEND
+↓
+BACKEND
+↓
+DOCUMENT WORKFLOW
+↓
+FOXIT APIs
+↓
+PDF / SIGNATURE / ANNOTATION / PROCESSING
+↓
+STORAGE + AUDIT TRAIL
+
+---
+
+# 8. DISEÑA EL MODELO DE DATOS
+
+Propón un modelo de datos mínimo.
+
+Como mínimo analiza entidades como:
+
+* User
+* Institution
+* Case
+* Document
+* DocumentVersion
+* Signature
+* Annotation
+* Transfer
+* AuditLog
+
+Para cada entidad indica:
+
+* campos;
+* tipo de dato;
+* relación;
+* propósito.
+
+No sobre-diseñes la base de datos.
+
+---
+
+# 9. FLUJO FUNCIONAL DEL MVP
+
+Diseña el flujo completo.
+
+Ejemplo:
+
+### STEP 1
+
+Police officer creates case.
+
+### STEP 2
+
+Officer generates the Police Intervention Report.
+
+### STEP 3
+
+The document is converted/generated as PDF.
+
+### STEP 4
+
+Foxit processes the PDF.
+
+### STEP 5
+
+Metadata is associated with the document.
+
+### STEP 6
+
+Officer signs the document.
+
+### STEP 7
+
+System creates Version 1.
+
+### STEP 8
+
+Document is transferred to Prosecutor.
+
+### STEP 9
+
+Prosecutor reviews the document.
+
+### STEP 10
+
+Prosecutor adds an annotation.
+
+### STEP 11
+
+If the document requires modification, Version 2 is created.
+
+### STEP 12
+
+The system preserves Version 1.
+
+### STEP 13
+
+The system records:
+
+WHO
+WHEN
+WHAT CHANGED
+WHY
+FROM WHERE
+TO WHERE
+
+### STEP 14
+
+Final documentation is incorporated into the judicial file.
+
+Mejora este flujo si encuentras una alternativa técnicamente superior.
+
+---
+
+# 10. DEMO QUE DEBE PODER MOSTRARSE
+
+El MVP debe estar diseñado pensando en una demostración de aproximadamente 5–10 minutos.
+
+Quiero poder mostrar:
+
+1. Crear un caso.
+2. Crear o cargar un documento policial.
+3. Generar/procesar el PDF.
+4. Mostrar metadata.
+5. Firmarlo.
+6. Transferirlo al siguiente actor.
+7. Abrirlo como fiscal.
+8. Realizar una anotación.
+9. Crear una nueva versión.
+10. Mostrar que la versión anterior permanece intacta.
+11. Mostrar el historial.
+12. Mostrar quién hizo cada acción.
+13. Mostrar la cadena completa.
+14. Mostrar cómo las APIs de Foxit participan realmente en el proceso.
+
+La demo debe ser visualmente convincente.
+
+---
+
+# 11. AUDIT TRAIL
+
+El audit trail es una de las partes más importantes.
+
+Diseña una línea de tiempo como:
+
+10:32 — Document created
+10:33 — PDF generated
+10:34 — Metadata assigned
+10:35 — Digitally signed
+10:41 — Transferred to Prosecutor
+11:02 — Prosecutor opened document
+11:08 — Annotation added
+11:15 — Version 2 created
+11:16 — Version 1 preserved
+11:30 — Final document transferred to Court
+
+Quiero que determines cuáles de estos eventos pueden ser registrados directamente mediante Foxit y cuáles deben ser gestionados por nuestra propia aplicación/backend.
+
+Esto es MUY importante.
+
+No quiero atribuirle a Foxit funcionalidades que en realidad tendría que implementar nuestro backend.
+
+---
+
+# 12. VERSION CONTROL
+
+Diseña específicamente cómo funcionará el versionado.
+
+Ejemplo:
+
+Version 1
+↓
+Original signed document
+
+Version 2
+↓
+Legitimate correction
+
+Version 3
+↓
+Final approved document
+
+El sistema debe conservar:
+
+* previous version;
+* new version;
+* user;
+* timestamp;
+* reason for modification;
+* relationship between versions.
+
+Explica qué parte corresponde a Foxit y qué parte corresponde al backend.
+
+---
+
+# 13. DIGITAL SIGNATURES
+
+Analiza cómo integrar firmas mediante las tecnologías de Foxit disponibles.
+
+Quiero saber:
+
+* qué API utilizar;
+* flujo de firma;
+* generación del documento firmado;
+* verificación;
+* almacenamiento;
+* relación entre firma y versión del documento;
+* qué sucede si un documento firmado necesita modificarse.
+
+No asumas que una modificación de un PDF firmado debe sobrescribir el archivo original.
+
+Diseña un flujo seguro de nuevas versiones.
+
+---
+
+# 14. ANNOTATIONS
+
+Quiero una funcionalidad de anotaciones.
+
+Por ejemplo:
+
+Un fiscal revisa un documento y agrega una observación sobre una sección específica.
+
+La anotación debería poder asociarse a:
+
+* página;
+* posición;
+* usuario;
+* fecha;
+* comentario;
+* documento;
+* versión.
+
+Analiza cómo Foxit puede ayudar con esto.
+
+---
+
+# 15. DOCUMENT INTEGRITY
+
+Quiero que expliques cómo podemos demostrar que un documento no fue alterado silenciosamente.
+
+Analiza conceptos como:
+
+* document hash;
+* digital signature;
+* version ID;
+* timestamp;
+* audit log;
+* immutable storage;
+* metadata.
+
+No inventes capacidades de Foxit.
+
+Si una parte requiere infraestructura propia, dilo claramente.
+
+---
+
+# 16. SEGURIDAD
+
+El MVP debe considerar:
+
+* authentication;
+* authorization;
+* role-based access;
+* encrypted communication;
+* secure document storage;
+* audit logs;
+* document integrity;
+* least privilege.
+
+Roles mínimos:
+
+### Police Officer
+
+Can create and submit police documents.
+
+### Prosecutor
+
+Can review and annotate documents.
+
+### Court User
+
+Can receive and review final documents.
+
+### Administrator
+
+Can manage users and system configuration.
+
+---
+
+# 17. PRIVACY
+
+Como estamos hablando de justicia penal, NO quiero utilizar datos personales reales.
+
+Diseña la demo utilizando:
+
+* fictional names;
+* fictional case numbers;
+* fictional dates;
+* fictional addresses;
+* fictional documents.
+
+El sistema debe dejar claro que es un **prototype / proof of concept** y no un sistema judicial oficial.
+
+---
+
+# 18. PERU / LEGAL CONTEXT
+
+El proyecto está pensado inicialmente para Perú.
+
+Quiero que identifiques qué normativa, estándares o principios podrían ser relevantes para:
+
+* documentos electrónicos;
+* firmas digitales;
+* gobierno digital;
+* expediente judicial electrónico;
+* protección de datos;
+* trazabilidad;
+* integridad documental.
+
+Pero NO quiero asesoramiento legal definitivo.
+
+Distingue claramente:
+
+**Verified legal requirement**
+
+vs.
+
+**Design assumption**
+
+vs.
+
+**Potential future compliance requirement**
+
+---
+
+# 19. ALCANCE
+
+Quiero que seas muy estricto con el alcance.
+
+El MVP NO debe intentar:
+
+* reemplazar el EJE;
+* reemplazar sistemas policiales;
+* reemplazar sistemas del Ministerio Público;
+* construir un sistema completo de gestión judicial;
+* automatizar decisiones judiciales;
+* utilizar inteligencia artificial para decidir culpabilidad;
+* procesar casos reales.
+
+El objetivo es demostrar:
+
+**document integrity + document workflow + traceability**
+
+---
+
+# 20. PLAN DE DESARROLLO
+
+Propón un plan realista para aproximadamente 20 días.
+
+Divide el proyecto en fases:
+
+### Days 1–3
+
+Research + workflow definition.
+
+### Days 4–6
+
+Architecture + database + UI design.
+
+### Days 7–12
+
+Core development.
+
+### Days 13–15
+
+Foxit integration.
+
+### Days 16–17
+
+Audit trail + versioning + security.
+
+### Days 18–19
+
+Testing + demo scenario.
+
+### Day 20
+
+Documentation + technical article + final presentation.
+
+Ajusta este cronograma si técnicamente consideras que existe una distribución mejor.
+
+---
+
+# 21. ENTREGABLES
+
+Propón entregables concretos:
+
+1. Working MVP.
+2. Source code.
+3. Technical documentation.
+4. Architecture diagram.
+5. API integration documentation.
+6. Demo video.
+7. Demo presentation.
+8. Technical article.
+9. Sample documents.
+10. Deployment instructions.
+
+También indica qué entregables son imprescindibles y cuáles son opcionales.
+
+---
+
+# 22. COST AND COMPLEXITY
+
+Mi presupuesto preliminar es:
+
+**USD $600–$1,200**
+
+El cliente ha indicado que este presupuesto funciona.
+
+Por eso, diseña un MVP que pueda razonablemente desarrollarse dentro de ese rango.
+
+Clasifica cada funcionalidad:
+
+### MUST HAVE
+
+Necesaria para la demo.
+
+### SHOULD HAVE
+
+Aporta valor, pero puede omitirse si el tiempo es limitado.
+
+### NICE TO HAVE
+
+Solo si sobra tiempo.
+
+---
+
+# 23. TECNOLOGÍA
+
+Recomienda un stack concreto.
+
+No quiero diez alternativas.
+
+Quiero que finalmente digas:
+
+**Recommended Stack**
+
+Frontend:
+Backend:
+Database:
+Authentication:
+Storage:
+Foxit:
+Deployment:
+Testing:
+
+Y explica brevemente por qué.
+
+---
+
+# 24. API IMPLEMENTATION PLAN
+
+Esta sección es especialmente importante.
+
+Para CADA integración de Foxit quiero:
+
+1. Foxit product/API.
+2. Purpose.
+3. Input.
+4. Processing.
+5. Output.
+6. Where it appears in the workflow.
+7. Backend responsibility.
+8. Frontend responsibility.
+9. Security consideration.
+10. Example request/response, SOLO si está confirmado por la documentación oficial.
+
+NO inventes endpoints.
+
+Si no puedes confirmar una API específica, indícalo.
+
+---
+
+# 25. MVP USER INTERFACE
+
+Propón las pantallas mínimas:
+
+1. Login.
+2. Dashboard.
+3. Case details.
+4. Documents.
+5. PDF viewer.
+6. Document metadata.
+7. Annotation interface.
+8. Version history.
+9. Audit trail.
+10. Transfer document.
+11. Signature workflow.
+
+Para cada pantalla explica qué debe mostrar.
+
+---
+
+# 26. FINAL DEMO STORY
+
+Finalmente crea una historia de demostración.
+
+Por ejemplo:
+
+> A police officer creates a fictional case.
+>
+> The officer generates an intervention report.
+>
+> The PDF is processed using Foxit.
+>
+> The officer signs the document.
+>
+> The document is transferred to the prosecutor.
+>
+> The prosecutor reviews it and adds an annotation.
+>
+> A legitimate correction is made.
+>
+> The system creates Version 2.
+>
+> Version 1 remains preserved.
+>
+> The audit trail shows exactly what happened.
+>
+> The final version is transferred to the judicial stage.
+
+Haz que esta historia sea el centro de toda la arquitectura.
+
+---
+
+# 27. OUTPUT I EXPECT FROM YOU
+
+Quiero que tu respuesta final esté estructurada exactamente en este orden:
+
+## A. Executive Summary
+
+Explica el proyecto en máximo 200 palabras.
+
+## B. Problem
+
+Explica el problema específico.
+
+## C. Proposed Solution
+
+Explica la solución.
+
+## D. Exact Police Documentation Workflow
+
+Explica específicamente los documentos policiales y su recorrido.
+
+## E. Foxit Technology Mapping
+
+Tabla:
+
+| Requirement | Foxit Technology | Why | Backend Responsibility |
+
+## F. System Architecture
+
+Incluye diagrama textual.
+
+## G. Database Model
+
+Incluye entidades y relaciones.
+
+## H. API Integration Plan
+
+Explica cada integración.
+
+## I. User Interface
+
+Lista de pantallas.
+
+## J. Audit Trail
+
+Explica exactamente qué registra Foxit y qué registra nuestro backend.
+
+## K. Version Control
+
+Explica cómo se preservan las versiones.
+
+## L. Digital Signature Workflow
+
+Explica el flujo.
+
+## M. Security & Privacy
+
+Explica las medidas principales.
+
+## N. Peru Legal/Regulatory Considerations
+
+Separando hechos verificados de supuestos.
+
+## O. 20-Day Development Plan
+
+Plan día por día.
+
+## P. MVP Scope
+
+Must Have / Should Have / Nice to Have.
+
+## Q. Demo Script
+
+Guion completo de la demostración.
+
+## R. Risks & Limitations
+
+Principales riesgos técnicos y legales.
+
+## S. Future Expansion
+
+Cómo podría evolucionar el proyecto después del MVP.
+
+## T. Final Recommendation
+
+Termina recomendando exactamente qué construir primero y qué NO construir.
+
+---
+
+# IMPORTANT RULES
+
+1. No inventes funcionalidades de Foxit.
+2. No inventes endpoints.
+3. No inventes requisitos legales.
+4. Prioriza documentación oficial de Foxit.
+5. Si una característica necesita confirmación, indícalo.
+6. Mantén el MVP pequeño.
+7. Prioriza una demo funcional sobre una arquitectura excesivamente compleja.
+8. Diferencia claramente las responsabilidades de Foxit y de nuestro propio backend.
+9. Diseña pensando en una presentación ante el equipo directivo de Foxit.
+10. La demostración debe hacer evidente que Foxit es una parte esencial del flujo y no simplemente una tecnología añadida superficialmente.
+11. No construyas un sistema judicial completo.
+12. No utilices datos reales de personas o casos.
+13. El objetivo principal es demostrar:
+
+**DOCUMENT INTEGRITY + VERSION CONTROL + DIGITAL SIGNATURES + ANNOTATIONS + AUDIT TRAIL + TRACEABILITY**
+
+Ahora analiza todo lo anterior y crea el plan técnico completo.
