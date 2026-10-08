@@ -14,19 +14,3 @@ package-lock.json
 Thumbs.db
 *.log
 *.zip
-
-# Capa de trazabilidad: estado generado, no código fuente.
-# El vault de trabajo y la base de datos se regeneran con
-# `node run_complete_pipeline.js`. Versionarlos haría diffs de binarios sin valor.
-#
-# EXCEPCIÓN: site/vault/ SÍ se versiona. GitHub Pages no ejecuta Node, así que
-# los PDF publicados tienen que estar en el repo para que la demo funcione.
-vault/
-traceability.db
-traceability.db-wal
-traceability.db-shm
-!CAPA-RAZABILIDAD/site/vault/
-!CAPA-RAZABILIDAD/site/vault/**
-
-# Material previo con datos obsoletos
-_obsoleto/
